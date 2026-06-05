@@ -2,5 +2,6 @@ node_modules
 .next
 .git
 lib/generated/prisma
+!lib/generated/prisma/index.ts
 .env*
 npm-debug.log*
