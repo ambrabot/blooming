@@ -21,7 +21,13 @@ export async function POST(req: NextRequest) {
   }
 
   const hashed = await bcrypt.hash(password, 12);
-  const userRole = (Object.values(UserRole).includes(role) ? role : UserRole.WOMAN) as UserRole;
+  const SELF_SIGNUP_ROLES: UserRole[] = [
+    UserRole.WOMAN,
+    UserRole.COUPLE,
+    UserRole.FAMILY,
+    UserRole.LEADER,
+  ];
+  const userRole = SELF_SIGNUP_ROLES.includes(role) ? (role as UserRole) : UserRole.WOMAN;
 
   const user = await db.user.create({
     data: {

@@ -4,19 +4,23 @@ FROM base AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY package.json package-lock.json* ./
-RUN npm ci
+# Força devDependencies (tailwind, typescript) mesmo se o Coolify injetar
+# NODE_ENV=production no buildtime — npm ci pularia devDeps sem isso.
+RUN NODE_ENV=development npm ci --include=dev
 
 FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 ENV NEXT_TELEMETRY_DISABLED=1
+ENV NODE_ENV=development
 ARG NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
 ARG NEXT_PUBLIC_APP_URL
 ENV NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=$NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY \
     NEXT_PUBLIC_APP_URL=$NEXT_PUBLIC_APP_URL
 RUN npx prisma generate
-RUN npm run build
+# Build otimizado de produção (devDeps já presentes do stage deps).
+RUN NODE_ENV=production npm run build
 
 FROM base AS runner
 WORKDIR /app
