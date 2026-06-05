@@ -1,0 +1,215 @@
+import { notFound, redirect } from "next/navigation";
+import Link from "next/link";
+import { getSession } from "@/lib/auth/jwt";
+import { db } from "@/lib/db/client";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { ArrowLeft, ArrowRight, CheckCircle2, MessageCircle, Clock } from "lucide-react";
+import LessonCompleteButton from "@/components/modules/lesson-complete-button";
+
+interface Props {
+  params: Promise<{ slug: string; lessonSlug: string }>;
+}
+
+export default async function LicaoPage({ params }: Props) {
+  const { slug, lessonSlug } = await params;
+  const session = await getSession();
+  if (!session) redirect("/login");
+
+  const mod = await db.module.findUnique({
+    where: { slug, isActive: true },
+    include: { lessons: { orderBy: { order: "asc" }, select: { id: true, slug: true, title: true, order: true } } },
+  });
+  if (!mod) notFound();
+
+  const purchase = await db.modulePurchase.findFirst({
+    where: { userId: session.userId, moduleId: mod.id, status: "COMPLETED" },
+  });
+  if (!purchase) redirect(`/modulos/${slug}`);
+
+  const lesson = await db.lesson.findUnique({
+    where: { moduleId_slug: { moduleId: mod.id, slug: lessonSlug } },
+  });
+  if (!lesson) notFound();
+
+  // Ensure UserProgress exists
+  await db.userProgress.upsert({
+    where: { userId_moduleId: { userId: session.userId, moduleId: mod.id } },
+    create: { userId: session.userId, moduleId: mod.id },
+    update: {},
+  });
+
+  const progress = await db.userProgress.findUnique({
+    where: { userId_moduleId: { userId: session.userId, moduleId: mod.id } },
+    include: { lessonProgress: { select: { lessonId: true, completedAt: true } } },
+  });
+
+  const lessonCompleted = progress?.lessonProgress.some(
+    (lp: typeof progress.lessonProgress[number]) => lp.lessonId === lesson.id && lp.completedAt,
+  ) ?? false;
+
+  // Prev / Next navigation
+  const currentIdx = mod.lessons.findIndex((l: typeof mod.lessons[number]) => l.slug === lessonSlug);
+  const prevLesson = currentIdx > 0 ? mod.lessons[currentIdx - 1] : null;
+  const nextLesson = currentIdx < mod.lessons.length - 1 ? mod.lessons[currentIdx + 1] : null;
+
+  return (
+    <div className="p-8 max-w-3xl mx-auto">
+      {/* Breadcrumb */}
+      <div className="flex items-center gap-2 text-sm text-stone-400 mb-8">
+        <Link href="/modulos" className="hover:text-stone-600">Módulos</Link>
+        <span>/</span>
+        <Link href={`/modulos/${slug}`} className="hover:text-stone-600">{mod.title}</Link>
+        <span>/</span>
+        <span className="text-stone-600 truncate">{lesson.title}</span>
+      </div>
+
+      {/* Lesson header */}
+      <div className="flex items-start justify-between gap-4 mb-6">
+        <div>
+          <div className="flex items-center gap-2 mb-2">
+            <Badge variant="outline" className="text-xs">{lesson.type}</Badge>
+            {lesson.durationMin && (
+              <span className="text-xs text-stone-400 flex items-center gap-1">
+                <Clock className="h-3 w-3" />
+                {lesson.durationMin} min
+              </span>
+            )}
+            {lessonCompleted && (
+              <span className="text-xs text-teal-600 flex items-center gap-1">
+                <CheckCircle2 className="h-3 w-3" />
+                Concluída
+              </span>
+            )}
+          </div>
+          <h1 className="text-2xl font-serif text-stone-800">{lesson.title}</h1>
+        </div>
+      </div>
+
+      {/* Content */}
+      <div className="prose prose-stone prose-sm max-w-none mb-8">
+        <LessonContent content={lesson.content} />
+      </div>
+
+      {/* Scripture */}
+      {lesson.scripture && (
+        <Card className="border-amber-100 bg-amber-50 mb-6">
+          <CardContent className="p-4">
+            <p className="text-xs font-medium text-amber-700 uppercase tracking-wide mb-1">Escritura âncora</p>
+            <p className="text-stone-700 italic">{lesson.scripture}</p>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Exercise */}
+      {lesson.exercise && (
+        <Card className="border-teal-100 bg-teal-50 mb-6">
+          <CardContent className="p-4">
+            <p className="text-xs font-medium text-teal-700 uppercase tracking-wide mb-2">Exercício prático</p>
+            <p className="text-stone-700 whitespace-pre-wrap text-sm leading-relaxed">{lesson.exercise}</p>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Prayer */}
+      {lesson.prayer && (
+        <Card className="border-rose-100 bg-rose-50 mb-6">
+          <CardContent className="p-4">
+            <p className="text-xs font-medium text-rose-700 uppercase tracking-wide mb-2">Oração</p>
+            <p className="text-stone-700 italic text-sm leading-relaxed whitespace-pre-wrap">{lesson.prayer}</p>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Session CTA */}
+      <Card className="border-amber-200 bg-amber-50 mb-8">
+        <CardContent className="p-4 flex items-center justify-between gap-4">
+          <div>
+            <p className="text-sm font-medium text-amber-900">Aprofundar com a Rafa</p>
+            <p className="text-xs text-amber-700 mt-0.5">Sessão com o contexto desta lição</p>
+          </div>
+          <Button asChild size="sm" className="bg-amber-700 hover:bg-amber-800 text-white shrink-0">
+            <Link href={`/sessao/nova?moduleId=${mod.id}&lessonTitle=${encodeURIComponent(lesson.title)}`}>
+              <MessageCircle className="h-4 w-4 mr-1" />
+              Conversar
+            </Link>
+          </Button>
+        </CardContent>
+      </Card>
+
+      {/* Footer nav */}
+      <div className="flex items-center justify-between">
+        <div>
+          {prevLesson ? (
+            <Button asChild variant="outline" size="sm">
+              <Link href={`/modulos/${slug}/licoes/${prevLesson.slug}`}>
+                <ArrowLeft className="h-4 w-4 mr-1" />
+                Anterior
+              </Link>
+            </Button>
+          ) : (
+            <Button asChild variant="ghost" size="sm">
+              <Link href={`/modulos/${slug}`}>
+                <ArrowLeft className="h-4 w-4 mr-1" />
+                Módulo
+              </Link>
+            </Button>
+          )}
+        </div>
+
+        <div className="flex items-center gap-3">
+          <LessonCompleteButton
+            lessonId={lesson.id}
+            progressId={progress?.id}
+            moduleId={mod.id}
+            completed={lessonCompleted}
+          />
+
+          {nextLesson && (
+            <Button asChild className="bg-amber-700 hover:bg-amber-800 text-white" size="sm">
+              <Link href={`/modulos/${slug}/licoes/${nextLesson.slug}`}>
+                Próxima
+                <ArrowRight className="h-4 w-4 ml-1" />
+              </Link>
+            </Button>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Simple markdown-to-HTML renderer for lesson content
+function LessonContent({ content }: { content: string }) {
+  const lines = content.split("\n");
+  const elements: React.ReactNode[] = [];
+  let i = 0;
+
+  while (i < lines.length) {
+    const line = lines[i];
+
+    if (line.startsWith("## ")) {
+      elements.push(<h2 key={i} className="text-xl font-serif text-stone-800 mt-8 mb-3">{line.slice(3)}</h2>);
+    } else if (line.startsWith("### ")) {
+      elements.push(<h3 key={i} className="text-lg font-medium text-stone-700 mt-6 mb-2">{line.slice(4)}</h3>);
+    } else if (line.startsWith("> ")) {
+      elements.push(
+        <blockquote key={i} className="border-l-4 border-amber-300 pl-4 my-4 text-stone-600 italic text-sm">
+          {line.slice(2)}
+        </blockquote>
+      );
+    } else if (line === "---") {
+      elements.push(<hr key={i} className="my-6 border-stone-100" />);
+    } else if (line.startsWith("**") && line.endsWith("**") && line.length > 4) {
+      elements.push(<p key={i} className="font-semibold text-stone-800 my-2">{line.slice(2, -2)}</p>);
+    } else if (line.trim() === "") {
+      elements.push(<div key={i} className="my-2" />);
+    } else {
+      elements.push(<p key={i} className="text-stone-700 leading-relaxed my-2 text-[0.95rem]">{line}</p>);
+    }
+    i++;
+  }
+
+  return <div>{elements}</div>;
+}

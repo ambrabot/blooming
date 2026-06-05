@@ -1,0 +1,380 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>BLOOMING — Pitch Deck</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: sans-serif; background: #111; }
+
+  .slide {
+    width: 1280px;
+    height: 720px;
+    position: relative;
+    overflow: hidden;
+    page-break-after: always;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px;
+    margin: 0 auto 4px;
+  }
+
+  .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  h1 { font-family: Georgia, serif; line-height: 1.1; }
+  h2 { font-family: Georgia, serif; line-height: 1.2; }
+
+  .tag {
+    display: inline-block;
+    font-size: 11px;
+    padding: 4px 12px;
+    border-radius: 100px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+
+  /* Slide 1 — Cover */
+  .s1 {
+    background: #1c1917;
+    align-items: center;
+    text-align: center;
+  }
+  .s1 .star { font-size: 48px; color: #d97706; margin-bottom: 24px; }
+  .s1 h1 { font-size: 72px; color: #faf9f7; letter-spacing: 0.15em; }
+  .s1 .hebrew { font-size: 24px; color: #d97706; font-family: Georgia, serif; margin: 8px 0 24px; }
+  .s1 .tagline { font-size: 18px; color: #a8a29e; }
+  .s1::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #d97706, transparent);
+  }
+
+  /* Slide 2 — Problem */
+  .s2 { background: #faf9f7; }
+  .s2 .label { color: #92400e; }
+  .s2 h2 { font-size: 48px; color: #1c1917; margin-bottom: 40px; }
+  .s2 .points { display: flex; gap: 32px; }
+  .s2 .point { flex: 1; background: #fff; border: 1px solid #e7e5e4; border-radius: 12px; padding: 28px; }
+  .s2 .point .emoji { font-size: 28px; margin-bottom: 12px; }
+  .s2 .point h3 { font-family: Georgia, serif; font-size: 18px; color: #1c1917; margin-bottom: 8px; }
+  .s2 .point p { font-size: 14px; color: #78716c; line-height: 1.6; }
+
+  /* Slide 3 — Solution */
+  .s3 { background: #1c1917; }
+  .s3 .label { color: #d97706; }
+  .s3 h2 { font-size: 52px; color: #faf9f7; margin-bottom: 16px; max-width: 700px; }
+  .s3 .sub { font-size: 20px; color: #a8a29e; max-width: 600px; margin-bottom: 40px; line-height: 1.5; }
+  .s3 .pillars { display: flex; gap: 16px; }
+  .s3 .pillar { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 16px 20px; }
+  .s3 .pillar span { font-size: 12px; color: #d97706; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; }
+
+  /* Slide 4 — Rafa */
+  .s4 { background: #faf9f7; flex-direction: row; gap: 60px; align-items: center; }
+  .s4 .left { flex: 1; }
+  .s4 .label { color: #92400e; }
+  .s4 h2 { font-size: 44px; color: #1c1917; margin-bottom: 16px; }
+  .s4 .sub { font-size: 16px; color: #57534e; line-height: 1.7; margin-bottom: 32px; }
+  .s4 .traits { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .s4 .trait { display: flex; gap: 10px; align-items: flex-start; }
+  .s4 .trait-dot { width: 6px; height: 6px; border-radius: 50%; background: #d97706; margin-top: 7px; flex-shrink: 0; }
+  .s4 .trait-text { font-size: 13px; color: #57534e; }
+  .s4 .right { width: 340px; background: #fff; border: 1px solid #e7e5e4; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.08); }
+  .s4 .chat-header { border-bottom: 1px solid #f5f5f4; padding: 16px; display: flex; align-items: center; gap: 10px; }
+  .s4 .avatar { width: 36px; height: 36px; background: #fef3c7; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; color: #92400e; }
+  .s4 .chat-body { padding: 16px; font-size: 13px; color: #57534e; line-height: 1.6; font-style: italic; }
+
+  /* Slide 5 — For Whom */
+  .s5 { background: #faf9f7; }
+  .s5 .label { color: #92400e; }
+  .s5 h2 { font-size: 44px; color: #1c1917; margin-bottom: 32px; }
+  .s5 .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .s5 .card { background: white; border: 1px solid #e7e5e4; border-radius: 12px; padding: 24px; }
+  .s5 .card .emoji { font-size: 28px; margin-bottom: 12px; }
+  .s5 .card h3 { font-family: Georgia, serif; font-size: 20px; color: #1c1917; margin-bottom: 4px; }
+  .s5 .card .hebrew { font-size: 12px; color: #d97706; margin-bottom: 8px; }
+  .s5 .card p { font-size: 12px; color: #78716c; line-height: 1.5; }
+
+  /* Slide 6 — Modules */
+  .s6 { background: #1c1917; }
+  .s6 .label { color: #d97706; }
+  .s6 h2 { font-size: 40px; color: #faf9f7; margin-bottom: 32px; }
+  .s6 .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .s6 .mod { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 16px; }
+  .s6 .mod .emoji { font-size: 20px; margin-bottom: 8px; }
+  .s6 .mod h4 { font-family: Georgia, serif; font-size: 14px; color: #faf9f7; margin-bottom: 4px; }
+  .s6 .mod .price { font-size: 11px; color: #d97706; font-weight: 600; }
+
+  /* Slide 7 — How it works */
+  .s7 { background: #faf9f7; }
+  .s7 .label { color: #92400e; }
+  .s7 h2 { font-size: 44px; color: #1c1917; margin-bottom: 40px; }
+  .s7 .steps { display: flex; gap: 24px; }
+  .s7 .step { flex: 1; position: relative; }
+  .s7 .step-num { width: 36px; height: 36px; background: #fef3c7; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: Georgia, serif; font-size: 18px; color: #92400e; font-weight: bold; margin-bottom: 12px; }
+  .s7 .step h3 { font-family: Georgia, serif; font-size: 18px; color: #1c1917; margin-bottom: 8px; }
+  .s7 .step p { font-size: 13px; color: #78716c; line-height: 1.6; }
+  .s7 .connector { position: absolute; top: 18px; right: -12px; width: 24px; height: 1px; background: #d6d3d1; }
+
+  /* Slide 8 — Business model */
+  .s8 { background: #faf9f7; }
+  .s8 .label { color: #92400e; }
+  .s8 h2 { font-size: 44px; color: #1c1917; margin-bottom: 40px; }
+  .s8 .metrics { display: flex; gap: 40px; margin-bottom: 40px; }
+  .s8 .metric { }
+  .s8 .metric-value { font-family: Georgia, serif; font-size: 48px; color: #92400e; line-height: 1; }
+  .s8 .metric-label { font-size: 14px; color: #78716c; margin-top: 4px; }
+  .s8 .model-note { background: #fff; border: 1px solid #e7e5e4; border-radius: 12px; padding: 24px; font-size: 14px; color: #57534e; line-height: 1.7; max-width: 700px; }
+
+  /* Slide 9 — Differentials */
+  .s9 { background: #1c1917; }
+  .s9 .label { color: #d97706; }
+  .s9 h2 { font-size: 44px; color: #faf9f7; margin-bottom: 40px; }
+  .s9 .diffs { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 800px; }
+  .s9 .diff { border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 20px 24px; }
+  .s9 .diff h3 { font-family: Georgia, serif; font-size: 18px; color: #faf9f7; margin-bottom: 6px; }
+  .s9 .diff p { font-size: 13px; color: #a8a29e; line-height: 1.5; }
+
+  /* Slide 10 — CTA */
+  .s10 { background: #1c1917; align-items: center; text-align: center; }
+  .s10 .star { font-size: 48px; color: #d97706; margin-bottom: 24px; }
+  .s10 h2 { font-size: 56px; color: #faf9f7; margin-bottom: 16px; font-family: Georgia, serif; }
+  .s10 .hebrew { font-size: 22px; color: #d97706; font-family: Georgia, serif; margin-bottom: 32px; }
+  .s10 .contact { font-size: 18px; color: #a8a29e; }
+  .s10 .website { font-size: 22px; color: #d97706; font-family: Georgia, serif; margin-top: 8px; }
+
+  @media print {
+    body { background: white; }
+    .slide { margin: 0; page-break-after: always; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Slide 1: Cover -->
+<div class="slide s1">
+  <div class="star">✦</div>
+  <h1>BLOOMING</h1>
+  <div class="hebrew">חַיִל</div>
+  <div class="tagline">Terapia Cristã Integrativa · Fé × Neurociência × Endocrinologia</div>
+</div>
+
+<!-- Slide 2: Problem -->
+<div class="slide s2">
+  <div class="label">O problema</div>
+  <h2>Saúde mental e fé vivem separadas.</h2>
+  <div class="points">
+    <div class="point">
+      <div class="emoji">🧠</div>
+      <h3>Terapia sem fé</h3>
+      <p>A maioria das plataformas de saúde mental ignora a espiritualidade como componente central da cura — tratando-a como opcional, não fundacional.</p>
+    </div>
+    <div class="point">
+      <div class="emoji">✝️</div>
+      <h3>Fé sem ciência</h3>
+      <p>O acompanhamento pastoral e bíblico raramente integra neurociência, endocrinologia e psicologia clínica — deixando lacunas reais sem resposta.</p>
+    </div>
+    <div class="point">
+      <div class="emoji">⏰</div>
+      <h3>Acesso limitado</h3>
+      <p>Terapia presencial de qualidade custa R$200–500/sessão e tem lista de espera. A maioria das pessoas não tem acesso a quem genuinamente integre essas áreas.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 3: Solution -->
+<div class="slide s3">
+  <div class="label">Nossa solução</div>
+  <h2>A primeira plataforma terapêutica cristã verdadeiramente integrativa.</h2>
+  <div class="sub">Fé + Neurociência + Endocrinologia. Disponível 24h. Contextual. Profunda.</div>
+  <div class="pillars">
+    <div class="pillar"><span>Palavra como fundação</span></div>
+    <div class="pillar"><span>Perspectiva hebraica</span></div>
+    <div class="pillar"><span>Teoria polyvagal</span></div>
+    <div class="pillar"><span>Ciclo menstrual</span></div>
+    <div class="pillar"><span>Cultura da honra</span></div>
+    <div class="pillar"><span>Stewardship</span></div>
+  </div>
+</div>
+
+<!-- Slide 4: Rafa -->
+<div class="slide s4">
+  <div class="left">
+    <div class="label">A terapeuta</div>
+    <h2>Rafa — "Deus cura"</h2>
+    <div class="sub">Não é um chatbot genérico. É uma terapeuta com identidade profunda, treinada em aconselhamento bíblico-clínico integrado. Direta, calorosa, fundamentada na Palavra.</div>
+    <div class="traits">
+      <div class="trait"><div class="trait-dot"></div><div class="trait-text">Aconselhamento bíblico</div></div>
+      <div class="trait"><div class="trait-dot"></div><div class="trait-text">Neurociência interpessoal</div></div>
+      <div class="trait"><div class="trait-dot"></div><div class="trait-text">Endocrinologia feminina</div></div>
+      <div class="trait"><div class="trait-dot"></div><div class="trait-text">Teoria polyvagal</div></div>
+      <div class="trait"><div class="trait-dot"></div><div class="trait-text">Método Gottman</div></div>
+      <div class="trait"><div class="trait-dot"></div><div class="trait-text">Cultura da honra</div></div>
+    </div>
+  </div>
+  <div class="right">
+    <div class="chat-header">
+      <div class="avatar">R</div>
+      <div>
+        <div style="font-weight:600;font-size:14px;color:#1c1917">Rafa</div>
+        <div style="font-size:12px;color:#78716c">● Disponível agora</div>
+      </div>
+    </div>
+    <div class="chat-body">
+      "Shalom. Que bom que você veio.<br><br>
+      Como você está chegando aqui hoje? Não precisa ser perfeito. Pode ser uma palavra, uma sensação, uma pergunta que não sai da cabeça.<br><br>
+      Estou aqui."
+    </div>
+  </div>
+</div>
+
+<!-- Slide 5: For Whom -->
+<div class="slide s5">
+  <div class="label">Público-alvo</div>
+  <h2>Para quem é o BLOOMING</h2>
+  <div class="grid">
+    <div class="card">
+      <div class="emoji">🌸</div>
+      <div class="hebrew">Ishah</div>
+      <h3>Mulher</h3>
+      <p>Identidade, ciclo hormonal, crenças limitantes, emoções e jornada individual.</p>
+    </div>
+    <div class="card">
+      <div class="emoji">💍</div>
+      <div class="hebrew">Brit</div>
+      <h3>Casal</h3>
+      <p>Dinâmica conjugal, comunicação, aliança. Método Gottman + perspectiva bíblica.</p>
+    </div>
+    <div class="card">
+      <div class="emoji">🏡</div>
+      <div class="hebrew">Mishpachah</div>
+      <h3>Família</h3>
+      <p>Sistemas familiares, gerações, parentificação, cura de padrões transmitidos.</p>
+    </div>
+    <div class="card">
+      <div class="emoji">👑</div>
+      <div class="hebrew">Kavod</div>
+      <h3>Líder</h3>
+      <p>Cultura da honra, solidão no topo, liderança serva, relacionamentos saudáveis.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 6: Modules -->
+<div class="slide s6">
+  <div class="label">8 módulos de cura profunda</div>
+  <h2>Compra individual · Acesso vitalício</h2>
+  <div class="grid">
+    <div class="mod"><div class="emoji">🌿</div><h4>Fundamentos</h4><div class="price">R$ 97</div></div>
+    <div class="mod"><div class="emoji">🌸</div><h4>Mulher</h4><div class="price">R$ 97</div></div>
+    <div class="mod"><div class="emoji">💛</div><h4>Cura Interior</h4><div class="price">R$ 127</div></div>
+    <div class="mod"><div class="emoji">🌊</div><h4>Regulação Emocional</h4><div class="price">R$ 97</div></div>
+    <div class="mod"><div class="emoji">💍</div><h4>Casamento</h4><div class="price">R$ 147</div></div>
+    <div class="mod"><div class="emoji">🏡</div><h4>Família Funcional</h4><div class="price">R$ 127</div></div>
+    <div class="mod"><div class="emoji">👑</div><h4>Liderança</h4><div class="price">R$ 147</div></div>
+    <div class="mod"><div class="emoji">⌛</div><h4>Tempo de Deus</h4><div class="price">R$ 97</div></div>
+  </div>
+</div>
+
+<!-- Slide 7: How it works -->
+<div class="slide s7">
+  <div class="label">Como funciona</div>
+  <h2>Sua jornada em 4 passos</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h3>Assessment</h3>
+      <p>15 min. Gratuito. Rafa analisa e gera relatório personalizado com módulos recomendados.</p>
+      <div class="connector"></div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h3>Módulos</h3>
+      <p>Compra individual. Lições de ensino, exercícios, escrituras, e sessões contextualizadas.</p>
+      <div class="connector"></div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h3>Sessões com Rafa</h3>
+      <p>Chat terapêutico ilimitado. Contextual por módulo. Disponível 24h. Streaming.</p>
+      <div class="connector"></div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <h3>Diário & Check-in</h3>
+      <p>Registro guiado + reflexão da IA. Check-in mensal com comparação de tendências.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 8: Business model -->
+<div class="slide s8">
+  <div class="label">Modelo de negócio</div>
+  <h2>Por módulo · Acesso vitalício</h2>
+  <div class="metrics">
+    <div class="metric">
+      <div class="metric-value">R$127</div>
+      <div class="metric-label">Ticket médio por módulo</div>
+    </div>
+    <div class="metric">
+      <div class="metric-value">R$97–147</div>
+      <div class="metric-label">Range de preços</div>
+    </div>
+    <div class="metric">
+      <div class="metric-value">8</div>
+      <div class="metric-label">Módulos disponíveis</div>
+    </div>
+    <div class="metric">
+      <div class="metric-value">R$1.016</div>
+      <div class="metric-label">LTV máximo (todos os módulos)</div>
+    </div>
+  </div>
+  <div class="model-note">
+    <strong>Diferencial do modelo:</strong> Sem assinatura — sem churn. O usuário compra o que precisa, quando precisa. Assessment gratuito serve como funil de qualificação natural. Usuário que compra 1 módulo tem alta probabilidade de comprar mais — especialmente após ver resultados nas sessões com a Rafa.
+  </div>
+</div>
+
+<!-- Slide 9: Differentials -->
+<div class="slide s9">
+  <div class="label">Por que o BLOOMING é diferente</div>
+  <h2>Ninguém faz tudo isso junto.</h2>
+  <div class="diffs">
+    <div class="diff">
+      <h3>Perspectiva judaico-messiânica</h3>
+      <p>Shabat, festas, nomes hebraicos, raízes da fé. Aprofunda sem substituir.</p>
+    </div>
+    <div class="diff">
+      <h3>Endocrinologia integrada</h3>
+      <p>Ciclo menstrual como mapa espiritual. Progesterona, estrogênio, cortisol como dados terapêuticos.</p>
+    </div>
+    <div class="diff">
+      <h3>Teoria polyvagal aplicada</h3>
+      <p>Janela de tolerância, regulação co-regulada. Louvor e lamento como ferramentas polyvagais.</p>
+    </div>
+    <div class="diff">
+      <h3>Cultura da honra no centro</h3>
+      <p>Não expõe vergonha. Não acusa. Chama para o mais alto. Consistente em cada interação.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 10: CTA -->
+<div class="slide s10">
+  <div class="star">✦</div>
+  <h2>Cura profunda começa aqui.</h2>
+  <div class="hebrew">חַיִל · Mulher de Valor</div>
+  <div class="contact">Para conversas, parcerias e investimento:</div>
+  <div class="website">BLOOMING.com.br</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,374 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─── Auth ────────────────────────────────────────────────────────────────────
+
+model User {
+  id                String    @id @default(cuid())
+  email             String    @unique
+  password          String
+  name              String
+  role              UserRole  @default(WOMAN)
+  resetToken        String?   @unique
+  resetTokenExpiry  DateTime?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  profile        Profile?
+  coupleProfile  CoupleProfile?  @relation("PrimaryUser")
+  spouseProfile  CoupleProfile?  @relation("SpouseUser")
+  purchases      ModulePurchase[]
+  sessions       TherapySession[]
+  journalEntries JournalEntry[]
+  assessments    Assessment[]
+  progress       UserProgress[]
+  milestones     Milestone[]
+
+  @@map("users")
+}
+
+enum UserRole {
+  WOMAN
+  COUPLE
+  FAMILY
+  LEADER
+  ADMIN
+}
+
+// ─── Profile ─────────────────────────────────────────────────────────────────
+
+model Profile {
+  id               String    @id @default(cuid())
+  userId           String    @unique
+  user             User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bio              String?
+  birthDate        DateTime?
+  cycleStartDate   DateTime?
+  cycleLengthDays  Int?      @default(28)
+  churchBackground String?
+  hebrewRoots      Boolean   @default(false)
+  primaryGoal      String?
+  currentSeason    String?
+  avatarUrl        String?
+  timezone         String    @default("America/Sao_Paulo")
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  @@map("profiles")
+}
+
+model CoupleProfile {
+  id           String    @id @default(cuid())
+  userId       String    @unique
+  user         User      @relation("PrimaryUser", fields: [userId], references: [id], onDelete: Cascade)
+  spouseId     String?   @unique
+  spouse       User?     @relation("SpouseUser", fields: [spouseId], references: [id])
+  marriageDate DateTime?
+  createdAt    DateTime  @default(now())
+
+  @@map("couple_profiles")
+}
+
+// ─── Assessment ──────────────────────────────────────────────────────────────
+
+model Assessment {
+  id          String           @id @default(cuid())
+  userId      String
+  user        User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type        AssessmentType
+  completedAt DateTime?
+  score       Json?
+  report      String?          @db.Text
+  answers     AssessmentAnswer[]
+  recommendations AssessmentRecommendation[]
+  createdAt   DateTime         @default(now())
+
+  @@map("assessments")
+}
+
+enum AssessmentType {
+  INITIAL
+  EMOTIONAL_HEALTH
+  IDENTITY
+  MARRIAGE
+  FAMILY
+  LEADERSHIP
+  HORMONAL
+  PERIODIC
+}
+
+model AssessmentQuestion {
+  id           String            @id @default(cuid())
+  type         AssessmentType
+  order        Int
+  text         String
+  subtext      String?
+  category     String
+  inputType    QuestionInputType
+  options      Json?
+  scriptureRef String?
+  answers      AssessmentAnswer[]
+
+  @@map("assessment_questions")
+}
+
+enum QuestionInputType {
+  SCALE
+  MULTIPLE_CHOICE
+  TEXT
+  YES_NO
+}
+
+model AssessmentAnswer {
+  id           String             @id @default(cuid())
+  assessmentId String
+  assessment   Assessment         @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+  questionId   String
+  question     AssessmentQuestion @relation(fields: [questionId], references: [id])
+  value        String
+  createdAt    DateTime           @default(now())
+
+  @@unique([assessmentId, questionId])
+  @@map("assessment_answers")
+}
+
+model AssessmentRecommendation {
+  id           String     @id @default(cuid())
+  assessmentId String
+  assessment   Assessment @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+  moduleId     String
+  module       Module     @relation(fields: [moduleId], references: [id])
+  priority     Int
+  reason       String
+  createdAt    DateTime   @default(now())
+
+  @@map("assessment_recommendations")
+}
+
+// ─── Modules ─────────────────────────────────────────────────────────────────
+
+model Module {
+  id                   String     @id @default(cuid())
+  slug                 String     @unique
+  title                String
+  subtitle             String?
+  description          String     @db.Text
+  audience             UserRole[]
+  iconEmoji            String
+  colorClass           String
+  priceInCents         Int
+  order                Int
+  isActive             Boolean    @default(true)
+  systemPromptAddition String?    @db.Text
+  hebrewWord           String?
+  keyScriptures        Json?
+  createdAt            DateTime   @default(now())
+  updatedAt            DateTime   @updatedAt
+
+  lessons         Lesson[]
+  purchases       ModulePurchase[]
+  journalPrompts  JournalPromptTemplate[]
+  progress        UserProgress[]
+  recommendations AssessmentRecommendation[]
+
+  @@map("modules")
+}
+
+model Lesson {
+  id          String      @id @default(cuid())
+  moduleId    String
+  module      Module      @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  title       String
+  slug        String
+  order       Int
+  type        LessonType
+  content     String      @db.Text
+  audioUrl    String?
+  videoUrl    String?
+  durationMin Int?
+  scripture   String?
+  prayer      String?     @db.Text
+  exercise    String?     @db.Text
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  progress    LessonProgress[]
+
+  @@unique([moduleId, slug])
+  @@map("lessons")
+}
+
+enum LessonType {
+  TEACHING
+  PRACTICE
+  SCRIPTURE
+  ENDOCRINOLOGY
+  COUNSELING
+}
+
+// ─── Purchases ───────────────────────────────────────────────────────────────
+
+model ModulePurchase {
+  id              String         @id @default(cuid())
+  userId          String
+  user            User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  moduleId        String
+  module          Module         @relation(fields: [moduleId], references: [id])
+  stripeSessionId String?        @unique
+  stripePaymentId String?
+  amountPaid      Int
+  currency        String         @default("BRL")
+  status          PurchaseStatus @default(PENDING)
+  purchasedAt     DateTime?
+  createdAt       DateTime       @default(now())
+
+  @@unique([userId, moduleId])
+  @@map("module_purchases")
+}
+
+enum PurchaseStatus {
+  PENDING
+  COMPLETED
+  REFUNDED
+  FAILED
+}
+
+// ─── Therapy Sessions ────────────────────────────────────────────────────────
+
+model TherapySession {
+  id        String           @id @default(cuid())
+  userId    String
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  moduleId  String?
+  title     String?
+  summary   String?          @db.Text
+  mood      Int?
+  moodEnd   Int?
+  messages  SessionMessage[]
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+
+  @@map("therapy_sessions")
+}
+
+model SessionMessage {
+  id        String         @id @default(cuid())
+  sessionId String
+  session   TherapySession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  role      MessageRole
+  content   String         @db.Text
+  tokens    Int?
+  createdAt DateTime       @default(now())
+
+  @@map("session_messages")
+}
+
+enum MessageRole {
+  USER
+  ASSISTANT
+}
+
+// ─── Journaling ──────────────────────────────────────────────────────────────
+
+model JournalEntry {
+  id           String                 @id @default(cuid())
+  userId       String
+  user         User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  moduleId     String?
+  promptId     String?
+  prompt       JournalPromptTemplate? @relation(fields: [promptId], references: [id])
+  title        String?
+  content      String                 @db.Text
+  mood         Int?
+  gratitude    String?
+  scripture    String?
+  insight      String?
+  cyclePhase   CyclePhase?
+  aiReflection String?                @db.Text
+  createdAt    DateTime               @default(now())
+  updatedAt    DateTime               @updatedAt
+
+  @@map("journal_entries")
+}
+
+enum CyclePhase {
+  MENSTRUAL
+  FOLLICULAR
+  OVULATORY
+  LUTEAL
+}
+
+model JournalPromptTemplate {
+  id         String      @id @default(cuid())
+  moduleId   String?
+  module     Module?     @relation(fields: [moduleId], references: [id])
+  category   String
+  cyclePhase CyclePhase?
+  title      String
+  prompt     String      @db.Text
+  scripture  String?
+  isActive   Boolean     @default(true)
+  entries    JournalEntry[]
+  createdAt  DateTime    @default(now())
+
+  @@map("journal_prompt_templates")
+}
+
+// ─── Progress ────────────────────────────────────────────────────────────────
+
+model UserProgress {
+  id              String          @id @default(cuid())
+  userId          String
+  user            User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  moduleId        String
+  module          Module          @relation(fields: [moduleId], references: [id])
+  startedAt       DateTime        @default(now())
+  completedAt     DateTime?
+  percentComplete Int             @default(0)
+  lessonProgress  LessonProgress[]
+
+  @@unique([userId, moduleId])
+  @@map("user_progress")
+}
+
+model LessonProgress {
+  id          String       @id @default(cuid())
+  progressId  String
+  progress    UserProgress @relation(fields: [progressId], references: [id], onDelete: Cascade)
+  lessonId    String
+  lesson      Lesson       @relation(fields: [lessonId], references: [id])
+  completedAt DateTime?
+  notes       String?
+
+  @@unique([progressId, lessonId])
+  @@map("lesson_progress")
+}
+
+model Milestone {
+  id          String        @id @default(cuid())
+  userId      String
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title       String
+  description String?
+  type        MilestoneType
+  moduleId    String?
+  metadata    Json?
+  achievedAt  DateTime      @default(now())
+
+  @@map("milestones")
+}
+
+enum MilestoneType {
+  MODULE_STARTED
+  MODULE_COMPLETED
+  JOURNAL_STREAK
+  SESSION_COUNT
+  ASSESSMENT_DONE
+  BREAKTHROUGH
+}
