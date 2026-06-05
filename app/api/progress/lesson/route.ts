@@ -6,20 +6,15 @@ export async function POST(req: NextRequest) {
   const session = await getSession();
   if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  const { lessonId, progressId, moduleId } = await req.json();
+  const { lessonId, moduleId } = await req.json();
 
-  // Ensure UserProgress exists
-  let progress = progressId
-    ? await db.userProgress.findUnique({ where: { id: progressId } })
-    : null;
-
-  if (!progress) {
-    progress = await db.userProgress.upsert({
-      where: { userId_moduleId: { userId: session.userId, moduleId } },
-      create: { userId: session.userId, moduleId },
-      update: {},
-    });
-  }
+  // Sempre derivar o progress do usuário da sessão (nunca de um id do body —
+  // evita IDOR: gravar progresso na conta de outro usuário).
+  const progress = await db.userProgress.upsert({
+    where: { userId_moduleId: { userId: session.userId, moduleId } },
+    create: { userId: session.userId, moduleId },
+    update: {},
+  });
 
   // Upsert lesson progress
   await db.lessonProgress.upsert({

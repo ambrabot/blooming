@@ -2,8 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db/client";
 import bcrypt from "bcryptjs";
 import { setSessionCookie } from "@/lib/auth/jwt";
+import { rateLimit, clientIp } from "@/lib/rate-limit";
 
 export async function POST(req: NextRequest) {
+  const ip = clientIp(req);
+  if (rateLimit(`reset:${ip}`, 10, 10 * 60 * 1000)) {
+    return NextResponse.json({ error: "Muitas tentativas. Aguarde alguns minutos." }, { status: 429 });
+  }
+
   const { token, password } = await req.json();
 
   if (!token || !password || password.length < 8) {

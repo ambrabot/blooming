@@ -3,8 +3,14 @@ import bcrypt from "bcryptjs";
 import { db } from "@/lib/db/client";
 import { setSessionCookie } from "@/lib/auth/jwt";
 import { UserRole } from "@/lib/generated/prisma";
+import { rateLimit, clientIp } from "@/lib/rate-limit";
 
 export async function POST(req: NextRequest) {
+  const ip = clientIp(req);
+  if (rateLimit(`register:${ip}`, 5, 10 * 60 * 1000)) {
+    return NextResponse.json({ error: "Muitas tentativas. Aguarde alguns minutos." }, { status: 429 });
+  }
+
   const { name, email, password, role } = await req.json();
 
   if (!name || !email || !password) {
