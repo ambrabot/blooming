@@ -18,7 +18,11 @@ ARG NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
 ARG NEXT_PUBLIC_APP_URL
 ENV NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=$NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY \
     NEXT_PUBLIC_APP_URL=$NEXT_PUBLIC_APP_URL
-RUN npx prisma generate
+# O barrel index.ts é versionado, mas o `prisma generate` recusa gerar numa
+# pasta não-vazia. Tira o barrel, gera o client limpo, devolve o barrel.
+RUN mv lib/generated/prisma/index.ts /tmp/prisma-barrel.ts \
+  && npx prisma generate \
+  && mv /tmp/prisma-barrel.ts lib/generated/prisma/index.ts
 # Build otimizado de produção (devDeps já presentes do stage deps).
 RUN NODE_ENV=production npm run build
 
