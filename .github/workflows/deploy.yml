@@ -1,0 +1,141 @@
+name: Deploy to Lightsail
+
+# ─── GitHub Secrets necessários ─────────────────────────────────────────────
+# AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY
+# DATABASE_URL · JWT_SECRET · ANTHROPIC_API_KEY
+# STRIPE_SECRET_KEY · STRIPE_WEBHOOK_SECRET
+# NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY · NEXT_PUBLIC_APP_URL
+#
+# One-time:
+#   aws lightsail create-container-service --service-name blooming --power nano --scale 1 --region us-east-1
+# ────────────────────────────────────────────────────────────────────────────
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+env:
+  LIGHTSAIL_SERVICE: blooming
+  LIGHTSAIL_REGION: us-east-1
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: "20", cache: npm }
+      - run: npm ci
+      - run: npx tsc --noEmit
+
+  deploy:
+    needs: [check]
+    runs-on: ubuntu-latest
+    permissions: { contents: read }
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.LIGHTSAIL_REGION }}
+
+      - name: Prune old Lightsail images (keep 10)
+        run: |
+          IMAGES=$(aws lightsail get-container-images --region ${{ env.LIGHTSAIL_REGION }} \
+            --service-name ${{ env.LIGHTSAIL_SERVICE }} \
+            --query 'containerImages[10:].image' --output text 2>/dev/null || echo "")
+          for img in $IMAGES; do
+            echo "Deleting $img"
+            aws lightsail delete-container-image --region ${{ env.LIGHTSAIL_REGION }} \
+              --service-name ${{ env.LIGHTSAIL_SERVICE }} --image "$img" || true
+          done
+
+      - name: Install lightsailctl
+        run: |
+          curl -sL https://s3.us-west-2.amazonaws.com/lightsailctl/latest/linux-amd64/lightsailctl -o /usr/local/bin/lightsailctl
+          chmod +x /usr/local/bin/lightsailctl
+
+      - name: Build Docker image
+        run: |
+          docker build \
+            --build-arg NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY='${{ secrets.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY }}' \
+            --build-arg NEXT_PUBLIC_APP_URL='${{ secrets.NEXT_PUBLIC_APP_URL }}' \
+            -t ${{ env.LIGHTSAIL_SERVICE }}:${{ github.sha }} .
+
+      - name: Push image to Lightsail
+        id: push
+        run: |
+          aws lightsail push-container-image --region ${{ env.LIGHTSAIL_REGION }} \
+            --service-name ${{ env.LIGHTSAIL_SERVICE }} --label app \
+            --image ${{ env.LIGHTSAIL_SERVICE }}:${{ github.sha }} 2>&1 | tee /tmp/push.txt
+          IMAGE=$(grep -oP '(?<=Refer to this image as ").*(?=" in deployments)' /tmp/push.txt)
+          echo "image=$IMAGE" >> "$GITHUB_OUTPUT"
+
+      - name: Wait for service idle
+        run: |
+          for i in $(seq 1 30); do
+            STATE=$(aws lightsail get-container-services --region ${{ env.LIGHTSAIL_REGION }} \
+              --service-name ${{ env.LIGHTSAIL_SERVICE }} \
+              --query 'containerServices[0].state' --output text)
+            echo "[$i/30] $STATE"
+            { [ "$STATE" = "RUNNING" ] || [ "$STATE" = "READY" ]; } && break
+            [ "$STATE" = "DISABLED" ] && exit 1
+            sleep 20
+          done
+
+      - name: Create deployment
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+          STRIPE_WEBHOOK_SECRET: ${{ secrets.STRIPE_WEBHOOK_SECRET }}
+          NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY }}
+          NEXT_PUBLIC_APP_URL: ${{ secrets.NEXT_PUBLIC_APP_URL }}
+        run: |
+          DB_URL=$(echo "$DATABASE_URL" | tr -d '\n\r')
+          CONTAINERS=$(jq -n \
+            --arg image "${{ steps.push.outputs.image }}" \
+            --arg db "$DB_URL" \
+            --arg jwt "$JWT_SECRET" \
+            --arg anthropic "$ANTHROPIC_API_KEY" \
+            --arg sk "$STRIPE_SECRET_KEY" \
+            --arg wh "$STRIPE_WEBHOOK_SECRET" \
+            --arg pubStripe "$NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY" \
+            --arg pubApp "$NEXT_PUBLIC_APP_URL" \
+            '{ app: { image: $image, ports: { "3000": "HTTP" }, environment: {
+                NODE_ENV: "production",
+                DATABASE_URL: $db,
+                JWT_SECRET: $jwt,
+                ANTHROPIC_API_KEY: $anthropic,
+                STRIPE_SECRET_KEY: $sk,
+                STRIPE_WEBHOOK_SECRET: $wh,
+                NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: $pubStripe,
+                NEXT_PUBLIC_APP_URL: $pubApp
+              } } }')
+          ENDPOINT=$(jq -n '{ containerName: "app", containerPort: 3000, healthCheck: {
+            path: "/api/health", successCodes: "200",
+            intervalSeconds: 30, timeoutSeconds: 5,
+            unhealthyThreshold: 3, healthyThreshold: 2
+          } }')
+          aws lightsail create-container-service-deployment \
+            --region ${{ env.LIGHTSAIL_REGION }} \
+            --service-name ${{ env.LIGHTSAIL_SERVICE }} \
+            --containers "$CONTAINERS" \
+            --public-endpoint "$ENDPOINT"
+
+      - name: Wait for deployment
+        run: |
+          for i in $(seq 1 40); do
+            STATE=$(aws lightsail get-container-services --region ${{ env.LIGHTSAIL_REGION }} \
+              --service-name ${{ env.LIGHTSAIL_SERVICE }} \
+              --query 'containerServices[0].state' --output text)
+            echo "[$i/40] $STATE"
+            { [ "$STATE" = "RUNNING" ] || [ "$STATE" = "READY" ]; } && exit 0
+            [ "$STATE" = "DISABLED" ] && exit 1
+            sleep 20
+          done; exit 1
