@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
 
   const { sessionId, message, moduleId } = await req.json();
 
-  const [user, therapySession] = await Promise.all([
+  const [user, therapySession, assessment, priorSessions] = await Promise.all([
     db.user.findUnique({
       where: { id: session.userId },
       include: { profile: true },
@@ -56,6 +56,23 @@ export async function POST(req: NextRequest) {
           include: { messages: { orderBy: { createdAt: "asc" } } },
         })
       : null,
+    // Memória de longo prazo: a análise inicial da usuária...
+    db.assessment.findFirst({
+      where: { userId: session.userId, type: "INITIAL", report: { not: null } },
+      orderBy: { createdAt: "desc" },
+      select: { report: true },
+    }),
+    // ...e os resumos das sessões ANTERIORES (exceto a atual).
+    db.therapySession.findMany({
+      where: {
+        userId: session.userId,
+        summary: { not: null },
+        ...(sessionId ? { id: { not: sessionId } } : {}),
+      },
+      orderBy: { createdAt: "desc" },
+      take: 6,
+      select: { title: true, summary: true, createdAt: true },
+    }),
   ]);
 
   if (!user) return NextResponse.json({ error: "User not found" }, { status: 404 });
@@ -91,6 +108,11 @@ export async function POST(req: NextRequest) {
     moduleSystemAddition: moduleData?.systemPromptAddition ?? undefined,
     cyclePhase,
     currentSeason: user.profile?.currentSeason ?? null,
+    assessmentSummary: assessment?.report ?? null,
+    recentInsights: priorSessions.map((s) => {
+      const when = s.createdAt.toLocaleDateString("pt-BR", { month: "long", year: "numeric" });
+      return `(${when}) ${s.title ?? "Sessão"}: ${s.summary}`;
+    }),
   };
 
   // Save user message

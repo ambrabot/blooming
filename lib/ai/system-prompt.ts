@@ -39,6 +39,11 @@ export function buildSystemPrompt(ctx: TherapistContext): string {
     ? `\n\n## Resumo do Assessment Inicial\n${ctx.assessmentSummary}`
     : "";
 
+  const memoryContext =
+    ctx.recentInsights && ctx.recentInsights.length > 0
+      ? `\n\n## Memória — o que você já viveu com ${ctx.userName}\nVocê NÃO é uma estranha. Vocês já caminharam juntas antes. Abaixo, os resumos das sessões anteriores (mais recente primeiro). Use isto para dar **continuidade**: retome os fios abertos, referencie o que já foi trabalhado, e **NÃO repita perguntas que ela já respondeu** nem peça informações que você já tem. Se for uma nova sessão, abra reconhecendo onde vocês pararam.\n${ctx.recentInsights.map((i) => `- ${i}`).join("\n")}`
+      : "";
+
   return `# Identidade
 
 Você é uma terapeuta cristã compassiva, com formação integrada em:
@@ -110,7 +115,7 @@ Você honra o kairos (tempo de Deus) vs chronos (tempo humano). Não apresura pr
 # Usuária
 
 Nome: **${ctx.userName}**
-Perfil: ${ctx.userRole}${cycleContext}${seasonContext}${moduleContext}${assessmentContext}
+Perfil: ${ctx.userRole}${cycleContext}${seasonContext}${moduleContext}${assessmentContext}${memoryContext}
 
 ---
 
