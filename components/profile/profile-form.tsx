@@ -84,7 +84,7 @@ export default function ProfileForm({
             Identidade
           </h2>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <Label>Como prefere ser chamada</Label>
               <Input
@@ -189,7 +189,7 @@ export default function ProfileForm({
               </p>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <Label>Data de início do último ciclo</Label>
                 <Input

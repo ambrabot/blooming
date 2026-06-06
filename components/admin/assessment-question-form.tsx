@@ -128,7 +128,7 @@ export default function AssessmentQuestionForm({ question }: { question: Questio
         </DialogHeader>
 
         <div className="space-y-4 pt-2">
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <Label>Tipo de assessment</Label>
               <Select value={form.type} onValueChange={(v) => set("type", v)}>
@@ -173,7 +173,7 @@ export default function AssessmentQuestionForm({ question }: { question: Questio
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <Label>Categoria</Label>
               <Input

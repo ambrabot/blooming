@@ -96,7 +96,7 @@ export default function ModuleEditForm({ module }: { module: ModuleData | null }
             Informações básicas
           </h2>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <Label>Emoji do ícone</Label>
               <Input
@@ -165,7 +165,7 @@ export default function ModuleEditForm({ module }: { module: ModuleData | null }
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <Label>Preço (centavos)</Label>
               <Input

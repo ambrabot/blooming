@@ -134,7 +134,7 @@ export default function LessonEditForm({ moduleSlug, moduleId, lesson, nextOrder
             Informações da lição
           </h2>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <Label>Título</Label>
               <Input
@@ -164,7 +164,7 @@ export default function LessonEditForm({ moduleSlug, moduleId, lesson, nextOrder
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <Label>Slug</Label>
               <Input
