@@ -163,8 +163,10 @@ export async function POST(req: NextRequest) {
           }
         }
 
-        // Auto-generate summary every 8 messages
-        if (msgCount > 0 && msgCount % 8 === 0) {
+        // Atualiza o resumo a cada troca completa (a cada resposta da Rafa),
+        // para que até conversas curtas virem memória. Roda após o stream já
+        // entregue ao usuário, então não adiciona latência percebida.
+        if (msgCount >= 2 && msgCount % 2 === 0) {
           const allMessages = await db.sessionMessage.findMany({
             where: { sessionId: activeSession!.id },
             orderBy: { createdAt: "asc" },
