@@ -3,6 +3,7 @@ import { getSession } from "@/lib/auth/jwt";
 import { db } from "@/lib/db/client";
 import { streamTherapistResponse, generateSessionSummary } from "@/lib/ai/therapist";
 import { CyclePhase } from "@/lib/generated/prisma";
+import { hasActiveSubscription, FREE_RAFA_MESSAGES_PER_MONTH } from "@/lib/subscription";
 import Anthropic from "@anthropic-ai/sdk";
 
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
@@ -76,6 +77,32 @@ export async function POST(req: NextRequest) {
   ]);
 
   if (!user) return NextResponse.json({ error: "User not found" }, { status: 404 });
+
+  // Gating: admin e assinantes têm a Rafa ilimitada; demais têm um teto mensal
+  // (degustação) que convida a assinar. Não bloqueia o histórico — só novas falas.
+  const unlimited = user.role === "ADMIN" || hasActiveSubscription(user);
+  if (!unlimited) {
+    const startOfMonth = new Date();
+    startOfMonth.setDate(1);
+    startOfMonth.setHours(0, 0, 0, 0);
+    const usedThisMonth = await db.sessionMessage.count({
+      where: {
+        role: "USER",
+        createdAt: { gte: startOfMonth },
+        session: { userId: user.id },
+      },
+    });
+    if (usedThisMonth >= FREE_RAFA_MESSAGES_PER_MONTH) {
+      return NextResponse.json(
+        {
+          error: "subscription_required",
+          message:
+            "Você usou suas conversas deste mês com a Rafa. Assine o Blooming para conversar com ela sem limites.",
+        },
+        { status: 402 },
+      );
+    }
+  }
 
   // Get module context if present
   let moduleData = null;

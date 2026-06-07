@@ -18,8 +18,23 @@ export async function* streamTherapistResponse(
 ): AsyncGenerator<string> {
   const systemPrompt = buildSystemPrompt(ctx);
 
+  // Cacheia o PREFIXO da conversa (system + histórico inteiro) marcando a última
+  // mensagem do histórico como breakpoint de cache. A Rafa continua vendo a
+  // conversa COMPLETA — nada é truncado; só não reprocessamos o que não mudou,
+  // o que derruba o custo do histórico crescente. Integridade total, custo menor.
+  const history_messages: Anthropic.Messages.MessageParam[] = history.map((m, i) =>
+    i === history.length - 1
+      ? {
+          role: m.role,
+          content: [
+            { type: "text", text: m.content, cache_control: { type: "ephemeral" } },
+          ],
+        }
+      : { role: m.role, content: m.content },
+  );
+
   const messages: Anthropic.Messages.MessageParam[] = [
-    ...history.map((m) => ({ role: m.role, content: m.content })),
+    ...history_messages,
     { role: "user", content: userMessage },
   ];
 

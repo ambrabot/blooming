@@ -24,6 +24,7 @@ const NAV = [
   { href: "/modulos", label: "Módulos", icon: BookOpen, exact: false },
   { href: "/check-in", label: "Check-in", icon: CalendarCheck, exact: false },
   { href: "/diario", label: "Diário", icon: NotebookPen, exact: false },
+  { href: "/assinatura", label: "Assinatura", icon: Sparkles, exact: false },
   { href: "/perfil", label: "Perfil", icon: User, exact: false },
 ];
 
