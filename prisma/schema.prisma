@@ -17,6 +17,13 @@ model User {
   role              UserRole  @default(WOMAN)
   resetToken        String?   @unique
   resetTokenExpiry  DateTime?
+
+  // Assinatura (camada recorrente — Rafa ilimitada + comunidade)
+  stripeCustomerId             String?            @unique
+  subscriptionId               String?            @unique
+  subscriptionStatus           SubscriptionStatus @default(NONE)
+  subscriptionCurrentPeriodEnd DateTime?
+
   createdAt         DateTime  @default(now())
   updatedAt         DateTime  @updatedAt
 
@@ -39,6 +46,13 @@ enum UserRole {
   FAMILY
   LEADER
   ADMIN
+}
+
+enum SubscriptionStatus {
+  NONE
+  ACTIVE
+  PAST_DUE
+  CANCELED
 }
 
 // ─── Profile ─────────────────────────────────────────────────────────────────

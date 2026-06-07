@@ -44,6 +44,14 @@ export async function POST(req: NextRequest) {
         await handleRefund(event.data.object as Stripe.Charge);
         break;
 
+      case "customer.subscription.updated":
+        await handleSubscriptionChange(event.data.object as Stripe.Subscription);
+        break;
+
+      case "customer.subscription.deleted":
+        await handleSubscriptionDeleted(event.data.object as Stripe.Subscription);
+        break;
+
       default:
         // Ignore other events
         break;
@@ -57,7 +65,63 @@ export async function POST(req: NextRequest) {
   return NextResponse.json({ received: true });
 }
 
+// Lê o fim do período pago de forma defensiva (o campo migrou entre versões da API).
+function periodEnd(sub: Stripe.Subscription): Date | null {
+  const s = sub as unknown as {
+    current_period_end?: number;
+    items?: { data?: { current_period_end?: number }[] };
+  };
+  const ts = s.current_period_end ?? s.items?.data?.[0]?.current_period_end;
+  return ts ? new Date(ts * 1000) : null;
+}
+
+function mapSubStatus(stripeStatus: Stripe.Subscription.Status): "ACTIVE" | "PAST_DUE" | "CANCELED" {
+  if (stripeStatus === "active" || stripeStatus === "trialing") return "ACTIVE";
+  if (stripeStatus === "past_due") return "PAST_DUE";
+  return "CANCELED";
+}
+
+async function handleSubscriptionChange(sub: Stripe.Subscription) {
+  await db.user.updateMany({
+    where: { subscriptionId: sub.id },
+    data: {
+      subscriptionStatus: mapSubStatus(sub.status),
+      subscriptionCurrentPeriodEnd: periodEnd(sub),
+    },
+  });
+}
+
+async function handleSubscriptionDeleted(sub: Stripe.Subscription) {
+  await db.user.updateMany({
+    where: { subscriptionId: sub.id },
+    data: { subscriptionStatus: "CANCELED" },
+  });
+}
+
 async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
+  // Assinatura (modo recorrente) — ativa e sai.
+  if (session.mode === "subscription") {
+    const userId = session.metadata?.userId;
+    const subscriptionId =
+      typeof session.subscription === "string" ? session.subscription : null;
+    if (!userId || !subscriptionId) return;
+
+    const sub = await stripe.subscriptions.retrieve(subscriptionId);
+    await db.user.update({
+      where: { id: userId },
+      data: {
+        subscriptionId,
+        subscriptionStatus: mapSubStatus(sub.status),
+        subscriptionCurrentPeriodEnd: periodEnd(sub),
+        ...(typeof session.customer === "string"
+          ? { stripeCustomerId: session.customer }
+          : {}),
+      },
+    });
+    console.log(`[Stripe webhook] Subscription ${subscriptionId} active for user ${userId}`);
+    return;
+  }
+
   const { purchaseId, userId, moduleId, moduleSlug } = session.metadata ?? {};
   if (!purchaseId) {
     console.warn("[Stripe webhook] checkout.session.completed missing purchaseId");
