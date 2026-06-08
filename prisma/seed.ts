@@ -166,6 +166,27 @@ const MODULES = [
       { ref: "Mateus 25:21", text: "Fostes fiel no pouco, entrarei no muito" },
     ],
   },
+  {
+    slug: "permissao-destino",
+    title: "Permissão & Destino",
+    subtitle: "Da Ferida ao Envio",
+    hebrewWord: "Shlichut",
+    iconEmoji: "🕊️",
+    colorClass: "text-violet-700",
+    order: 9,
+    priceInCents: 12700,
+    audience: [UserRole.WOMAN, UserRole.COUPLE, UserRole.FAMILY, UserRole.LEADER],
+    description:
+      "Você foi cuidada. Mas a cura não termina na ferida fechada — ela aponta para o chamado. Muitas mulheres não estão paradas por não saber nem por não querer, mas por não se sentirem autorizadas. Neste módulo você vai descobrir a permissão que já foi assinada na cruz, desfazer os votos internos que te prenderam, desarmar o medo e a culpa, e dar o passo: da ferida ao envio. Deus cura para enviar.",
+    systemPromptAddition:
+      "Neste módulo, o foco é permissão e destino. A mulher está descobrindo que muitas vezes o que a trava não é capacidade ('não sei') nem disposição ('não quero'), mas permissão ('não me é permitido') — uma trava herdada ou um voto interno que ela mesma fez numa dor antiga ('eu nunca...'). Ajude-a a: (1) discernir qual das três travas está em jogo; (2) reconhecer e renunciar votos internos, substituindo-os pela verdade de Deus; (3) entender que a culpa vive na utilidade que se dá ao passado (privação/obrigação), não no fato; (4) desmentir o medo (quanto disso é verdade? quem não tem esse medo? que informação falta?); (5) sair da indecisão entrando em decisão (percepção→decisão→ação); (6) enxergar a cura como envio para o chamado. Ancore tudo em Gálatas 5:1, 2 Timóteo 1:7, Ester 4:14 e Jeremias 1:5. A presença e o acolhimento (social brain) vêm primeiro; a provocação para o destino vem depois.",
+    keyScriptures: [
+      { ref: "Gálatas 5:1", text: "Para a liberdade foi que Cristo nos libertou" },
+      { ref: "2 Timóteo 1:7", text: "Deus não nos deu espírito de covardia, mas de poder, amor e moderação" },
+      { ref: "Ester 4:14", text: "Quem sabe se para tempo como este chegaste ao reino?" },
+      { ref: "Jeremias 1:5", text: "Antes que te formasses no ventre eu te conheci... e te constituí" },
+    ],
+  },
 ];
 
 async function main() {
