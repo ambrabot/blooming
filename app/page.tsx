@@ -6,6 +6,7 @@ import ForWhomSection from "@/components/landing/for-whom";
 import RafaSection from "@/components/landing/rafa";
 import PillarsSection from "@/components/landing/pillars";
 import ModulesSection from "@/components/landing/modules";
+import SubscriptionSection from "@/components/landing/subscription";
 import HowItWorksSection from "@/components/landing/how-it-works";
 import TestimonialsSection from "@/components/landing/testimonials";
 import AssessmentCtaSection from "@/components/landing/assessment-cta";
@@ -40,6 +41,7 @@ export default async function RootPage() {
       <RafaSection />
       <PillarsSection />
       <ModulesSection modules={modules} />
+      <SubscriptionSection />
       <HowItWorksSection />
       <TestimonialsSection />
       <AssessmentCtaSection />
