@@ -167,8 +167,11 @@ export default function OnboardingPage() {
           <div className="text-center mb-8">
             <Sparkles className="h-8 w-8 text-amber-600 mx-auto mb-3" />
             <h1 className="text-2xl font-serif text-stone-800">
-              Sua jornada começa aqui
+              Você chegou para ser cuidada
             </h1>
+            <p className="text-sm text-stone-500 mt-2 max-w-sm mx-auto">
+              E não para por aqui: você foi feita para algo — e tem permissão de ir.
+            </p>
           </div>
           <Card className="border-stone-200 shadow-sm mb-4">
             <CardContent className="p-6">
