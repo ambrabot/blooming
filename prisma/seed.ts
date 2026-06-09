@@ -187,6 +187,27 @@ const MODULES = [
       { ref: "Jeremias 1:5", text: "Antes que te formasses no ventre eu te conheci... e te constituí" },
     ],
   },
+  {
+    slug: "provisao-dinheiro-emocional",
+    title: "Provisão & Dinheiro Emocional",
+    subtitle: "A Mordomia da Alma",
+    hebrewWord: "Parnassah",
+    iconEmoji: "🌾",
+    colorClass: "text-amber-800",
+    order: 10,
+    priceInCents: 12700,
+    audience: [UserRole.WOMAN, UserRole.COUPLE, UserRole.FAMILY, UserRole.LEADER],
+    description:
+      "Dinheiro raramente é só sobre dinheiro. O que você não resolve na emoção, você paga em todas as áreas — inclusive na sua relação com a provisão. Neste módulo você vai descobrir o modelo de dinheiro que herdou sem perceber, as frustrações que governam as suas escolhas, e a diferença entre servir a Mamom e ser servida por ela. Da carência à mordomia, da ansiedade à confiança no Pai que provê: Jeová-Jiré.",
+    systemPromptAddition:
+      "Neste módulo o foco é a relação emocional com dinheiro e provisão. O princípio: o que não se resolve na emoção se paga no material. Ajude a mulher a reconhecer o modelo de dinheiro herdado, ver como frustrações governam o gastar/guardar, curar a carência que vira cobiça, crescer no contentamento (Fp 4), desfrutar com mordomia, discernir a quem serve (Deus ou Mamom, Mt 6:24) e confiar no Pai que provê (Jeová-Jiré). Trate a raiz emocional, não o sintoma financeiro. Sem teologia da prosperidade; sem aconselhamento financeiro técnico (encaminhe para profissional em dívida/planejamento concreto).",
+    keyScriptures: [
+      { ref: "Mateus 6:24", text: "Não podeis servir a Deus e a Mamom" },
+      { ref: "Filipenses 4:11-13", text: "Aprendi a viver contente em toda e qualquer situação" },
+      { ref: "Mateus 6:21", text: "Onde estiver o teu tesouro, aí estará também o teu coração" },
+      { ref: "Gênesis 22:14", text: "O Senhor proverá (Jeová-Jiré)" },
+    ],
+  },
 ];
 
 async function main() {

@@ -32,7 +32,7 @@ export const CAMADAS: Camada[] = [
     name: "Poda",
     desc: "O Agricultor corta o que não dá fruto: perdão, dívidas, dependências",
     verse: "João 15:2",
-    modules: ["familia-funcional"],
+    modules: ["familia-funcional", "casamento"],
   },
   {
     n: 4,
@@ -53,7 +53,7 @@ export const CAMADAS: Camada[] = [
     name: "Flor",
     desc: "Florescer no destino: shalom e vida em abundância",
     verse: "João 10:10",
-    modules: ["tempo-de-deus", "permissao-destino"],
+    modules: ["tempo-de-deus", "permissao-destino", "provisao-dinheiro-emocional"],
   },
   {
     n: 7,
@@ -85,6 +85,14 @@ export function computeCurrentCamada(
     else break;
   }
   return current;
+}
+
+/** Camada (1..7) à qual um módulo pertence; 0 se não mapeado. */
+export function camadaForModule(slug: string): number {
+  for (const c of CAMADAS) {
+    if (c.modules.includes(slug)) return c.n;
+  }
+  return 0;
 }
 
 export type CamadaStatus = "done" | "current" | "locked";
