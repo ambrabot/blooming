@@ -36,6 +36,7 @@ model User {
   assessments    Assessment[]
   progress       UserProgress[]
   milestones     Milestone[]
+  devotionalLogs DevotionalLog[]
 
   @@map("users")
 }
@@ -385,4 +386,17 @@ enum MilestoneType {
   SESSION_COUNT
   ASSESSMENT_DONE
   BREAKTHROUGH
+}
+
+// ─── Devocional (hábito diário + streak) ─────────────────────────────────────
+
+model DevotionalLog {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  date      DateTime @db.Date
+  createdAt DateTime @default(now())
+
+  @@unique([userId, date])
+  @@map("devotional_logs")
 }

@@ -5,7 +5,11 @@ import { db } from "@/lib/db/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { MessageCircle, NotebookPen, BookOpen, Sparkles } from "lucide-react";
+import { MessageCircle, NotebookPen, BookOpen, Sparkles, Flame, ArrowRight } from "lucide-react";
+import { computeCurrentCamada } from "@/lib/journey";
+import { computeStreak } from "@/lib/streak";
+import { getDailyDevotional } from "@/lib/devotionals";
+import JourneyTrail from "@/components/journey/journey-trail";
 
 const GREETINGS = [
   "Shalom",
@@ -18,7 +22,7 @@ export default async function DashboardPage() {
   const session = await getSession();
   if (!session) redirect("/login");
 
-  const [user, recentSessions, recentJournal, assessment, moduleCount, recentCheckIn] =
+  const [user, recentSessions, recentJournal, assessment, moduleCount, recentCheckIn, userProgress, devotionalLogs] =
     await Promise.all([
       db.user.findUnique({
         where: { id: session.userId },
@@ -45,6 +49,18 @@ export default async function DashboardPage() {
         orderBy: { createdAt: "desc" },
         select: { createdAt: true },
       }),
+      db.userProgress.findMany({
+        where: { userId: session.userId },
+        select: {
+          completedAt: true,
+          module: { select: { slug: true } },
+          lessonProgress: { where: { completedAt: { not: null } }, select: { id: true } },
+        },
+      }),
+      db.devotionalLog.findMany({
+        where: { userId: session.userId },
+        select: { date: true },
+      }),
     ]);
 
   const hour = new Date().getHours();
@@ -52,6 +68,19 @@ export default async function DashboardPage() {
     hour < 12 ? "Bom dia" : hour < 18 ? "Boa tarde" : "Boa noite";
 
   const hasAssessment = !!assessment;
+
+  const touched = new Set<string>();
+  for (const p of userProgress) {
+    if (p.completedAt || p.lessonProgress.length > 0) touched.add(p.module.slug);
+  }
+  const currentCamada = computeCurrentCamada(touched, hasAssessment);
+  const now = new Date();
+  const streak = computeStreak(
+    devotionalLogs.map((l) => l.date),
+    now,
+  );
+  const dev = getDailyDevotional(now);
+
   const lastCheckIn = recentCheckIn?.createdAt ?? null;
   const daysSinceCheckIn = lastCheckIn
     ? Math.floor((Date.now() - lastCheckIn.getTime()) / 86400000)
@@ -71,6 +100,31 @@ export default async function DashboardPage() {
             : "Como você está chegando hoje?"}
         </p>
       </div>
+
+      {/* Pergunta do dia */}
+      <Link href="/devocional" className="block mb-6">
+        <div className="rounded-lg bg-stone-800 text-stone-100 p-6 md:p-7 hover:bg-stone-900 transition-colors">
+          <p
+            className="text-[11px] uppercase tracking-[0.16em] font-semibold mb-2"
+            style={{ color: "#c9a86a" }}
+          >
+            Pergunta do dia
+          </p>
+          <p className="font-serif text-xl md:text-2xl leading-snug">{dev.pergunta}</p>
+          <p className="text-[13px] text-stone-400 italic mt-3 pt-3 border-t border-white/10">
+            “{dev.passageText}” — {dev.passageRef}
+          </p>
+          <span className="inline-flex items-center gap-2 text-[13px] mt-4" style={{ color: "#e7d9bf" }}>
+            Abrir o devocional <ArrowRight className="h-3.5 w-3.5" />
+            {streak.current > 0 && (
+              <span className="inline-flex items-center gap-1 ml-2" style={{ color: "#c9a86a" }}>
+                <Flame className="h-3.5 w-3.5" />
+                {streak.current}
+              </span>
+            )}
+          </span>
+        </div>
+      </Link>
 
       {/* CTA: Assessment */}
       {!hasAssessment && (
@@ -112,6 +166,14 @@ export default async function DashboardPage() {
           </CardContent>
         </Card>
       )}
+
+      {/* Jornada de florescimento */}
+      <div className="mb-8 rounded-lg border border-stone-200 bg-white p-6">
+        <p className="text-[11px] uppercase tracking-[0.16em] text-stone-400 font-semibold mb-4">
+          Sua jornada de florescimento · camada {currentCamada} de 7
+        </p>
+        <JourneyTrail current={currentCamada} />
+      </div>
 
       {/* Quick Actions */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
