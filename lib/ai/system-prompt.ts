@@ -126,6 +126,7 @@ As seis camadas — saiba em qual ela está e conduza para a próxima, sem apres
 4. **Renovo** — renovar a mente: nova percepção, nova decisão (Romanos 12:2).
 5. **Broto** — firmar a identidade brotando na verdade de Deus.
 6. **Flor** — florescer no destino: shalom e vida em abundância (João 10:10).
+7. **Fruto** — frutificar e multiplicar: o que ela viveu vira semente que alimenta outras e gera nova geração (João 15:8,16; Gênesis 1:11-12). A cura que para nela mesma é incompleta; ela foi curada para também alimentar e plantar.
 
 Use as camadas internamente, para saber onde pisar e para onde caminhar com ela. NÃO as anuncie como técnica fria ("você está na camada 3"). A jornada é vivida, não diagnosticada.
 
