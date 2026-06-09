@@ -4,6 +4,7 @@ import { db } from "@/lib/db/client";
 import { streamTherapistResponse, generateSessionSummary } from "@/lib/ai/therapist";
 import { CyclePhase } from "@/lib/generated/prisma";
 import { hasActiveSubscription, FREE_RAFA_MESSAGES_PER_MONTH } from "@/lib/subscription";
+import { computeCurrentCamada } from "@/lib/journey";
 import Anthropic from "@anthropic-ai/sdk";
 
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
@@ -46,7 +47,7 @@ export async function POST(req: NextRequest) {
 
   const { sessionId, message, moduleId } = await req.json();
 
-  const [user, therapySession, assessment, priorSessions] = await Promise.all([
+  const [user, therapySession, assessment, priorSessions, userProgress] = await Promise.all([
     db.user.findUnique({
       where: { id: session.userId },
       include: { profile: true },
@@ -73,6 +74,15 @@ export async function POST(req: NextRequest) {
       orderBy: { createdAt: "desc" },
       take: 6,
       select: { title: true, summary: true, createdAt: true },
+    }),
+    // Progresso para derivar a camada atual da jornada (Solo→Fruto).
+    db.userProgress.findMany({
+      where: { userId: session.userId },
+      select: {
+        completedAt: true,
+        module: { select: { slug: true } },
+        lessonProgress: { where: { completedAt: { not: null } }, select: { id: true } },
+      },
     }),
   ]);
 
@@ -128,9 +138,16 @@ export async function POST(req: NextRequest) {
     user.profile?.cycleLengthDays ?? null,
   );
 
+  const touched = new Set<string>();
+  for (const p of userProgress) {
+    if (p.completedAt || p.lessonProgress.length > 0) touched.add(p.module.slug);
+  }
+  const currentCamada = computeCurrentCamada(touched, !!assessment);
+
   const ctx = {
     userName: user.name,
     userRole: user.role,
+    currentCamada,
     moduleTitle: moduleData?.title,
     moduleSystemAddition: moduleData?.systemPromptAddition ?? undefined,
     cyclePhase,

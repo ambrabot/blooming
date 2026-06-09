@@ -1,4 +1,5 @@
 ﻿import { UserRole, CyclePhase } from "@/lib/generated/prisma";
+import { PSYCHOLOGY_KNOWLEDGE } from "./psychology";
 
 export interface TherapistContext {
   userName: string;
@@ -9,7 +10,18 @@ export interface TherapistContext {
   currentSeason?: string | null;
   assessmentSummary?: string | null;
   recentInsights?: string[];
+  currentCamada?: number;
 }
+
+const CAMADA_FOCO: Record<number, string> = {
+  1: "Camada 1 — Solo. Foco: ajudá-la a reconhecer quem ela é em Deus antes da ferida; firmar a identidade (Salmos 139).",
+  2: "Camada 2 — Espinhos. Foco: ajudá-la a nomear o joio — as mentiras, os votos internos e as fortalezas que cresceram parecendo verdade.",
+  3: "Camada 3 — Poda. Foco: soltar o que não dá fruto — perdão, dívidas emocionais, dependências.",
+  4: "Camada 4 — Renovo. Foco: renovar a mente — conduzir de uma percepção nova a uma decisão e a um passo concreto.",
+  5: "Camada 5 — Broto. Foco: firmar na verdade de Deus a identidade que está nascendo; regar o novo.",
+  6: "Camada 6 — Flor. Foco: provocar para o destino e o chamado; shalom e vida em abundância.",
+  7: "Camada 7 — Fruto. Foco: multiplicar — como o que ela viveu pode alimentar e gerar vida em outras.",
+};
 
 const CYCLE_PHASE_CONTEXT: Record<CyclePhase, string> = {
   MENSTRUAL:
@@ -30,6 +42,11 @@ export function buildSystemPrompt(ctx: TherapistContext): string {
   const seasonContext = ctx.currentSeason
     ? `\n\n## Estação de Vida\nA usuária identificou sua estação atual como: "${ctx.currentSeason}". Honre esse contexto ao interpretar suas palavras.`
     : "";
+
+  const camadaContext =
+    ctx.currentCamada && CAMADA_FOCO[ctx.currentCamada]
+      ? `\n\n## Onde ela está na jornada\n${CAMADA_FOCO[ctx.currentCamada]} Não anuncie a camada como técnica — deixe que ela guie a sua ênfase.`
+      : "";
 
   const moduleContext = ctx.moduleSystemAddition
     ? `\n\n## Contexto do Módulo: ${ctx.moduleTitle}\n${ctx.moduleSystemAddition}`
@@ -150,6 +167,10 @@ Use as camadas internamente, para saber onde pisar e para onde caminhar com ela.
 
 ---
 
+${PSYCHOLOGY_KNOWLEDGE}
+
+---
+
 # Formato das Sessões
 
 - Comece com uma saudação calorosa e uma pergunta de abertura (como a pessoa está chegando hoje).
@@ -174,7 +195,7 @@ Use as camadas internamente, para saber onde pisar e para onde caminhar com ela.
 # Usuária
 
 Nome: **${ctx.userName}**
-Perfil: ${ctx.userRole}${cycleContext}${seasonContext}${moduleContext}${assessmentContext}${memoryContext}
+Perfil: ${ctx.userRole}${cycleContext}${seasonContext}${camadaContext}${moduleContext}${assessmentContext}${memoryContext}
 
 ---
 
