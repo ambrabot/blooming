@@ -1,6 +1,7 @@
-﻿import type { Metadata } from "next";
+﻿import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Playfair_Display } from "next/font/google";
 import "./globals.css";
+import PWARegister from "@/components/pwa-register";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,6 +29,11 @@ export const metadata: Metadata = {
       "Cura profunda. Identidade sólida. Relacionamentos saudáveis. Fundamentados na Palavra.",
     type: "website",
   },
+  appleWebApp: { capable: true, title: "Blooming", statusBarStyle: "default" },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#f3ece0",
 };
 
 export default function RootLayout({
@@ -40,7 +46,7 @@ export default function RootLayout({
       lang="pt-BR"
       className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">{children}<PWARegister /></body>
     </html>
   );
 }
