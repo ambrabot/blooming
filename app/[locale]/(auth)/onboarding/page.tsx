@@ -54,7 +54,7 @@ export default function OnboardingPage() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<{
     report: string;
-    recommendations: { slug: string; priority: number; reason: string }[];
+    recommendations: { slug: string; priority: number; reason: string; title?: string; emoji?: string }[];
   } | null>(null);
 
   const content = questions[step];
@@ -151,7 +151,10 @@ export default function OnboardingPage() {
                         {i + 1}º
                       </Badge>
                       <div>
-                        <p className="text-sm font-medium text-stone-800">{r.slug}</p>
+                        <p className="text-sm font-medium text-stone-800">
+                          {r.emoji ? `${r.emoji} ` : ""}
+                          {r.title ?? r.slug}
+                        </p>
                         <p className="text-xs text-stone-500 mt-0.5">{r.reason}</p>
                       </div>
                     </CardContent>

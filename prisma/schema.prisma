@@ -38,6 +38,7 @@ model User {
   progress       UserProgress[]
   milestones     Milestone[]
   devotionalLogs DevotionalLog[]
+  streakState    StreakState?
 
   @@map("users")
 }
@@ -440,4 +441,20 @@ model DevotionalLog {
 
   @@unique([userId, date])
   @@map("devotional_logs")
+}
+
+// Estado durável do streak de "Presença" — devocional OU Rafa OU diário alimentam
+// o mesmo streak. graceDays cobrem uma falha sem zerar ("as misericórdias se
+// renovam a cada manhã" — Lm 3:23). É o anti-Duolingo: restaura, não pune.
+model StreakState {
+  id           String    @id @default(cuid())
+  userId       String    @unique
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  current      Int       @default(0)
+  best         Int       @default(0)
+  graceDays    Int       @default(0)
+  lastActiveOn DateTime? @db.Date
+  updatedAt    DateTime  @updatedAt
+
+  @@map("streak_states")
 }

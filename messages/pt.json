@@ -475,7 +475,20 @@
     "sessionUntitled": "Sessão sem título",
     "mood": "Humor {value}/10",
     "lastJournal": "Último diário",
-    "journalUntitled": "Entrada sem título"
+    "journalUntitled": "Entrada sem título",
+    "todayStep": "Teu passo de hoje",
+    "markPresence": "Marcar presença",
+    "presenceMarking": "Marcando…",
+    "presentToday": "Presente hoje",
+    "streakLabel": "{count, plural, one {# dia} other {# dias}}",
+    "graceBanked": "{count, plural, one {# dia de graça} other {# dias de graça}}",
+    "graceCovered": "A graça cobriu {count, plural, one {o dia que faltou} other {os # dias que faltaram}}. As misericórdias se renovam a cada manhã.",
+    "milestoneReached": "{count} dias de presença — Deus honra o secreto.",
+    "openFullDevotional": "Abrir devocional completo",
+    "continueJourney": "Continuar tua jornada",
+    "camadaProgress": "Camada {n} · {name}",
+    "secondaryRafa": "Conversar com a Rafa",
+    "secondaryJournal": "Escrever no diário"
   },
   "Journal": {
     "title": "Diário",

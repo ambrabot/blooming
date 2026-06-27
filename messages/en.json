@@ -475,7 +475,20 @@
     "sessionUntitled": "Untitled session",
     "mood": "Mood {value}/10",
     "lastJournal": "Last journal",
-    "journalUntitled": "Untitled entry"
+    "journalUntitled": "Untitled entry",
+    "todayStep": "Your step today",
+    "markPresence": "Mark presence",
+    "presenceMarking": "Marking…",
+    "presentToday": "Present today",
+    "streakLabel": "{count, plural, one {# day} other {# days}}",
+    "graceBanked": "{count, plural, one {# grace day} other {# grace days}}",
+    "graceCovered": "Grace covered {count, plural, one {the missed day} other {the # missed days}}. His mercies are new every morning.",
+    "milestoneReached": "{count} days of presence — God honors the secret place.",
+    "openFullDevotional": "Open full devotional",
+    "continueJourney": "Continue your journey",
+    "camadaProgress": "Layer {n} · {name}",
+    "secondaryRafa": "Talk with Rafa",
+    "secondaryJournal": "Write in your journal"
   },
   "Journal": {
     "title": "Journal",

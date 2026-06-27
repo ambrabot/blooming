@@ -7,6 +7,7 @@ import { hasActiveSubscription, FREE_RAFA_MESSAGES_PER_MONTH } from "@/lib/subsc
 import { computeCurrentCamada } from "@/lib/journey";
 import { dateLocale } from "@/lib/i18n/format";
 import { respondInLanguage } from "@/lib/i18n/language";
+import { recordPresence } from "@/lib/presence";
 import Anthropic from "@anthropic-ai/sdk";
 
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
@@ -169,6 +170,9 @@ export async function POST(req: NextRequest) {
   await db.sessionMessage.create({
     data: { sessionId: activeSession.id, role: "USER", content: message },
   });
+
+  // Conversar com a Rafa conta como presença do dia → streak unificado.
+  await recordPresence(user.id).catch(() => {});
 
   // Build history from saved messages
   const history = activeSession.messages.map((m: { role: string; content: string }) => ({

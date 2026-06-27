@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSession } from "@/lib/auth/jwt";
 import { db } from "@/lib/db/client";
+import { recordPresence } from "@/lib/presence";
 
 export async function POST(req: NextRequest) {
   const session = await getSession();
@@ -27,20 +28,8 @@ export async function POST(req: NextRequest) {
     },
   });
 
-  // Check for journal streak milestones
-  const entryCount = await db.journalEntry.count({ where: { userId: session.userId } });
-  const streakMilestones = [7, 30, 90];
-  if (streakMilestones.includes(entryCount)) {
-    await db.milestone.create({
-      data: {
-        userId: session.userId,
-        type: "JOURNAL_STREAK",
-        title: `${entryCount} dias de diário`,
-        description: `Você completou ${entryCount} entradas no diário. Isso é consistência.`,
-        metadata: { count: entryCount },
-      },
-    });
-  }
+  // Escrever no diário conta como presença do dia → streak unificado + milestones.
+  await recordPresence(session.userId).catch(() => {});
 
   return NextResponse.json({ id: entry.id });
 }

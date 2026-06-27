@@ -1,9 +1,8 @@
 import { getTranslations, getLocale } from "next-intl/server";
 import { redirect, Link } from "@/i18n/navigation";
 import { getSession } from "@/lib/auth/jwt";
-import { db } from "@/lib/db/client";
 import { getDailyDevotional, READING_PLANS, THEMATIC_STUDIES } from "@/lib/devotionals";
-import { computeStreak } from "@/lib/streak";
+import { getStreak } from "@/lib/presence";
 import { Flame, MessageCircle } from "lucide-react";
 import CompleteButton from "@/components/devocional/complete-button";
 
@@ -23,14 +22,9 @@ export default async function DevocionalPage() {
   const now = new Date();
   const dev = getDailyDevotional(now);
 
-  const logs = await db.devotionalLog.findMany({
-    where: { userId: session.userId },
-    select: { date: true },
-  });
-  const streak = computeStreak(
-    logs.map((l) => l.date),
-    now,
-  );
+  // Streak unificado de "Presença" (devocional OU Rafa OU diário) — o mesmo número
+  // do dashboard, com graça. Não recalcula só pelo devocional.
+  const streak = await getStreak(session.userId, now);
 
   const steps = [
     { t: t("stepWord"), s: `“${dev.passageText}” — ${dev.passageRef}` },
