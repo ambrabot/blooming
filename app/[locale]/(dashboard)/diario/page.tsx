@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Plus, NotebookPen, Flame } from "lucide-react";
 import { dateLocale } from "@/lib/i18n/format";
+import { getStreak } from "@/lib/presence";
 
 const CYCLE_EMOJI: Record<string, string> = {
   MENSTRUAL: "🌑",
@@ -50,8 +51,9 @@ export default async function DiarioPage() {
 
   const df = dateLocale(locale);
 
-  // Compute streak (consecutive days with at least one entry)
-  const streak = computeStreak(entries.map((e: typeof entries[number]) => e.createdAt));
+  // Streak unificado de "Presença" (devocional OU Rafa OU diário) — o mesmo número
+  // do dashboard, não um streak separado só do diário.
+  const streak = (await getStreak(session.userId)).current;
 
   // Group by month
   const grouped = entries.reduce<Record<string, typeof entries>>((acc: Record<string, typeof entries>, e: typeof entries[number]) => {
@@ -167,27 +169,4 @@ export default async function DiarioPage() {
       )}
     </div>
   );
-}
-
-function computeStreak(dates: Date[]): number {
-  if (dates.length === 0) return 0;
-
-  const uniqueDays = [...new Set(
-    dates.map((d) => new Date(d).toDateString()),
-  )];
-
-  const today = new Date().toDateString();
-  const yesterday = new Date(Date.now() - 86400000).toDateString();
-
-  if (!uniqueDays.includes(today) && !uniqueDays.includes(yesterday)) return 0;
-
-  let streak = 0;
-  let check = uniqueDays.includes(today) ? new Date() : new Date(Date.now() - 86400000);
-
-  while (uniqueDays.includes(check.toDateString())) {
-    streak++;
-    check = new Date(check.getTime() - 86400000);
-  }
-
-  return streak;
 }

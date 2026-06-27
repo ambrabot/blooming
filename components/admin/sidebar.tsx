@@ -9,6 +9,7 @@ import {
   BookOpen,
   Users,
   ClipboardList,
+  BarChart3,
   ArrowLeft,
   Shield,
   Menu,
@@ -21,6 +22,7 @@ const NAV = [
   { href: "/admin/modulos", label: "Módulos", icon: BookOpen, exact: false },
   { href: "/admin/usuarios", label: "Usuários", icon: Users, exact: false },
   { href: "/admin/assessment", label: "Assessments", icon: ClipboardList, exact: false },
+  { href: "/admin/metrics", label: "Métricas", icon: BarChart3, exact: false },
 ];
 
 export default function AdminSidebar({ user }: { user: JWTPayload }) {
