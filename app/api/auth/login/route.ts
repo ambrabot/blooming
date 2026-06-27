@@ -24,5 +24,14 @@ export async function POST(req: NextRequest) {
 
   await setSessionCookie({ userId: user.id, email: user.email, name: user.name, role: user.role });
 
-  return NextResponse.json({ ok: true });
+  // Reidrata o idioma da conta: cookie p/ a detecção do next-intl + locale no
+  // corpo p/ o cliente redirecionar já no prefixo certo (/en, /es; pt sem prefixo).
+  const lang = user.language ?? "pt";
+  const res = NextResponse.json({ ok: true, locale: lang });
+  res.cookies.set("NEXT_LOCALE", lang, {
+    path: "/",
+    maxAge: 60 * 60 * 24 * 365,
+    sameSite: "lax",
+  });
+  return res;
 }

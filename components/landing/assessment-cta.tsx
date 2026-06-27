@@ -1,19 +1,12 @@
-import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, Sparkles } from "lucide-react";
 
-const ASSESSMENT_HIGHLIGHTS = [
-  "Identidade & autoconhecimento",
-  "Saúde emocional",
-  "Conexão espiritual",
-  "Qualidade dos relacionamentos",
-  "Corpo & ciclo (para mulheres)",
-  "Crenças limitantes",
-  "Dinâmica conjugal",
-  "Propósito & estação de vida",
-];
-
 export default function AssessmentCtaSection() {
+  const t = useTranslations("Landing.assessmentCta");
+  const highlights = t.raw("highlights") as string[];
+
   return (
     <section className="py-24 px-6 bg-gradient-to-br from-amber-900 via-stone-900 to-stone-950 text-white relative overflow-hidden">
       {/* Background texture */}
@@ -28,21 +21,21 @@ export default function AssessmentCtaSection() {
         <Sparkles className="h-8 w-8 text-amber-400 mx-auto mb-6" />
 
         <p className="text-xs font-medium text-amber-400 uppercase tracking-widest mb-4">
-          Comece aqui
+          {t("eyebrow")}
         </p>
         <h2 className="font-serif text-4xl md:text-6xl leading-tight mb-6">
-          Seu assessment.{" "}
-          <br className="hidden md:block" />
-          <span className="italic text-amber-300">Gratuito. 15 minutos.</span>
+          {t.rich("title", {
+            br: () => <br className="hidden md:block" />,
+            em: (chunks) => <span className="italic text-amber-300">{chunks}</span>,
+          })}
         </h2>
         <p className="text-stone-300 text-lg max-w-2xl mx-auto mb-10 leading-relaxed">
-          A Rafa analisa suas respostas e gera um relatório personalizado sobre onde você está —
-          com as áreas de maior necessidade e os módulos exatos para começar sua jornada de cura.
+          {t("subtitle")}
         </p>
 
         {/* Areas covered */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-2 max-w-2xl mx-auto mb-10">
-          {ASSESSMENT_HIGHLIGHTS.map((a) => (
+          {highlights.map((a) => (
             <div
               key={a}
               className="bg-white/10 border border-white/10 rounded-lg px-3 py-2 text-xs text-stone-300"
@@ -59,7 +52,7 @@ export default function AssessmentCtaSection() {
             className="bg-amber-500 hover:bg-amber-400 text-stone-900 font-semibold h-12 px-9 text-base rounded-full"
           >
             <Link href="/register">
-              Fazer meu assessment agora
+              {t("ctaPrimary")}
               <ChevronRight className="h-4 w-4 ml-1" />
             </Link>
           </Button>
@@ -69,13 +62,11 @@ export default function AssessmentCtaSection() {
             size="lg"
             className="h-12 px-8 text-base rounded-full border-white/20 text-white hover:bg-white/10"
           >
-            <Link href="/login">Já tenho conta</Link>
+            <Link href="/login">{t("ctaSecondary")}</Link>
           </Button>
         </div>
 
-        <p className="text-stone-500 text-xs mt-6">
-          Sem cartão de crédito · Assessment 100% gratuito · Confidencial
-        </p>
+        <p className="text-stone-500 text-xs mt-6">{t("fineprint")}</p>
       </div>
     </section>
   );

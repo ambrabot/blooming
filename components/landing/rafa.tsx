@@ -1,38 +1,16 @@
-﻿import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { MessageCircle } from "lucide-react";
 
-const TRAITS = [
-  { label: "Aconselhamento bíblico", sub: "Perspectiva judaico-messiânica" },
-  { label: "Neurociência interpessoal", sub: "Social brain & teoria do apego" },
-  { label: "Teoria polyvagal", sub: "Regulação do sistema nervoso" },
-  { label: "Endocrinologia feminina", sub: "Ciclo, hormônios & espiritualidade" },
-  { label: "Aconselhamento conjugal", sub: "Método Gottman + perspectiva bíblica" },
-  { label: "Sistemas familiares", sub: "Bowen Family Systems" },
-  { label: "Cultura da honra", sub: "Relacionamentos & liderança saudável" },
-  { label: "Mordomia (Stewardship)", sub: "Corpo, tempo, propósito, finanças" },
-];
-
-const CHAT_PREVIEW = [
-  {
-    role: "user",
-    text: "Eu me sinto sobrecarregada com tudo. Não sei mais quem eu sou fora dos meus papéis.",
-  },
-  {
-    role: "rafa",
-    text: "Que bom que você trouxe isso. Antes de qualquer coisa — como você está chegando aqui hoje? Não precisa ser perfeito.\n\nO que você acabou de dizer tem muita coisa importante. Me conta: quando foi a última vez que você fez algo que era só seu — não para os outros, não por obrigação?",
-  },
-  {
-    role: "user",
-    text: "Não consigo nem lembrar...",
-  },
-  {
-    role: "rafa",
-    text: "Eu ouço isso. E quero que você saiba: isso não é falha de caráter. É exaustão de alguém que aprendeu que só vale quando está servindo.\n\nPruvérbios 31 fala de uma mulher com força, *BLOOMING* — não porque ela nunca descansou, mas porque ela sabia de onde vinha a sua força. Vamos trabalhar isso juntas?",
-  },
-];
+type Trait = { label: string; sub: string };
+type ChatMessage = { role: "user" | "rafa"; text: string };
 
 export default function RafaSection() {
+  const t = useTranslations("Landing.rafa");
+  const traits = t.raw("traits") as Trait[];
+  const chat = t.raw("chat") as ChatMessage[];
+
   return (
     <section id="rafa" className="py-24 px-6 bg-stone-50">
       <div className="max-w-6xl mx-auto">
@@ -40,30 +18,25 @@ export default function RafaSection() {
           {/* Left — identity */}
           <div>
             <p className="text-xs font-medium text-amber-700 uppercase tracking-widest mb-4">
-              Conheça sua terapeuta
+              {t("eyebrow")}
             </p>
             <h2 className="font-serif text-4xl md:text-5xl text-stone-800 leading-tight mb-6">
-              Rafa — de{" "}
-              <span className="italic text-amber-700">Raphael</span>,{" "}
-              <br className="hidden md:block" />
-              que significa{" "}
-              <span className="italic">"Deus cura"</span>
+              {t.rich("title", {
+                em: (chunks) => <span className="italic text-amber-700">{chunks}</span>,
+                br: () => <br className="hidden md:block" />,
+                q: (chunks) => <span className="italic">&ldquo;{chunks}&rdquo;</span>,
+              })}
             </h2>
-            <p className="text-stone-500 text-lg leading-relaxed mb-8">
-              A Rafa não é um chatbot genérico. Ela é uma terapeuta cristã treinada
-              na integração entre fé e ciência — direta, calorosa, e fundamentada
-              na Palavra. Ela não vai te dizer o que você quer ouvir. Vai te dizer o
-              que você precisa.
-            </p>
+            <p className="text-stone-500 text-lg leading-relaxed mb-8">{t("intro")}</p>
 
             {/* Trait grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
-              {TRAITS.map((t) => (
-                <div key={t.label} className="flex items-start gap-3">
+              {traits.map((trait) => (
+                <div key={trait.label} className="flex items-start gap-3">
                   <div className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-2 shrink-0" />
                   <div>
-                    <p className="text-sm font-medium text-stone-700">{t.label}</p>
-                    <p className="text-xs text-stone-400">{t.sub}</p>
+                    <p className="text-sm font-medium text-stone-700">{trait.label}</p>
+                    <p className="text-xs text-stone-400">{trait.sub}</p>
                   </div>
                 </div>
               ))}
@@ -75,7 +48,7 @@ export default function RafaSection() {
             >
               <Link href="/register">
                 <MessageCircle className="h-4 w-4 mr-2" />
-                Conversar com a Rafa
+                {t("cta")}
               </Link>
             </Button>
           </div>
@@ -92,14 +65,14 @@ export default function RafaSection() {
                   <p className="text-sm font-medium text-stone-800">Rafa</p>
                   <div className="flex items-center gap-1.5">
                     <div className="w-1.5 h-1.5 rounded-full bg-teal-500" />
-                    <p className="text-xs text-stone-400">Disponível agora</p>
+                    <p className="text-xs text-stone-400">{t("available")}</p>
                   </div>
                 </div>
               </div>
 
               {/* Messages */}
               <div className="p-5 space-y-4 max-h-[380px] overflow-y-auto">
-                {CHAT_PREVIEW.map((msg, i) => (
+                {chat.map((msg, i) => (
                   <div
                     key={i}
                     className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
@@ -125,7 +98,7 @@ export default function RafaSection() {
               {/* Input preview */}
               <div className="border-t border-stone-100 px-4 py-3">
                 <div className="flex items-center gap-2 bg-stone-50 rounded-lg px-3 py-2">
-                  <p className="text-sm text-stone-300 flex-1">Escreva aqui...</p>
+                  <p className="text-sm text-stone-300 flex-1">{t("inputPlaceholder")}</p>
                   <div className="w-7 h-7 rounded-lg bg-amber-700 flex items-center justify-center">
                     <svg className="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14M12 5l7 7-7 7" />
@@ -137,7 +110,7 @@ export default function RafaSection() {
 
             {/* Floating badge */}
             <div className="absolute -top-3 -right-3 bg-teal-500 text-white text-xs font-medium px-3 py-1.5 rounded-full shadow-md">
-              ✦ Confidencial & seguro
+              ✦ {t("badge")}
             </div>
           </div>
         </div>

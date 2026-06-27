@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { useRouter } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -16,22 +17,7 @@ import {
 } from "@/components/ui/select";
 import { Loader2, Save } from "lucide-react";
 
-const SEASONS = [
-  "Gênesis — Novos começos",
-  "Êxodo — Saindo de lugares conhecidos",
-  "Deserto — Processo e formação",
-  "Promessa — Aguardando em fé",
-  "Posse — Vivendo o que foi prometido",
-  "Consolidação — Estabelecendo o que foi conquistado",
-  "Transmissão — Passando adiante",
-];
-
-const ROLE_LABELS: Record<string, string> = {
-  WOMAN: "Mulher — jornada individual",
-  COUPLE: "Casal — aconselhamento conjugal",
-  FAMILY: "Família — família funcional",
-  LEADER: "Líder / Pastor — cultura da honra",
-};
+const ROLE_KEYS = ["WOMAN", "COUPLE", "FAMILY", "LEADER"] as const;
 
 interface ProfileData {
   name: string;
@@ -51,6 +37,8 @@ export default function ProfileForm({
   userId: string;
   initial: ProfileData;
 }) {
+  const t = useTranslations("Profile");
+  const seasons = t.raw("seasons") as string[];
   const router = useRouter();
   const [form, setForm] = useState(initial);
   const [saving, setSaving] = useState(false);
@@ -81,12 +69,12 @@ export default function ProfileForm({
       <Card className="border-stone-200">
         <CardContent className="p-6 space-y-4">
           <h2 className="text-sm font-medium text-stone-500 uppercase tracking-wide">
-            Identidade
+            {t("identityTitle")}
           </h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <Label>Como prefere ser chamada</Label>
+              <Label>{t("nameLabel")}</Label>
               <Input
                 value={form.name}
                 onChange={(e) => set("name", e.target.value)}
@@ -94,14 +82,14 @@ export default function ProfileForm({
               />
             </div>
             <div>
-              <Label>Perfil</Label>
+              <Label>{t("roleLabel")}</Label>
               <Select value={form.role} onValueChange={(v) => set("role", v)}>
                 <SelectTrigger className="mt-1">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  {Object.entries(ROLE_LABELS).map(([v, l]) => (
-                    <SelectItem key={v} value={v}>{l}</SelectItem>
+                  {ROLE_KEYS.map((v) => (
+                    <SelectItem key={v} value={v}>{t(`roles.${v}`)}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
@@ -109,11 +97,11 @@ export default function ProfileForm({
           </div>
 
           <div>
-            <Label>Bio (opcional)</Label>
+            <Label>{t("bioLabel")}</Label>
             <Textarea
               value={form.bio}
               onChange={(e) => set("bio", e.target.value)}
-              placeholder="Um pouco sobre você e sua jornada..."
+              placeholder={t("bioPlaceholder")}
               className="mt-1 resize-none"
               rows={2}
             />
@@ -125,35 +113,35 @@ export default function ProfileForm({
       <Card className="border-stone-200">
         <CardContent className="p-6 space-y-4">
           <h2 className="text-sm font-medium text-stone-500 uppercase tracking-wide">
-            Contexto espiritual
+            {t("spiritualTitle")}
           </h2>
 
           <div>
-            <Label>Estação atual de vida</Label>
+            <Label>{t("seasonLabel")}</Label>
             <Select
               value={form.currentSeason}
               onValueChange={(v) => set("currentSeason", v)}
             >
               <SelectTrigger className="mt-1">
-                <SelectValue placeholder="Selecione sua estação..." />
+                <SelectValue placeholder={t("seasonPlaceholder")} />
               </SelectTrigger>
               <SelectContent>
-                {SEASONS.map((s) => (
+                {seasons.map((s) => (
                   <SelectItem key={s} value={s}>{s}</SelectItem>
                 ))}
               </SelectContent>
             </Select>
             <p className="text-xs text-stone-400 mt-1">
-              A Rafa vai considerar sua estação ao acompanhar você.
+              {t("seasonHelp")}
             </p>
           </div>
 
           <div>
-            <Label>Contexto de igreja / comunidade</Label>
+            <Label>{t("churchLabel")}</Label>
             <Input
               value={form.churchBackground}
               onChange={(e) => set("churchBackground", e.target.value)}
-              placeholder="Ex: Batista, Presbiteriana, Messiânica, sem vínculo..."
+              placeholder={t("churchPlaceholder")}
               className="mt-1"
             />
           </div>
@@ -167,11 +155,11 @@ export default function ProfileForm({
               className="w-4 h-4 accent-amber-600"
             />
             <Label htmlFor="hebrewRoots" className="cursor-pointer">
-              Tenho interesse / conexão com raízes hebraicas
+              {t("hebrewRootsLabel")}
             </Label>
           </div>
           <p className="text-xs text-stone-400 -mt-2 ml-7">
-            A Rafa vai usar mais perspectiva judaico-messiânica nas sessões.
+            {t("hebrewRootsHelp")}
           </p>
         </CardContent>
       </Card>
@@ -182,16 +170,16 @@ export default function ProfileForm({
           <CardContent className="p-6 space-y-4">
             <div>
               <h2 className="text-sm font-medium text-rose-700 uppercase tracking-wide">
-                Ciclo Menstrual
+                {t("cycleTitle")}
               </h2>
               <p className="text-xs text-stone-400 mt-1">
-                A Rafa considera sua fase do ciclo para contextualizar emoções e sugerir abordagens.
+                {t("cycleHelp")}
               </p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <Label>Data de início do último ciclo</Label>
+                <Label>{t("cycleStartLabel")}</Label>
                 <Input
                   type="date"
                   value={form.cycleStartDate}
@@ -200,7 +188,7 @@ export default function ProfileForm({
                 />
               </div>
               <div>
-                <Label>Duração média do ciclo (dias)</Label>
+                <Label>{t("cycleLengthLabel")}</Label>
                 <Input
                   type="number"
                   min={21}
@@ -230,13 +218,13 @@ export default function ProfileForm({
           className="bg-amber-700 hover:bg-amber-800 text-white"
         >
           {saving ? (
-            <><Loader2 className="h-4 w-4 animate-spin mr-2" />Salvando...</>
+            <><Loader2 className="h-4 w-4 animate-spin mr-2" />{t("saving")}</>
           ) : (
-            <><Save className="h-4 w-4 mr-2" />Salvar perfil</>
+            <><Save className="h-4 w-4 mr-2" />{t("save")}</>
           )}
         </Button>
         {saved && (
-          <p className="text-sm text-teal-600 font-medium">✓ Salvo</p>
+          <p className="text-sm text-teal-600 font-medium">✓ {t("saved")}</p>
         )}
       </div>
     </div>
@@ -250,40 +238,36 @@ function CyclePhaseIndicator({
   startDate: string;
   length: number;
 }) {
+  const t = useTranslations("Profile");
   const start = new Date(startDate);
   const today = new Date();
   const daysSince = Math.floor((today.getTime() - start.getTime()) / 86400000);
   const dayInCycle = ((daysSince % length) + length) % length + 1;
 
-  let phase: string;
-  let description: string;
+  let key: "menstrual" | "follicular" | "ovulatory" | "luteal";
   let color: string;
 
   if (dayInCycle <= 5) {
-    phase = "Menstrual (dias 1–5)";
-    description = "Tempo de repouso, introspecção e reflexão. Como o Shabat.";
+    key = "menstrual";
     color = "text-rose-700 bg-rose-50 border-rose-200";
   } else if (dayInCycle <= 13) {
-    phase = "Folicular (dias 6–13)";
-    description = "Energia em ascensão, clareza mental. Novos começos.";
+    key = "follicular";
     color = "text-teal-700 bg-teal-50 border-teal-200";
   } else if (dayInCycle <= 17) {
-    phase = "Ovulatória (dias 14–17)";
-    description = "Pico de expressão, conexão e confiança. Ótimo para comunicação.";
+    key = "ovulatory";
     color = "text-amber-700 bg-amber-50 border-amber-200";
   } else {
-    phase = "Lútea (dias 18–28)";
-    description = "Introspecção e discernimento. Não tome decisões impulsivas.";
+    key = "luteal";
     color = "text-purple-700 bg-purple-50 border-purple-200";
   }
 
   return (
     <div className={`border rounded-xl px-4 py-3 ${color}`}>
       <p className="text-xs font-medium uppercase tracking-wide mb-1">
-        Fase atual · Dia {dayInCycle} do ciclo
+        {t("cyclePhaseLabel", { day: dayInCycle })}
       </p>
-      <p className="text-sm font-medium">{phase}</p>
-      <p className="text-xs mt-0.5 opacity-80">{description}</p>
+      <p className="text-sm font-medium">{t(`phases.${key}.name`)}</p>
+      <p className="text-xs mt-0.5 opacity-80">{t(`phases.${key}.desc`)}</p>
     </div>
   );
 }

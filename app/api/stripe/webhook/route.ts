@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db/client";
 import Stripe from "stripe";
+import { webhookSecrets } from "@/lib/stripe/accounts";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2026-05-27.dahlia",
@@ -17,17 +18,21 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Missing stripe-signature header" }, { status: 400 });
   }
 
-  let event: Stripe.Event;
-  try {
-    event = stripe.webhooks.constructEvent(
-      body,
-      sig,
-      process.env.STRIPE_WEBHOOK_SECRET!,
-    );
-  } catch (err) {
-    const message = err instanceof Error ? err.message : "Webhook signature verification failed";
-    console.error("[Stripe webhook] signature error:", message);
-    return NextResponse.json({ error: message }, { status: 400 });
+  // Verifica contra os segredos das DUAS contas (BR + US/AmBRA): eventos podem vir
+  // de qualquer uma. A verificação é só criptográfica (independe da conta da key).
+  let event: Stripe.Event | null = null;
+  let lastError = "Webhook signature verification failed";
+  for (const secret of webhookSecrets()) {
+    try {
+      event = stripe.webhooks.constructEvent(body, sig, secret);
+      break;
+    } catch (err) {
+      lastError = err instanceof Error ? err.message : lastError;
+    }
+  }
+  if (!event) {
+    console.error("[Stripe webhook] signature error:", lastError);
+    return NextResponse.json({ error: lastError }, { status: 400 });
   }
 
   try {

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { Flame, Check, Loader2 } from "lucide-react";
 
 export default function CompleteButton({
@@ -10,6 +11,7 @@ export default function CompleteButton({
   doneToday: boolean;
   currentStreak: number;
 }) {
+  const t = useTranslations("Devotional");
   const [done, setDone] = useState(doneToday);
   const [streak, setStreak] = useState(currentStreak);
   const [loading, setLoading] = useState(false);
@@ -33,10 +35,10 @@ export default function CompleteButton({
     return (
       <div className="inline-flex items-center gap-2 rounded text-sm font-medium text-[#6e7b61] bg-[#6e7b61]/10 px-4 py-3">
         <Check className="h-4 w-4" />
-        Concluído hoje
+        {t("doneToday")}
         <span className="inline-flex items-center gap-1 text-[#9c7a39] ml-1">
           <Flame className="h-4 w-4" />
-          {streak} {streak === 1 ? "dia" : "dias"}
+          {t("dayCount", { count: streak })}
         </span>
       </div>
     );
@@ -50,7 +52,7 @@ export default function CompleteButton({
       style={{ background: "#9c7a39" }}
     >
       {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
-      Concluir devocional
+      {t("completeButton")}
     </button>
   );
 }

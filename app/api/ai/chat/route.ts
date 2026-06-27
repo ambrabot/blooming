@@ -5,17 +5,22 @@ import { streamTherapistResponse, generateSessionSummary } from "@/lib/ai/therap
 import { CyclePhase } from "@/lib/generated/prisma";
 import { hasActiveSubscription, FREE_RAFA_MESSAGES_PER_MONTH } from "@/lib/subscription";
 import { computeCurrentCamada } from "@/lib/journey";
+import { dateLocale } from "@/lib/i18n/format";
+import { respondInLanguage } from "@/lib/i18n/language";
 import Anthropic from "@anthropic-ai/sdk";
 
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
-async function generateSessionTitle(firstUserMessage: string): Promise<string> {
+async function generateSessionTitle(
+  firstUserMessage: string,
+  locale: string,
+): Promise<string> {
   const res = await anthropic.messages.create({
     model: "claude-haiku-4-5-20251001",
     max_tokens: 40,
     messages: [{
       role: "user",
-      content: `Gere um título curto (máx 5 palavras) para uma sessão terapêutica que começou com esta mensagem do usuário. Retorne APENAS o título, sem aspas nem pontuação extra.\n\nMensagem: ${firstUserMessage}`,
+      content: `Gere um título curto (máx 5 palavras) para uma sessão terapêutica que começou com esta mensagem do usuário. Retorne APENAS o título, sem aspas nem pontuação extra. ${respondInLanguage(locale)}\n\nMensagem: ${firstUserMessage}`,
     }],
   });
   return res.content[0].type === "text" ? res.content[0].text.trim() : "Sessão";
@@ -45,7 +50,7 @@ export async function POST(req: NextRequest) {
   const session = await getSession();
   if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  const { sessionId, message, moduleId } = await req.json();
+  const { sessionId, message, moduleId, locale = "pt" } = await req.json();
 
   const [user, therapySession, assessment, priorSessions, userProgress] = await Promise.all([
     db.user.findUnique({
@@ -147,6 +152,7 @@ export async function POST(req: NextRequest) {
   const ctx = {
     userName: user.name,
     userRole: user.role,
+    locale,
     currentCamada,
     moduleTitle: moduleData?.title,
     moduleSystemAddition: moduleData?.systemPromptAddition ?? undefined,
@@ -154,7 +160,7 @@ export async function POST(req: NextRequest) {
     currentSeason: user.profile?.currentSeason ?? null,
     assessmentSummary: assessment?.report ?? null,
     recentInsights: priorSessions.map((s) => {
-      const when = s.createdAt.toLocaleDateString("pt-BR", { month: "long", year: "numeric" });
+      const when = s.createdAt.toLocaleDateString(dateLocale(locale), { month: "long", year: "numeric" });
       return `(${when}) ${s.title ?? "Sessão"}: ${s.summary}`;
     }),
   };
@@ -198,7 +204,7 @@ export async function POST(req: NextRequest) {
 
         // Auto-generate title after 3rd user message (msgCount = 6: 3 user + 3 assistant)
         if (msgCount === 2 && !activeSession!.title) {
-          const title = await generateSessionTitle(message).catch(() => null);
+          const title = await generateSessionTitle(message, locale).catch(() => null);
           if (title) {
             await db.therapySession.update({
               where: { id: activeSession!.id },
@@ -219,7 +225,7 @@ export async function POST(req: NextRequest) {
             role: m.role === "USER" ? ("user" as const) : ("assistant" as const),
             content: m.content,
           }));
-          const summary = await generateSessionSummary(msgs).catch(() => null);
+          const summary = await generateSessionSummary(msgs, locale).catch(() => null);
           if (summary) {
             await db.therapySession.update({
               where: { id: activeSession!.id },

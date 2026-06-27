@@ -1,8 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations, useLocale } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Loader2, ShoppingCart, AlertCircle } from "lucide-react";
+import { formatModulePrice } from "@/lib/i18n/pricing";
 
 interface Props {
   moduleId: string;
@@ -17,6 +19,8 @@ export default function ModuleCheckoutButton({
   priceInCents,
   size = "default",
 }: Props) {
+  const t = useTranslations("Modules.checkout");
+  const locale = useLocale();
   const [state, setState] = useState<"idle" | "loading" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
 
@@ -28,7 +32,7 @@ export default function ModuleCheckoutButton({
       const res = await fetch("/api/stripe/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ moduleId }),
+        body: JSON.stringify({ moduleId, locale }),
       });
 
       const data = await res.json();
@@ -39,7 +43,7 @@ export default function ModuleCheckoutButton({
           window.location.reload();
           return;
         }
-        throw new Error(data.error ?? "Erro ao iniciar checkout");
+        throw new Error(data.error ?? t("error"));
       }
 
       if (data.url) {
@@ -47,13 +51,13 @@ export default function ModuleCheckoutButton({
       }
     } catch (err) {
       setState("error");
-      setErrorMsg(err instanceof Error ? err.message : "Erro desconhecido");
+      setErrorMsg(err instanceof Error ? err.message : t("unknownError"));
     }
   }
 
   const priceLabel = priceInCents
-    ? (priceInCents / 100).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })
-    : "Adquirir";
+    ? formatModulePrice(priceInCents, locale)
+    : t("acquire");
 
   return (
     <div className="space-y-2">
@@ -66,12 +70,12 @@ export default function ModuleCheckoutButton({
         {state === "loading" ? (
           <>
             <Loader2 className="h-4 w-4 animate-spin mr-2" />
-            Abrindo checkout...
+            {t("opening")}
           </>
         ) : (
           <>
             <ShoppingCart className="h-4 w-4 mr-2" />
-            {priceInCents ? `Adquirir por ${priceLabel}` : "Adquirir módulo"}
+            {priceInCents ? t("acquireFor", { price: priceLabel }) : t("acquireModule")}
           </>
         )}
       </Button>
@@ -84,7 +88,7 @@ export default function ModuleCheckoutButton({
       )}
 
       <p className="text-xs text-stone-400 text-center">
-        Acesso vitalício · Pagamento seguro via Stripe
+        {t("footer")}
       </p>
     </div>
   );

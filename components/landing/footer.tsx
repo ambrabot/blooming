@@ -1,24 +1,43 @@
-﻿import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import { Sparkles } from "lucide-react";
 
-const LINKS = {
-  Produto: [
-    { label: "Módulos", href: "#modulos" },
-    { label: "Como funciona", href: "#como-funciona" },
-    { label: "FAQ", href: "#faq" },
-  ],
-  Conta: [
-    { label: "Criar conta", href: "/register" },
-    { label: "Entrar", href: "/login" },
-    { label: "Assessment gratuito", href: "/register" },
-  ],
-  Legal: [
-    { label: "Política de privacidade", href: "/privacidade" },
-    { label: "Termos de uso", href: "/termos" },
-  ],
-};
+type FooterLink = { key: string; href: string; anchor?: boolean };
+type FooterGroup = { id: "product" | "account" | "legal"; links: FooterLink[] };
+
+const GROUPS: FooterGroup[] = [
+  {
+    id: "product",
+    links: [
+      { key: "modulos", href: "#modulos", anchor: true },
+      { key: "comoFunciona", href: "#como-funciona", anchor: true },
+      { key: "faq", href: "#faq", anchor: true },
+    ],
+  },
+  {
+    id: "account",
+    links: [
+      { key: "register", href: "/register" },
+      { key: "signIn", href: "/login" },
+      { key: "assessment", href: "/register" },
+    ],
+  },
+  {
+    id: "legal",
+    links: [
+      { key: "privacy", href: "/privacidade" },
+      { key: "terms", href: "/termos" },
+    ],
+  },
+];
+
+const LINK_CLASS =
+  "text-sm text-stone-400 hover:text-white transition-colors";
 
 export default function LandingFooter() {
+  const t = useTranslations("Landing.footer");
+  const year = new Date().getFullYear();
+
   return (
     <footer className="bg-stone-900 text-stone-400 py-16 px-6">
       <div className="max-w-6xl mx-auto">
@@ -31,31 +50,34 @@ export default function LandingFooter() {
               <span className="text-stone-600 text-sm ml-1">חַיִל</span>
             </div>
             <p className="text-sm leading-relaxed text-stone-500 max-w-xs">
-              Terapia cristã integrativa. Fé, neurociência e endocrinologia ao
-              serviço da cura profunda — para mulheres, casais, famílias e
-              líderes.
+              {t("tagline")}
             </p>
             <p className="text-xs text-stone-600 mt-4 italic">
-              "Mulher virtuosa, quem a achará?"
-              <br />— Provérbios 31:10
+              {t.rich("verse", {
+                q: (chunks) => <>&ldquo;{chunks}&rdquo;</>,
+                br: () => <br />,
+              })}
             </p>
           </div>
 
           {/* Links */}
-          {Object.entries(LINKS).map(([section, links]) => (
-            <div key={section}>
+          {GROUPS.map((group) => (
+            <div key={group.id}>
               <p className="text-xs font-medium text-stone-500 uppercase tracking-widest mb-4">
-                {section}
+                {t(`groups.${group.id}.title`)}
               </p>
               <ul className="space-y-2.5">
-                {links.map((l) => (
-                  <li key={l.label}>
-                    <Link
-                      href={l.href}
-                      className="text-sm text-stone-400 hover:text-white transition-colors"
-                    >
-                      {l.label}
-                    </Link>
+                {group.links.map((l) => (
+                  <li key={l.key}>
+                    {l.anchor ? (
+                      <a href={l.href} className={LINK_CLASS}>
+                        {t(`groups.${group.id}.${l.key}`)}
+                      </a>
+                    ) : (
+                      <Link href={l.href} className={LINK_CLASS}>
+                        {t(`groups.${group.id}.${l.key}`)}
+                      </Link>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -64,12 +86,8 @@ export default function LandingFooter() {
         </div>
 
         <div className="border-t border-stone-800 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-stone-600">
-            © {new Date().getFullYear()} BLOOMING. Todos os direitos reservados.
-          </p>
-          <p className="text-xs text-stone-600">
-            Construído com propósito · Fundamentado na Palavra
-          </p>
+          <p className="text-xs text-stone-600">{t("rights", { year })}</p>
+          <p className="text-xs text-stone-600">{t("builtWith")}</p>
         </div>
       </div>
     </footer>

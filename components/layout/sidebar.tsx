@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import {
   Home,
@@ -17,21 +17,21 @@ import {
 } from "lucide-react";
 import type { JWTPayload } from "@/lib/auth/jwt";
 
-// 5 destinos primários (sitemap aprovado)
+// 5 destinos primários (sitemap aprovado). `key` indexa o namespace Nav das mensagens.
 const PRIMARY = [
-  { href: "/dashboard", label: "Início", icon: Home, exact: true },
-  { href: "/devocional", label: "Devocional", icon: BookOpen, exact: false },
-  { href: "/sessao", label: "Rafa", icon: MessageCircle, exact: false },
-  { href: "/modulos", label: "Jornada", icon: Sprout, exact: false },
-  { href: "/comunidade", label: "Comunidade", icon: Users, exact: false },
-];
+  { href: "/dashboard", key: "home", icon: Home, exact: true },
+  { href: "/devocional", key: "devotional", icon: BookOpen, exact: false },
+  { href: "/sessao", key: "rafa", icon: MessageCircle, exact: false },
+  { href: "/modulos", key: "journey", icon: Sprout, exact: false },
+  { href: "/comunidade", key: "community", icon: Users, exact: false },
+] as const;
 
 const SECONDARY = [
-  { href: "/diario", label: "Diário", icon: NotebookPen },
-  { href: "/check-in", label: "Check-in", icon: CalendarCheck },
-  { href: "/assinatura", label: "Assinatura", icon: Sparkles },
-  { href: "/perfil", label: "Perfil", icon: User },
-];
+  { href: "/diario", key: "journal", icon: NotebookPen },
+  { href: "/check-in", key: "checkIn", icon: CalendarCheck },
+  { href: "/assinatura", key: "subscription", icon: Sparkles },
+  { href: "/perfil", key: "profile", icon: User },
+] as const;
 
 const GOLD = "#9c7a39";
 
@@ -46,14 +46,17 @@ function initials(name: string) {
 }
 
 export default function Sidebar({ user }: { user: JWTPayload }) {
+  const t = useTranslations("Nav");
   const pathname = usePathname();
+  const router = useRouter();
 
   const isActive = (href: string, exact: boolean) =>
     exact ? pathname === href : pathname === href || pathname.startsWith(href + "/");
 
   async function handleLogout() {
     await fetch("/api/auth/logout", { method: "POST" });
-    window.location.href = "/login";
+    router.push("/login");
+    router.refresh();
   }
 
   return (
@@ -65,7 +68,7 @@ export default function Sidebar({ user }: { user: JWTPayload }) {
         </span>
         <Link
           href="/perfil"
-          aria-label="Perfil"
+          aria-label={t("profile")}
           className="w-8 h-8 rounded-full border border-stone-200 bg-white flex items-center justify-center text-xs font-serif"
           style={{ color: GOLD }}
         >
@@ -88,7 +91,7 @@ export default function Sidebar({ user }: { user: JWTPayload }) {
         </div>
 
         <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
-          {PRIMARY.map(({ href, label, icon: Icon, exact }) => {
+          {PRIMARY.map(({ href, key, icon: Icon, exact }) => {
             const active = isActive(href, exact);
             return (
               <Link
@@ -102,13 +105,13 @@ export default function Sidebar({ user }: { user: JWTPayload }) {
                 )}
               >
                 <Icon className="h-[18px] w-[18px] shrink-0" style={active ? { color: GOLD } : undefined} />
-                {label}
+                {t(key)}
               </Link>
             );
           })}
 
           <div className="pt-3 mt-3 border-t border-stone-100 space-y-1">
-            {SECONDARY.map(({ href, label, icon: Icon }) => {
+            {SECONDARY.map(({ href, key, icon: Icon }) => {
               const active = isActive(href, false);
               return (
                 <Link
@@ -122,7 +125,7 @@ export default function Sidebar({ user }: { user: JWTPayload }) {
                   )}
                 >
                   <Icon className="h-4 w-4 shrink-0" />
-                  {label}
+                  {t(key)}
                 </Link>
               );
             })}
@@ -135,14 +138,14 @@ export default function Sidebar({ user }: { user: JWTPayload }) {
             className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-stone-500 hover:text-red-600 hover:bg-red-50 transition-colors w-full"
           >
             <LogOut className="h-4 w-4" />
-            Sair
+            {t("logout")}
           </button>
         </div>
       </aside>
 
       {/* Bottom tab bar mobile */}
       <nav className="md:hidden fixed bottom-0 inset-x-0 z-40 bg-white/95 backdrop-blur border-t border-stone-100 flex">
-        {PRIMARY.map(({ href, label, icon: Icon, exact }) => {
+        {PRIMARY.map(({ href, key, icon: Icon, exact }) => {
           const active = isActive(href, exact);
           return (
             <Link
@@ -152,7 +155,7 @@ export default function Sidebar({ user }: { user: JWTPayload }) {
               style={{ color: active ? "#1c1917" : "#a8a29e" }}
             >
               <Icon className="h-5 w-5" style={active ? { color: GOLD } : undefined} />
-              {label}
+              {t(key)}
             </Link>
           );
         })}

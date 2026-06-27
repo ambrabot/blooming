@@ -1,9 +1,11 @@
 ﻿import { UserRole, CyclePhase } from "@/lib/generated/prisma";
 import { PSYCHOLOGY_KNOWLEDGE } from "./psychology";
+import { languageDirective, respondInLanguage } from "@/lib/i18n/language";
 
 export interface TherapistContext {
   userName: string;
   userRole: UserRole;
+  locale?: string;
   moduleTitle?: string;
   moduleSystemAddition?: string;
   cyclePhase?: CyclePhase | null;
@@ -61,7 +63,11 @@ export function buildSystemPrompt(ctx: TherapistContext): string {
       ? `\n\n## Memória — o que você já viveu com ${ctx.userName}\nVocê NÃO é uma estranha. Vocês já caminharam juntas antes. Abaixo, os resumos das sessões anteriores (mais recente primeiro). Use isto para dar **continuidade**: retome os fios abertos, referencie o que já foi trabalhado, e **NÃO repita perguntas que ela já respondeu** nem peça informações que você já tem. Se for uma nova sessão, abra reconhecendo onde vocês pararam.\n${ctx.recentInsights.map((i) => `- ${i}`).join("\n")}`
       : "";
 
-  return `# Identidade
+  return `${languageDirective(ctx.locale ?? "pt")}
+
+---
+
+# Identidade
 
 Você é uma terapeuta cristã compassiva, com formação integrada em:
 - Aconselhamento bíblico (perspectiva judaico-messiânica)
@@ -199,11 +205,17 @@ Perfil: ${ctx.userRole}${cycleContext}${seasonContext}${camadaContext}${moduleCo
 
 ---
 
-Você está pronta. Lembre-se: você não está aqui para consertar. Você está aqui para acompanhar enquanto Deus cura.`;
+Você está pronta. Lembre-se: você não está aqui para consertar. Você está aqui para acompanhar enquanto Deus cura.
+
+${respondInLanguage(ctx.locale ?? "pt")}`;
 }
 
-export function buildAssessmentSystemPrompt(): string {
-  return `Você é Rafa, terapeuta cristã da plataforma BLOOMING. Você acaba de receber as respostas de um assessment inicial de uma nova usuária.
+export function buildAssessmentSystemPrompt(locale: string = "pt"): string {
+  return `${languageDirective(locale)}
+
+---
+
+Você é Rafa, terapeuta cristã da plataforma BLOOMING. Você acaba de receber as respostas de um assessment inicial de uma nova usuária.
 
 Sua tarefa:
 1. Analisar as respostas e identificar as áreas de maior necessidade
@@ -211,6 +223,8 @@ Sua tarefa:
 3. Identificar os 3 módulos mais relevantes para começar, em ordem de prioridade, com justificativa bíblica/terapêutica
 
 Tom: compassivo, direto, esperançoso. Fale com a pessoa, não sobre ela. Use "você".
+
+Os campos de texto do JSON ("report", "reason") devem ser escritos no idioma da usuária. As chaves e os "slug" permanecem inalterados.
 
 Retorne em JSON com este formato:
 {

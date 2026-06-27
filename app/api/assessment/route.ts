@@ -3,12 +3,13 @@ import { getSession } from "@/lib/auth/jwt";
 import { db } from "@/lib/db/client";
 import { analyzeAssessment } from "@/lib/ai/therapist";
 import { AssessmentType } from "@/lib/generated/prisma";
+import { routing } from "@/i18n/routing";
 
 export async function POST(req: NextRequest) {
   const session = await getSession();
   if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  const { type, answers } = await req.json();
+  const { type, answers, locale = "pt" } = await req.json();
   // answers: Record<questionId, value>
 
   const assessmentType = (type as AssessmentType) ?? AssessmentType.INITIAL;
@@ -51,7 +52,7 @@ export async function POST(req: NextRequest) {
   });
 
   // Analyze with AI
-  const analysis = await analyzeAssessment(readableAnswers, modulesForAI);
+  const analysis = await analyzeAssessment(readableAnswers, modulesForAI, locale);
 
   // Save report and recommendations
   await db.assessment.update({
@@ -72,6 +73,12 @@ export async function POST(req: NextRequest) {
       },
     },
   });
+
+  // O idioma escolhido no onboarding vira o idioma da conta (UI + Rafa) — o
+  // "dono" do idioma. Login futuro reidrata o cookie a partir daqui.
+  if ((routing.locales as readonly string[]).includes(locale)) {
+    await db.user.update({ where: { id: session.userId }, data: { language: locale } });
+  }
 
   return NextResponse.json({
     assessmentId: assessment.id,

@@ -1,20 +1,23 @@
-﻿"use client";
+"use client";
 
-import Link from "next/link";
 import { useState, useEffect } from "react";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { LocaleSwitcher } from "@/components/locale-switcher";
 
 const NAV_LINKS = [
-  { href: "#para-quem", label: "Para quem" },
-  { href: "#rafa", label: "A Rafa" },
-  { href: "#modulos", label: "Módulos" },
-  { href: "#como-funciona", label: "Como funciona" },
-  { href: "#faq", label: "FAQ" },
-];
+  { href: "#para-quem", key: "paraQuem" },
+  { href: "#rafa", key: "rafa" },
+  { href: "#modulos", key: "modulos" },
+  { href: "#como-funciona", key: "comoFunciona" },
+  { href: "#faq", key: "faq" },
+] as const;
 
 export default function LandingNav() {
+  const t = useTranslations("Landing.nav");
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -51,18 +54,19 @@ export default function LandingNav() {
               href={l.href}
               className="text-sm text-stone-500 hover:text-stone-800 transition-colors"
             >
-              {l.label}
+              {t(l.key)}
             </a>
           ))}
         </div>
 
         {/* CTA */}
         <div className="hidden md:flex items-center gap-3">
+          <LocaleSwitcher />
           <Button asChild variant="ghost" size="sm">
-            <Link href="/login">Entrar</Link>
+            <Link href="/login">{t("signIn")}</Link>
           </Button>
           <Button asChild size="sm" className="bg-amber-700 hover:bg-amber-800 text-white">
-            <Link href="/register">Começar agora</Link>
+            <Link href="/register">{t("getStarted")}</Link>
           </Button>
         </div>
 
@@ -85,15 +89,18 @@ export default function LandingNav() {
               className="block text-sm text-stone-600 hover:text-stone-800 py-1"
               onClick={() => setOpen(false)}
             >
-              {l.label}
+              {t(l.key)}
             </a>
           ))}
+          <div className="pt-2">
+            <LocaleSwitcher />
+          </div>
           <div className="flex gap-3 pt-2">
             <Button asChild variant="outline" size="sm" className="flex-1">
-              <Link href="/login">Entrar</Link>
+              <Link href="/login">{t("signIn")}</Link>
             </Button>
             <Button asChild size="sm" className="flex-1 bg-amber-700 hover:bg-amber-800 text-white">
-              <Link href="/register">Começar</Link>
+              <Link href="/register">{t("getStartedShort")}</Link>
             </Button>
           </div>
         </div>

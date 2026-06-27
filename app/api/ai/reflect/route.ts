@@ -7,9 +7,9 @@ export async function POST(req: NextRequest) {
   const session = await getSession();
   if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  const { entryId, content } = await req.json();
+  const { entryId, content, locale = "pt" } = await req.json();
 
-  const reflection = await generateJournalReflection(content, session.name);
+  const reflection = await generateJournalReflection(content, session.name, locale);
 
   if (entryId) {
     await db.journalEntry.update({

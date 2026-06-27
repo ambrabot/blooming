@@ -1,5 +1,6 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { buildSystemPrompt, TherapistContext } from "./system-prompt";
+import { respondInLanguage } from "@/lib/i18n/language";
 
 // Re-export TherapistContext so callers import from one place
 export type { TherapistContext } from "./system-prompt";
@@ -63,6 +64,7 @@ export async function* streamTherapistResponse(
 
 export async function generateSessionSummary(
   messages: Message[],
+  locale: string = "pt",
 ): Promise<string> {
   const transcript = messages
     .map((m) => `${m.role === "user" ? "Usuária" : "Rafa"}: ${m.content}`)
@@ -74,7 +76,7 @@ export async function generateSessionSummary(
     messages: [
       {
         role: "user",
-        content: `Resuma esta sessão terapêutica em 2-3 frases, capturando o tema central, o que emergiu, e o próximo passo. Tom: gentil, presente tense.\n\n${transcript}`,
+        content: `Resuma esta sessão terapêutica em 2-3 frases, capturando o tema central, o que emergiu, e o próximo passo. Tom: gentil, presente tense. ${respondInLanguage(locale)}\n\n${transcript}`,
       },
     ],
   });
@@ -85,6 +87,7 @@ export async function generateSessionSummary(
 export async function generateJournalReflection(
   entry: string,
   userName: string,
+  locale: string = "pt",
 ): Promise<string> {
   const response = await client.messages.create({
     model: "claude-haiku-4-5-20251001",
@@ -92,7 +95,7 @@ export async function generateJournalReflection(
     messages: [
       {
         role: "user",
-        content: `Você é Rafa, terapeuta cristã. ${userName} acabou de escrever no diário. Ofereça uma reflexão breve e acolhedora (máx. 3 frases), com uma âncora bíblica sutil se couber naturalmente. NÃO dê conselhos. Apenas acolha e aprofunde.\n\nDiário: ${entry}`,
+        content: `Você é Rafa, terapeuta cristã. ${userName} acabou de escrever no diário. Ofereça uma reflexão breve e acolhedora (máx. 3 frases), com uma âncora bíblica sutil se couber naturalmente. NÃO dê conselhos. Apenas acolha e aprofunde. ${respondInLanguage(locale)}\n\nDiário: ${entry}`,
       },
     ],
   });
@@ -103,6 +106,7 @@ export async function generateJournalReflection(
 export async function analyzeAssessment(
   answers: Record<string, string>,
   availableModules: { slug: string; title: string; description: string }[],
+  locale: string = "pt",
 ): Promise<{
   report: string;
   primaryNeeds: string[];
@@ -121,7 +125,7 @@ export async function analyzeAssessment(
   const response = await client.messages.create({
     model: "claude-sonnet-4-6",
     max_tokens: 1000,
-    system: buildAssessmentSystemPrompt(),
+    system: buildAssessmentSystemPrompt(locale),
     messages: [
       {
         role: "user",

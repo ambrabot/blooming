@@ -15,6 +15,7 @@ model User {
   password          String
   name              String
   role              UserRole  @default(WOMAN)
+  language          String    @default("pt") // idioma da conta: UI + Rafa (pt|en|es)
   resetToken        String?   @unique
   resetTokenExpiry  DateTime?
 
@@ -191,8 +192,28 @@ model Module {
   journalPrompts  JournalPromptTemplate[]
   progress        UserProgress[]
   recommendations AssessmentRecommendation[]
+  translations    ModuleTranslation[]
 
   @@map("modules")
+}
+
+// Conteúdo traduzível de um módulo, uma linha por locale (en, es).
+// PT é a língua-base (campos do próprio Module) e nunca tem linha aqui.
+model ModuleTranslation {
+  id            String   @id @default(cuid())
+  moduleId      String
+  module        Module   @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  locale        String
+  title         String?
+  subtitle      String?
+  description    String?  @db.Text
+  hebrewWord    String?
+  keyScriptures Json?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@unique([moduleId, locale])
+  @@map("module_translations")
 }
 
 model Lesson {
@@ -214,9 +235,29 @@ model Lesson {
   updatedAt   DateTime    @updatedAt
 
   progress    LessonProgress[]
+  translations LessonTranslation[]
 
   @@unique([moduleId, slug])
   @@map("lessons")
+}
+
+// Conteúdo traduzível de uma lição, uma linha por locale (en, es).
+// PT é a língua-base (campos da própria Lesson) e nunca tem linha aqui.
+model LessonTranslation {
+  id        String   @id @default(cuid())
+  lessonId  String
+  lesson    Lesson   @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  locale    String
+  title     String?
+  content   String?  @db.Text
+  scripture String?
+  prayer    String?  @db.Text
+  exercise  String?  @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([lessonId, locale])
+  @@map("lesson_translations")
 }
 
 enum LessonType {

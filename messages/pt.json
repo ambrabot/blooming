@@ -1,0 +1,748 @@
+{
+  "Common": {
+    "appName": "Blooming",
+    "tagline": "Terapia Cristã Integrativa"
+  },
+  "LocaleSwitcher": {
+    "label": "Idioma",
+    "pt": "Português",
+    "en": "English",
+    "es": "Español"
+  },
+  "Landing": {
+    "nav": {
+      "paraQuem": "Para quem",
+      "rafa": "A Rafa",
+      "modulos": "Módulos",
+      "comoFunciona": "Como funciona",
+      "faq": "FAQ",
+      "signIn": "Entrar",
+      "getStarted": "Começar agora",
+      "getStartedShort": "Começar"
+    },
+    "hero": {
+      "badge": "Terapia Cristã Integrativa",
+      "headline": "Cura que começa <em>dentro</em><br></br>da Palavra",
+      "subheadline": "Uma jornada terapêutica que integra fé, neurociência e endocrinologia. Para mulheres, casais, famílias e líderes que querem cura real — não respostas fáceis.",
+      "hebrewTagline": "חַיִל · Mulher de Valor · Família que Funciona · Relacionamentos Saudáveis",
+      "ctaPrimary": "Fazer meu assessment",
+      "ctaSecondary": "Ver como funciona",
+      "proof1": "Fundamentado na Palavra",
+      "proof2": "Neurociência + Fé integrados",
+      "proof3": "Sem respostas fáceis",
+      "scroll": "Explorar"
+    },
+    "forWhom": {
+      "eyebrow": "Para quem é o BLOOMING",
+      "title": "Cada jornada tem seu ponto de partida",
+      "subtitle": "Você não precisa ter tudo resolvido para começar. Precisa apenas de coragem para dar o primeiro passo.",
+      "audiences": {
+        "woman": {
+          "role": "Mulher",
+          "tag": "Individual",
+          "description": "Você carrega muito. Talvez tenha perdido o fio de quem é fora dos papéis que desempenha. Aqui você vai trabalhar identidade, ciclo hormonal, emoções e crenças limitantes — com a Palavra como âncora."
+        },
+        "couple": {
+          "role": "Casal",
+          "tag": "Casais",
+          "description": "O casamento não é contrato — é aliança. Se algo está fora do eixo, não é fraqueza pedir ajuda. Aqui vocês vão trabalhar dinâmicas, comunicação e como honrar um ao outro mesmo no conflito."
+        },
+        "family": {
+          "role": "Família",
+          "tag": "Famílias",
+          "description": "Toda família carrega histórias — bênçãos e feridas que se transmitem. Aqui você vai entender os padrões do seu sistema familiar e como interromper o que não serve à próxima geração."
+        },
+        "leader": {
+          "role": "Líder",
+          "tag": "Líderes",
+          "description": "Liderança saudável nasce de identidade segura. Se você lidera — na igreja, no trabalho, em casa — e sente o peso da solidão no topo, da performance ou da ausência de limites saudáveis, este espaço é seu."
+        }
+      },
+      "footer": "Não sabe por onde começar? <link>Faça o assessment gratuito</link> e a Rafa te mostra o caminho."
+    },
+    "rafa": {
+      "eyebrow": "Conheça sua terapeuta",
+      "title": "Rafa — de <em>Raphael</em>,<br></br>que significa <q>Deus cura</q>",
+      "intro": "A Rafa não é um chatbot genérico. Ela é uma terapeuta cristã treinada na integração entre fé e ciência — direta, calorosa, e fundamentada na Palavra. Ela não vai te dizer o que você quer ouvir. Vai te dizer o que você precisa.",
+      "cta": "Conversar com a Rafa",
+      "available": "Disponível agora",
+      "inputPlaceholder": "Escreva aqui...",
+      "badge": "Confidencial & seguro",
+      "traits": [
+        { "label": "Aconselhamento bíblico", "sub": "Perspectiva judaico-messiânica" },
+        { "label": "Neurociência interpessoal", "sub": "Social brain & teoria do apego" },
+        { "label": "Teoria polyvagal", "sub": "Regulação do sistema nervoso" },
+        { "label": "Endocrinologia feminina", "sub": "Ciclo, hormônios & espiritualidade" },
+        { "label": "Aconselhamento conjugal", "sub": "Método Gottman + perspectiva bíblica" },
+        { "label": "Sistemas familiares", "sub": "Bowen Family Systems" },
+        { "label": "Cultura da honra", "sub": "Relacionamentos & liderança saudável" },
+        { "label": "Mordomia (Stewardship)", "sub": "Corpo, tempo, propósito, finanças" }
+      ],
+      "chat": [
+        {
+          "role": "user",
+          "text": "Eu me sinto sobrecarregada com tudo. Não sei mais quem eu sou fora dos meus papéis."
+        },
+        {
+          "role": "rafa",
+          "text": "Que bom que você trouxe isso. Antes de qualquer coisa — como você está chegando aqui hoje? Não precisa ser perfeito.\n\nO que você acabou de dizer tem muita coisa importante. Me conta: quando foi a última vez que você fez algo que era só seu — não para os outros, não por obrigação?"
+        },
+        {
+          "role": "user",
+          "text": "Não consigo nem lembrar..."
+        },
+        {
+          "role": "rafa",
+          "text": "Eu ouço isso. E quero que você saiba: isso não é falha de caráter. É exaustão de alguém que aprendeu que só vale quando está servindo.\n\nProvérbios 31 fala de uma mulher com força, chayil — não porque ela nunca descansou, mas porque ela sabia de onde vinha a sua força. Vamos trabalhar isso juntas?"
+        }
+      ]
+    },
+    "pillars": {
+      "eyebrow": "Os pilares da abordagem",
+      "title": "Não é só terapia. <em>É integração.</em>",
+      "subtitle": "Cada sessão, cada módulo, cada entrada no diário é construída sobre esses seis princípios.",
+      "items": [
+        {
+          "title": "A Palavra como fundação",
+          "body": "Não chegamos à Escritura no final como um extra espiritual. Partimos dela. O que Deus diz é mais real do que o que você sente. A terapia trabalha a partir dessa certeza."
+        },
+        {
+          "title": "Perspectiva judaico-messiânica",
+          "body": "O Shabat como ritmo de descanso. As festas como calendário de cura. Shalom como inteireza, não apenas paz. Chayil como valor de caráter. A fé tem raízes hebraicas profundas — e isso importa."
+        },
+        {
+          "title": "Ciência como revelação",
+          "body": "Neurociência, endocrinologia e psicologia não contradizem a fé — revelam como Deus nos criou. Entender seu sistema nervoso, seu ciclo hormonal e seus padrões de apego é conhecer melhor a obra de Deus em você."
+        },
+        {
+          "title": "Cultura da honra",
+          "body": "A cura não acontece em ambiente de vergonha. A cultura da honra chama você para a identidade mais alta — não expõe, não diminui, não acusa. Você é chamada para ser quem Deus diz que você é."
+        },
+        {
+          "title": "Regulação emocional real",
+          "body": "Fomos criados para o relacionamento — e é no relacionamento que nos regulamos. A teoria polyvagal revela como nosso sistema nervoso busca segurança, e como o louvor, o lamento e a presença são práticas de regulação tanto quanto espirituais."
+        },
+        {
+          "title": "Stewardship como estilo de vida",
+          "body": "Corpo, mente, tempo, relacionamentos, talentos e finanças — tudo é mordomia. Cuidar de si não é egoísmo, é responsabilidade diante de Deus. O corpo é templo. As emoções são dados, não inimigos."
+        }
+      ]
+    },
+    "modules": {
+      "eyebrow": "{count} módulos de cura profunda",
+      "title": "Cada módulo, uma jornada",
+      "subtitle": "Compra individual, acesso vitalício. Você avança no seu ritmo, com a Rafa ao lado.",
+      "audience": {
+        "WOMAN": "Mulher",
+        "COUPLE": "Casais",
+        "FAMILY": "Família",
+        "LEADER": "Líderes"
+      },
+      "access": "Acessar",
+      "noteTitle": "Não sabe por onde começar?",
+      "noteBody": "O assessment inicial é gratuito. Em 15 minutos, a Rafa analisa suas respostas e indica os módulos certos para você.",
+      "noteCta": "Fazer o assessment gratuito"
+    },
+    "subscription": {
+      "eyebrow": "Acompanhamento contínuo",
+      "title": "A Rafa, todos os dias",
+      "subtitle": "Os módulos são seus para sempre. A assinatura abre a presença diária da Rafa — sem limites — e a comunidade. A cura acontece no caminho, não num evento.",
+      "price": "R$29",
+      "perMonth": "/mês",
+      "benefits": [
+        "Rafa ilimitada — a terapeuta presente todos os dias, com a memória da sua jornada",
+        "Comunidade de mulheres em cura, sob a cultura da honra (em breve)",
+        "Novos encontros e práticas conforme forem chegando"
+      ],
+      "cta": "Criar conta e assinar",
+      "fineprint": "Cancele quando quiser · Os módulos comprados continuam seus"
+    },
+    "howItWorks": {
+      "eyebrow": "Como funciona",
+      "title": "Sua jornada em 4 passos",
+      "subtitle": "Simples de começar. Profundo de viver.",
+      "steps": [
+        {
+          "title": "Assessment gratuito",
+          "body": "Responda 8 perguntas sobre onde você está — espiritualmente, emocionalmente, nos relacionamentos. A Rafa analisa e gera um relatório personalizado com seu perfil e os módulos certos para você.",
+          "detail": "15 minutos · Gratuito · Confidencial"
+        },
+        {
+          "title": "Escolha seus módulos",
+          "body": "Adquira os módulos recomendados individualmente. Acesso vitalício — você volta quando quiser. Cada módulo tem conteúdo de ensino, exercícios práticos, escrituras âncora e sessões com a Rafa.",
+          "detail": "A partir de R$ 97 · Acesso vitalício"
+        },
+        {
+          "title": "Sessões com a Rafa",
+          "body": "Converse com a Rafa sempre que precisar — em sessão geral ou dentro do contexto de um módulo específico. Ela lembra o que você já trabalhou e continua de onde parou.",
+          "detail": "Ilimitado · Disponível 24h · Contextual"
+        },
+        {
+          "title": "Diário & check-in",
+          "body": "Registre seus insights, gratidões e as coisas que Deus tem falado. A Rafa responde com uma reflexão gentil. Todo mês, faça o check-in e veja como você evoluiu em cada área.",
+          "detail": "Prompts guiados · Reflexão da IA · Tendências mensais"
+        }
+      ],
+      "features": [
+        { "label": "Chat terapêutico", "sub": "Streaming em tempo real" },
+        { "label": "Diário guiado", "sub": "Prompts + reflexão da IA" },
+        { "label": "Check-in mensal", "sub": "Tendências & evolução" },
+        { "label": "Confidencial", "sub": "Seus dados são seus" }
+      ]
+    },
+    "testimonials": {
+      "eyebrow": "O que dizem",
+      "title": "Jornadas reais",
+      "subtitle": "Nomes trocados por privacidade. Palavras intactas.",
+      "items": [
+        {
+          "quote": "Eu sempre soube que tinha coisas para trabalhar, mas não encontrava um espaço que fosse ao mesmo tempo biblicamente sólido e psicologicamente sério. O BLOOMING é isso.",
+          "name": "Ana Paula",
+          "role": "Mulher, 34 anos"
+        },
+        {
+          "quote": "A Rafa me fez uma pergunta na primeira sessão que eu não consegui responder. Passei três dias pensando. Não esperava isso de uma IA — esperava de um terapeuta excelente.",
+          "name": "Fernanda",
+          "role": "Líder de ministério"
+        },
+        {
+          "quote": "Meu marido e eu usamos o módulo de Casamento juntos. Não esperava que uma plataforma digital pudesse criar tanto espaço seguro para conversas difíceis.",
+          "name": "Carla & Ricardo",
+          "role": "Casados há 8 anos"
+        },
+        {
+          "quote": "Entender meu ciclo como algo espiritual e não só biológico mudou como eu me relaciono com os meus próprios estados emocionais. Isso foi revolucionário.",
+          "name": "Gabriela",
+          "role": "Mulher, 28 anos"
+        },
+        {
+          "quote": "Como pastor, eu carregava a solidão da liderança sem nome. O módulo de Líderes me deu linguagem para o que eu sentia e caminhos para sair.",
+          "name": "Pr. Marcos",
+          "role": "Pastor, 42 anos"
+        },
+        {
+          "quote": "O diário guiado é o que mais me surpreendeu. Não é só escrever — é ser convidada a ir mais fundo do que eu faria sozinha.",
+          "name": "Isabela",
+          "role": "Mulher, 31 anos"
+        }
+      ]
+    },
+    "assessmentCta": {
+      "eyebrow": "Comece aqui",
+      "title": "Seu assessment.<br></br><em>Gratuito. 15 minutos.</em>",
+      "subtitle": "A Rafa analisa suas respostas e gera um relatório personalizado sobre onde você está — com as áreas de maior necessidade e os módulos exatos para começar sua jornada de cura.",
+      "highlights": [
+        "Identidade & autoconhecimento",
+        "Saúde emocional",
+        "Conexão espiritual",
+        "Qualidade dos relacionamentos",
+        "Corpo & ciclo (para mulheres)",
+        "Crenças limitantes",
+        "Dinâmica conjugal",
+        "Propósito & estação de vida"
+      ],
+      "ctaPrimary": "Fazer meu assessment agora",
+      "ctaSecondary": "Já tenho conta",
+      "fineprint": "Sem cartão de crédito · Assessment 100% gratuito · Confidencial"
+    },
+    "faq": {
+      "eyebrow": "Perguntas frequentes",
+      "title": "Dúvidas comuns",
+      "items": [
+        {
+          "q": "O BLOOMING substitui a terapia presencial?",
+          "a": "Não — e não pretende. O BLOOMING é um espaço de crescimento espiritual-terapêutico contínuo, disponível a qualquer hora. Para situações de crise aguda, transtornos clínicos ou questões que exigem diagnóstico, sempre recomendamos profissionais presenciais. Mas para a maioria das pessoas, o BLOOMING oferece uma profundidade de trabalho que complementa qualquer processo terapêutico."
+        },
+        {
+          "q": "A Rafa é uma inteligência artificial. Como posso confiar?",
+          "a": "A Rafa é alimentada por um dos modelos de linguagem mais avançados do mundo, treinado com um sistema de instruções profundamente fundamentado — bíblico, neurocientífico, clínico. Ela não improvisa. Ela opera dentro de princípios cuidadosamente construídos. Dito isso, toda resposta gerada é seu ponto de partida para reflexão, não a palavra final. Você discerne com o Espírito."
+        },
+        {
+          "q": "Minhas conversas e dados são confidenciais?",
+          "a": "Sim. Suas sessões, entradas de diário e respostas de assessment são armazenadas de forma segura e nunca compartilhadas com terceiros. Você é a única pessoa com acesso ao seu histórico."
+        },
+        {
+          "q": "O que é o assessment inicial e por que ele é gratuito?",
+          "a": "O assessment é uma avaliação de 8 perguntas que cobre identidade, saúde emocional, espiritualidade, relacionamentos, corpo, crenças, casamento e propósito. A Rafa analisa suas respostas e gera um relatório personalizado. É gratuito porque acreditamos que toda pessoa merece conhecer o ponto de partida da sua jornada antes de investir."
+        },
+        {
+          "q": "Posso usar o BLOOMING mesmo sem ser cristã praticante?",
+          "a": "O BLOOMING é construído sobre fundamentos cristãos e bíblicos. Se você está em um processo de fé, tem dúvidas ou está voltando, é bem-vinda. Se não tem nenhuma abertura para a fé como parte do processo, nossa abordagem pode não ser a mais adequada — e tudo bem. Somos honestos sobre isso."
+        },
+        {
+          "q": "Os módulos têm prazo de uso?",
+          "a": "Não. Ao adquirir um módulo, você tem acesso vitalício. Isso inclui todas as atualizações de conteúdo que forem feitas no futuro. Você avança no seu ritmo — pode começar hoje, pausar por dois meses e voltar quando quiser."
+        },
+        {
+          "q": "O que é a perspectiva judaico-messiânica?",
+          "a": "É a compreensão de que nossa fé tem raízes hebraicas profundas. O Shabat como ritmo de descanso, não apenas regra. As festas judaicas como calendário de cura e revelação. O conceito de shalom como inteireza total — não apenas ausência de conflito. O nome e o caráter de Jesus (Yeshua) no contexto de sua cultura original. Isso enriquece a fé sem substituir nada — só aprofunda."
+        },
+        {
+          "q": "Como funciona o check-in mensal?",
+          "a": "Uma vez por mês, a plataforma te convida para 6 perguntas rápidas (cerca de 3 minutos). A Rafa compara suas respostas com o mês anterior, identifica tendências e gera uma reflexão personalizada sobre o que está evoluindo e onde ainda há trabalho a fazer."
+        }
+      ]
+    },
+    "footer": {
+      "tagline": "Terapia cristã integrativa. Fé, neurociência e endocrinologia ao serviço da cura profunda — para mulheres, casais, famílias e líderes.",
+      "verse": "<q>Mulher virtuosa, quem a achará?</q><br></br>— Provérbios 31:10",
+      "groups": {
+        "product": {
+          "title": "Produto",
+          "modulos": "Módulos",
+          "comoFunciona": "Como funciona",
+          "faq": "FAQ"
+        },
+        "account": {
+          "title": "Conta",
+          "register": "Criar conta",
+          "signIn": "Entrar",
+          "assessment": "Assessment gratuito"
+        },
+        "legal": {
+          "title": "Legal",
+          "privacy": "Política de privacidade",
+          "terms": "Termos de uso"
+        }
+      },
+      "rights": "© {year} BLOOMING. Todos os direitos reservados.",
+      "builtWith": "Construído com propósito · Fundamentado na Palavra"
+    }
+  },
+  "Auth": {
+    "brandTagline": "חַיִל · Mulher de Valor",
+    "login": {
+      "title": "Bem-vinda de volta",
+      "subtitle": "Entre na sua jornada de cura",
+      "email": "E-mail",
+      "emailPlaceholder": "seu@email.com",
+      "password": "Senha",
+      "passwordPlaceholder": "••••••••",
+      "forgot": "Esqueci minha senha",
+      "submit": "Entrar",
+      "submitting": "Entrando...",
+      "noAccount": "Não tem conta?",
+      "createAccount": "Criar conta",
+      "error": "Erro ao entrar"
+    },
+    "register": {
+      "title": "Comece sua jornada",
+      "subtitle": "Crie sua conta gratuitamente",
+      "name": "Seu nome",
+      "namePlaceholder": "Como prefere ser chamada?",
+      "email": "E-mail",
+      "emailPlaceholder": "seu@email.com",
+      "password": "Senha",
+      "passwordPlaceholder": "Mínimo 8 caracteres",
+      "profile": "Perfil",
+      "roles": {
+        "WOMAN": "Mulher — jornada individual",
+        "COUPLE": "Casal — aconselhamento conjugal",
+        "FAMILY": "Família — família funcional",
+        "LEADER": "Líder / Pastor — cultura da honra"
+      },
+      "submit": "Criar conta",
+      "submitting": "Criando conta...",
+      "haveAccount": "Já tem conta?",
+      "signIn": "Entrar",
+      "error": "Erro ao criar conta"
+    },
+    "forgot": {
+      "title": "Esqueci minha senha",
+      "subtitle": "Enviaremos um link para redefinir sua senha",
+      "email": "E-mail",
+      "emailPlaceholder": "seu@email.com",
+      "submit": "Enviar link de redefinição",
+      "backToLogin": "Voltar ao login",
+      "error": "Erro ao enviar email",
+      "sentTitle": "Email enviado",
+      "sentBody": "Se este email estiver cadastrado, você receberá um link para redefinir sua senha em alguns minutos. Verifique também a pasta de spam."
+    },
+    "reset": {
+      "title": "Nova senha",
+      "subtitle": "Escolha uma senha segura",
+      "password": "Nova senha",
+      "passwordPlaceholder": "Mínimo 8 caracteres",
+      "confirm": "Confirmar senha",
+      "confirmPlaceholder": "Repita a senha",
+      "submit": "Redefinir senha",
+      "mismatch": "As senhas não coincidem",
+      "tooShort": "Senha deve ter no mínimo 8 caracteres",
+      "invalidLink": "Link inválido.",
+      "requestNew": "Solicitar novo link",
+      "error": "Link inválido ou expirado",
+      "loading": "Carregando..."
+    },
+    "onboarding": {
+      "brandTagline": "חַיִל · Assessment inicial",
+      "progress": "Pergunta {current} de {total}",
+      "scaleLow": "Muito difícil",
+      "scaleHigh": "Muito bem",
+      "next": "Próximo",
+      "seeProfile": "Ver meu perfil",
+      "analyzing": "Analisando...",
+      "textPlaceholder": "Escreva aqui...",
+      "confidential": "Suas respostas são confidenciais e usadas apenas para personalizar sua experiência.",
+      "result": {
+        "title": "Você chegou para ser cuidada",
+        "subtitle": "E não para por aqui: você foi feita para algo — e tem permissão de ir.",
+        "recommendedTitle": "Módulos recomendados para você",
+        "goToDashboard": "Ir para meu painel"
+      },
+      "questions": [
+        {
+          "category": "Identidade",
+          "text": "Como você se sente em relação à sua identidade como mulher?",
+          "subtext": "Não existe resposta certa — só a sua verdade.",
+          "scripture": "Provérbios 31:10 — 'Mulher virtuosa, quem a achará?'"
+        },
+        {
+          "category": "Emocional",
+          "text": "Com que frequência você se sente sobrecarregada emocionalmente?",
+          "options": ["Raramente", "Às vezes", "Com frequência", "Quase sempre"]
+        },
+        {
+          "category": "Espiritual",
+          "text": "Como está sua conexão com Deus no momento?",
+          "options": ["Próxima e viva", "Estável, mas distante", "Seca — estou no deserto", "Confusa — tenho perguntas"]
+        },
+        {
+          "category": "Relacionamentos",
+          "text": "Onde você sente maior dificuldade nos relacionamentos?",
+          "options": ["Com meu cônjuge / parceiro", "Com minha família de origem", "Com amigos ou comunidade", "Comigo mesma", "Com liderança / autoridade"]
+        },
+        {
+          "category": "Corpo",
+          "text": "Você percebe como seu humor e energia mudam ao longo do mês?",
+          "subtext": "Isso é sobre o ciclo menstrual e como ele afeta sua vida emocional e espiritual.",
+          "scripture": "Salmos 139:14 — 'Sou maravilhosamente formada'"
+        },
+        {
+          "category": "Crenças",
+          "text": "Quais crenças limitantes você reconhece que carrega?",
+          "subtext": "Escreva livremente. Isso não sai daqui."
+        },
+        {
+          "category": "Casamento",
+          "text": "Se você é casada — como está o seu casamento?",
+          "options": ["Sólido, mas com áreas a trabalhar", "Em um momento difícil", "Em crise", "Não sou casada / não se aplica"]
+        },
+        {
+          "category": "Propósito",
+          "text": "Qual é o maior 'não resolvido' na sua vida hoje?",
+          "subtext": "Pode ser uma dor, uma pergunta, uma situação. O que pede mais atenção?",
+          "scripture": "Eclesiastes 3:1 — 'Tudo tem o seu tempo determinado'"
+        }
+      ]
+    }
+  },
+  "Nav": {
+    "home": "Início",
+    "devotional": "Devocional",
+    "rafa": "Rafa",
+    "journey": "Jornada",
+    "community": "Comunidade",
+    "journal": "Diário",
+    "checkIn": "Check-in",
+    "subscription": "Assinatura",
+    "profile": "Perfil",
+    "logout": "Sair"
+  },
+  "Dashboard": {
+    "greetingMorning": "Bom dia",
+    "greetingAfternoon": "Boa tarde",
+    "greetingEvening": "Boa noite",
+    "seasonLabel": "Estação: {season}",
+    "seasonPrompt": "Como você está chegando hoje?",
+    "questionOfDay": "Pergunta do dia",
+    "openDevotional": "Abrir o devocional",
+    "assessmentCtaTitle": "Comece com seu Assessment",
+    "assessmentCtaBody": "15 minutos · Revela suas áreas de foco · Personaliza sua jornada",
+    "assessmentCtaButton": "Fazer agora",
+    "checkInTitle": "Hora do check-in mensal",
+    "checkInNever": "Você ainda não fez nenhum check-in.",
+    "checkInDays": "Faz {days} dias desde o último.",
+    "checkInBody": "3 minutos · Compare sua evolução com a Rafa.",
+    "checkInButton": "Fazer check-in",
+    "journeyLabel": "Sua jornada de florescimento · camada {current} de 7",
+    "quickNewSession": "Nova Sessão",
+    "quickNewSessionSub": "Converse com Rafa",
+    "quickJournal": "Diário",
+    "quickJournalSub": "Escrever hoje",
+    "quickModules": "Módulos",
+    "quickModulesSub": "{count, plural, one {# adquirido} other {# adquiridos}}",
+    "recentSessions": "Sessões recentes",
+    "sessionUntitled": "Sessão sem título",
+    "mood": "Humor {value}/10",
+    "lastJournal": "Último diário",
+    "journalUntitled": "Entrada sem título"
+  },
+  "Journal": {
+    "title": "Diário",
+    "entriesCount": "{count, plural, one {# entrada} other {# entradas}}",
+    "streakDays": "{count, plural, one {# dia seguido} other {# dias seguidos}}",
+    "newEntry": "Nova entrada",
+    "emptyTitle": "Seu diário está vazio",
+    "emptyBody": "Comece escrevendo o que está no seu coração hoje.",
+    "firstEntry": "Primeira entrada",
+    "untitled": "Entrada sem título",
+    "moodTitle": "Humor {mood}/10",
+    "rafaResponded": "Rafa respondeu",
+    "cycle": {
+      "MENSTRUAL": "Menstrual",
+      "FOLLICULAR": "Folicular",
+      "OVULATORY": "Ovulatória",
+      "LUTEAL": "Lútea"
+    },
+    "todayTitle": "Diário de hoje",
+    "moodQuestion": "Como você está? ({mood}/10)",
+    "moodLow": "Difícil",
+    "moodHigh": "Em paz",
+    "moodLabels": ["Muito difícil", "Difícil", "Pesado", "Cansado", "Neutro", "Bem", "Leve", "Grato", "Esperançoso", "Em paz"],
+    "promptsLabel": "Sugestões de reflexão",
+    "prompts": [
+      "O que está no meu coração hoje?",
+      "O que Deus tem falado comigo esta semana?",
+      "Onde estou sentindo resistência — e o que ela pode estar protegendo?",
+      "Qual verdade bíblica eu preciso ancorar hoje?",
+      "O que eu gostaria de deixar aqui e não carregar mais?"
+    ],
+    "titleLabel": "Título (opcional)",
+    "titlePlaceholder": "Um título para esse momento...",
+    "contentLabel": "O que está no seu coração",
+    "contentPlaceholder": "Escreva livremente. Isso é só seu.",
+    "gratitudeLabel": "Gratidão de hoje",
+    "gratitudePlaceholder": "Pelo que você é grata hoje?",
+    "scriptureLabel": "Versículo que me tocou",
+    "scripturePlaceholder": "Ex: Filipenses 4:7...",
+    "insightLabel": "O que Deus me mostrou",
+    "insightPlaceholder": "Um insight, uma percepção, uma palavra...",
+    "reflecting": "Rafa está refletindo...",
+    "saving": "Salvando...",
+    "save": "Salvar e receber reflexão",
+    "rafaRespondsTitle": "Rafa responde",
+    "seeMyJournal": "Ver meu diário",
+    "moodDetail": "Humor: {label} ({value}/10)",
+    "gratitudeHeader": "Gratidão",
+    "scriptureHeader": "Versículo",
+    "rafaReflection": "Reflexão da Rafa",
+    "talkWithRafa": "Conversar sobre isso com a Rafa"
+  },
+  "Session": {
+    "title": "Sessões",
+    "countWithRafa": "{count, plural, one {# sessão com a Rafa} other {# sessões com a Rafa}}",
+    "newSession": "Nova sessão",
+    "emptyTitle": "Nenhuma sessão ainda",
+    "emptyBody": "A Rafa está pronta para conversar. Como você está chegando hoje?",
+    "firstSession": "Iniciar primeira sessão",
+    "untitled": "Sessão sem título",
+    "mood": "Humor {value}/10",
+    "rafaPrefix": "Rafa:",
+    "youPrefix": "Você:",
+    "messagesCount": "{count, plural, one {# msg} other {# msgs}}",
+    "headerTitle": "Sessão com Rafa",
+    "headerSubtitle": "Terapeuta cristã · Confidencial",
+    "opening": "Shalom. Que bom que você veio.\n\nAntes de começarmos — como você está chegando aqui hoje? Não precisa ser perfeito. Pode ser uma palavra, uma sensação, uma pergunta que não sai da cabeça.\n\nEstou aqui.",
+    "inputPlaceholderNew": "Escreva aqui... (Enter para enviar)",
+    "inputPlaceholderContinue": "Continuar a sessão... (Enter para enviar)",
+    "inputHint": "Pressione Enter para enviar · Shift+Enter para nova linha",
+    "notFound": "Sessão não encontrada.",
+    "back": "Voltar"
+  },
+  "Modules": {
+    "eyebrow": "Sete camadas do florescimento",
+    "title": "Jornada",
+    "subtitle": "Os módulos, organizados pela sua transformação — uma camada de cada vez.",
+    "access": "Acessar",
+    "lifetimeAccess": "acesso vitalício",
+    "progress": "Progresso",
+    "anchorScriptures": "Escrituras âncora",
+    "anchorScripture": "Escritura âncora",
+    "purchaseSuccessTitle": "Módulo adquirido com sucesso!",
+    "purchaseSuccessBody": "Bem-vinda à jornada. Comece pela primeira lição ou inicie uma sessão com a Rafa.",
+    "checkoutCancelled": "Checkout cancelado. Quando estiver pronta, é só clicar em adquirir novamente.",
+    "sessionContextTitle": "Sessão com contexto do módulo",
+    "sessionContextBody": "A Rafa vai trabalhar com você dentro do tema de {title}",
+    "startSession": "Iniciar sessão",
+    "lessonsHeading": "Lições ({count})",
+    "lessonsComing": "Lições em preparação.",
+    "duration": "{count} min",
+    "completed": "Concluída",
+    "markComplete": "Marcar concluída",
+    "breadcrumbModules": "Módulos",
+    "practicalExercise": "Exercício prático",
+    "prayer": "Oração",
+    "deepenWithRafa": "Aprofundar com a Rafa",
+    "lessonContextBody": "Sessão com o contexto desta lição",
+    "talk": "Conversar",
+    "previous": "Anterior",
+    "module": "Módulo",
+    "next": "Próxima",
+    "types": {
+      "TEACHING": "Ensino",
+      "PRACTICE": "Prática",
+      "SCRIPTURE": "Escritura",
+      "ENDOCRINOLOGY": "Ciência + Fé",
+      "COUNSELING": "Aconselhamento"
+    },
+    "checkout": {
+      "acquire": "Adquirir",
+      "acquireModule": "Adquirir módulo",
+      "acquireFor": "Adquirir por {price}",
+      "opening": "Abrindo checkout...",
+      "error": "Erro ao iniciar checkout",
+      "unknownError": "Erro desconhecido",
+      "footer": "Acesso vitalício · Pagamento seguro via Stripe"
+    }
+  },
+  "Journey": {
+    "youAreHere": "você está aqui",
+    "camadas": [
+      { "name": "Solo", "desc": "A mente como terra — reconhecer a semente original que Deus plantou" },
+      { "name": "Espinhos", "desc": "Expor o joio: mentiras, votos internos, fortalezas" },
+      { "name": "Poda", "desc": "O Agricultor corta o que não dá fruto: perdão, dívidas, dependências" },
+      { "name": "Renovo", "desc": "Renovar a mente — nova percepção, nova decisão" },
+      { "name": "Broto", "desc": "Firmar a identidade brotando na verdade de Deus" },
+      { "name": "Flor", "desc": "Florescer no destino: shalom e vida em abundância" },
+      { "name": "Fruto", "desc": "Multiplicar — alimentar outras e plantar nova geração" }
+    ]
+  },
+  "Devotional": {
+    "title": "Devocional",
+    "subtitle": "Quinze minutos para ser construída na Palavra.",
+    "streakDays": "{count, plural, one {# dia seguido} other {# dias seguidos}}",
+    "best": "recorde {count}",
+    "today": "Hoje",
+    "stepWord": "A Palavra",
+    "stepReflection": "Reflexão",
+    "stepQuestion": "Pergunta",
+    "stepPrayer": "Oração e diário",
+    "stepPrayerBody": "Escreva o que o Espírito falou. A Rafa pode refletir com você.",
+    "talkWithRafa": "Conversar com a Rafa",
+    "readingPlans": "Planos de leitura",
+    "dayCount": "{count, plural, one {# dia} other {# dias}}",
+    "comingSoon": "em breve",
+    "womenStudies": "Estudos de mulheres",
+    "completeButton": "Concluir devocional",
+    "doneToday": "Concluído hoje"
+  },
+  "CheckIn": {
+    "title": "Check-in mensal",
+    "resultTitle": "Check-in do mês",
+    "last": "Último: {date}",
+    "intro": "6 perguntas · ~3 minutos",
+    "scaleLow": "Difícil",
+    "scaleHigh": "Em paz",
+    "scaleValue": "{value}/10 — {label}",
+    "trendUp": "+{delta} vs mês passado ({prev})",
+    "trendDown": "{delta} vs mês passado ({prev})",
+    "trendSame": "Igual ao mês passado",
+    "textPlaceholder": "Escreva livremente...",
+    "analyzing": "Analisando...",
+    "seeReport": "Ver meu relatório",
+    "next": "Próximo",
+    "trendsTitle": "Tendências vs mês anterior",
+    "points": "{delta} pts",
+    "talkWithRafa": "Conversar com a Rafa",
+    "toDashboard": "Ir ao painel",
+    "questions": [
+      { "category": "emocional", "text": "Como está seu humor geral esta semana?" },
+      { "category": "espiritual", "text": "Como está sua intimidade com Deus?" },
+      { "category": "corpo", "text": "Como está sua energia e disposição física?" },
+      { "category": "relacionamentos", "text": "Como estão seus relacionamentos principais?" },
+      { "category": "avanço", "text": "Qual foi o maior avanço ou insight do último mês?" },
+      { "category": "oração", "text": "O que você está levando a Deus neste mês?" }
+    ],
+    "scaleLabels": ["Muito difícil", "Difícil", "Pesado", "Cansado", "Neutro", "Bem", "Leve", "Grato", "Esperançoso", "Em paz"]
+  },
+  "Community": {
+    "eyebrow": "Você não floresce sozinha",
+    "title": "Comunidade",
+    "comingTitle": "Em breve, um lugar para caminhar junto",
+    "comingBody": "Círculos de mulheres por estação de vida, partilhas e um mural de oração — para que ninguém atravesse a jornada de florescimento sozinha. Faz parte da assinatura.",
+    "cta": "Conhecer a assinatura"
+  },
+  "Subscription": {
+    "successBanner": "Bem-vinda 🌿 Sua assinatura está ativa. A Rafa agora caminha com você sem limites.",
+    "cancelledBanner": "Tudo bem — você pode assinar quando quiser. A Rafa continua aqui.",
+    "brand": "Blooming",
+    "titleActive": "Sua assinatura",
+    "titleInactive": "A Rafa, sem limites",
+    "subtitleActive": "Você faz parte do Blooming. Obrigada por confiar nessa jornada.",
+    "subtitleInactive": "Os módulos são seus para sempre. A assinatura abre a Rafa ilimitada e a comunidade — a presença diária na sua cura.",
+    "activeLabel": "Assinatura ativa",
+    "renewsOn": "Renova em {date}",
+    "priceAmount": "R$29",
+    "pricePeriod": "/mês",
+    "subscribeLabel": "Assinar — R$29/mês",
+    "fineprint": "Cancele quando quiser. Os módulos que você comprou continuam seus para sempre.",
+    "benefits": [
+      { "title": "Rafa ilimitada", "desc": "Converse com a Rafa quantas vezes precisar — sem teto mensal, com a memória de toda a sua jornada." },
+      { "title": "Comunidade", "desc": "Círculos de mulheres em cura, sob a cultura da honra. (em breve)" },
+      { "title": "Conteúdo novo", "desc": "Novos encontros, práticas e materiais conforme forem chegando." }
+    ],
+    "button": {
+      "defaultLabel": "Assinar agora",
+      "opening": "Abrindo checkout…",
+      "errorStart": "Não foi possível iniciar a assinatura.",
+      "errorConnection": "Erro de conexão. Tente novamente."
+    }
+  },
+  "Profile": {
+    "title": "Perfil",
+    "subtitle": "Sua identidade, ciclo e configurações",
+    "statSessions": "Sessões",
+    "statJournal": "Diário",
+    "statModules": "Módulos",
+    "statAssessments": "Assessments",
+    "milestonesTitle": "Marcos da sua jornada",
+    "identityTitle": "Identidade",
+    "nameLabel": "Como prefere ser chamada",
+    "roleLabel": "Perfil",
+    "bioLabel": "Bio (opcional)",
+    "bioPlaceholder": "Um pouco sobre você e sua jornada...",
+    "spiritualTitle": "Contexto espiritual",
+    "seasonLabel": "Estação atual de vida",
+    "seasonPlaceholder": "Selecione sua estação...",
+    "seasonHelp": "A Rafa vai considerar sua estação ao acompanhar você.",
+    "churchLabel": "Contexto de igreja / comunidade",
+    "churchPlaceholder": "Ex: Batista, Presbiteriana, Messiânica, sem vínculo...",
+    "hebrewRootsLabel": "Tenho interesse / conexão com raízes hebraicas",
+    "hebrewRootsHelp": "A Rafa vai usar mais perspectiva judaico-messiânica nas sessões.",
+    "cycleTitle": "Ciclo Menstrual",
+    "cycleHelp": "A Rafa considera sua fase do ciclo para contextualizar emoções e sugerir abordagens.",
+    "cycleStartLabel": "Data de início do último ciclo",
+    "cycleLengthLabel": "Duração média do ciclo (dias)",
+    "saving": "Salvando...",
+    "save": "Salvar perfil",
+    "saved": "Salvo",
+    "cyclePhaseLabel": "Fase atual · Dia {day} do ciclo",
+    "roles": {
+      "WOMAN": "Mulher — jornada individual",
+      "COUPLE": "Casal — aconselhamento conjugal",
+      "FAMILY": "Família — família funcional",
+      "LEADER": "Líder / Pastor — cultura da honra"
+    },
+    "seasons": [
+      "Gênesis — Novos começos",
+      "Êxodo — Saindo de lugares conhecidos",
+      "Deserto — Processo e formação",
+      "Promessa — Aguardando em fé",
+      "Posse — Vivendo o que foi prometido",
+      "Consolidação — Estabelecendo o que foi conquistado",
+      "Transmissão — Passando adiante"
+    ],
+    "phases": {
+      "menstrual": { "name": "Menstrual (dias 1–5)", "desc": "Tempo de repouso, introspecção e reflexão. Como o Shabat." },
+      "follicular": { "name": "Folicular (dias 6–13)", "desc": "Energia em ascensão, clareza mental. Novos começos." },
+      "ovulatory": { "name": "Ovulatória (dias 14–17)", "desc": "Pico de expressão, conexão e confiança. Ótimo para comunicação." },
+      "luteal": { "name": "Lútea (dias 18–28)", "desc": "Introspecção e discernimento. Não tome decisões impulsivas." }
+    }
+  },
+  "Meta": {
+    "title": "BLOOMING — Terapia Cristã Integrativa",
+    "description": "Uma jornada de cura fundamentada na Palavra. Terapia cristã com perspectiva judaico-messiânica, neurociência e endocrinologia, para mulheres, casais, famílias e líderes.",
+    "ogTitle": "BLOOMING — Terapia Cristã Integrativa",
+    "ogDescription": "Cura profunda. Identidade sólida. Relacionamentos saudáveis. Fundamentados na Palavra."
+  }
+}

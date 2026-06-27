@@ -1,14 +1,18 @@
+import { useTranslations } from "next-intl";
 import { CAMADAS, statusFor } from "@/lib/journey";
 import { cn } from "@/lib/utils";
 
 const ROMAN = ["", "I", "II", "III", "IV", "V", "VI", "VII"];
 
 export default function JourneyTrail({ current }: { current: number }) {
+  const t = useTranslations("Journey");
+  const camadaText = t.raw("camadas") as { name: string; desc: string }[];
   return (
     <div>
       {CAMADAS.map((c, i) => {
         const status = statusFor(c.n, current);
         const last = i === CAMADAS.length - 1;
+        const ct = camadaText[c.n - 1] ?? { name: c.name, desc: c.desc };
         return (
           <div key={c.n} className="flex gap-4 pb-4 last:pb-0">
             <div className="relative w-6 shrink-0 flex justify-center">
@@ -38,14 +42,14 @@ export default function JourneyTrail({ current }: { current: number }) {
                 )}
               >
                 <span className="text-stone-400 font-normal mr-2">{ROMAN[c.n]}</span>
-                {c.name}
+                {ct.name}
                 {status === "current" && (
                   <span className="ml-2 inline-block text-[10px] uppercase tracking-wider text-[#9c7a39] border border-[#d8c39a] rounded-full px-2 py-0.5 align-middle">
-                    você está aqui
+                    {t("youAreHere")}
                   </span>
                 )}
               </p>
-              <p className="text-[13px] text-stone-500 mt-0.5 leading-snug">{c.desc}</p>
+              <p className="text-[13px] text-stone-500 mt-0.5 leading-snug">{ct.desc}</p>
             </div>
           </div>
         );

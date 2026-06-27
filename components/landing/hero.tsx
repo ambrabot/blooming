@@ -1,8 +1,13 @@
-import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, ArrowDown } from "lucide-react";
 
+const PROOF_EMOJI = ["🌿", "🌸", "💛"];
+
 export default function HeroSection() {
+  const t = useTranslations("Landing.hero");
+
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-stone-50 via-amber-50/60 to-rose-50/40 px-6 pt-16">
       {/* Texture overlay */}
@@ -17,28 +22,26 @@ export default function HeroSection() {
         {/* Hebrew badge */}
         <div className="inline-flex items-center gap-2 bg-amber-100/80 border border-amber-200 rounded-full px-4 py-1.5 text-xs text-amber-800 font-medium mb-8">
           <span className="text-base">✦</span>
-          Terapia Cristã Integrativa
+          {t("badge")}
           <span className="text-base">✦</span>
         </div>
 
         {/* Headline */}
         <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl text-stone-800 leading-[1.1] tracking-tight mb-6">
-          Cura que começa{" "}
-          <span className="italic text-amber-700">dentro</span>
-          <br />
-          da Palavra
+          {t.rich("headline", {
+            em: (chunks) => <span className="italic text-amber-700">{chunks}</span>,
+            br: () => <br />,
+          })}
         </h1>
 
         {/* Subheadline */}
         <p className="text-lg md:text-xl text-stone-500 max-w-2xl mx-auto leading-relaxed mb-4">
-          Uma jornada terapêutica que integra fé, neurociência e endocrinologia.
-          Para mulheres, casais, famílias e líderes que querem cura real — não
-          respostas fáceis.
+          {t("subheadline")}
         </p>
 
         {/* Hebrew tagline */}
         <p className="text-sm text-amber-700 font-medium tracking-widest uppercase mb-10">
-          חַיִל · Mulher de Valor · Família que Funciona · Relacionamentos Saudáveis
+          {t("hebrewTagline")}
         </p>
 
         {/* CTAs */}
@@ -49,7 +52,7 @@ export default function HeroSection() {
             className="bg-amber-700 hover:bg-amber-800 text-white h-12 px-8 text-base rounded-full"
           >
             <Link href="/register">
-              Fazer meu assessment
+              {t("ctaPrimary")}
               <ChevronRight className="h-4 w-4 ml-1" />
             </Link>
           </Button>
@@ -59,7 +62,7 @@ export default function HeroSection() {
             size="lg"
             className="h-12 px-8 text-base rounded-full border-stone-300 text-stone-600"
           >
-            <a href="#como-funciona">Ver como funciona</a>
+            <a href="#como-funciona">{t("ctaSecondary")}</a>
           </Button>
         </div>
 
@@ -67,7 +70,7 @@ export default function HeroSection() {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-stone-400">
           <div className="flex items-center gap-2">
             <div className="flex -space-x-2">
-              {["🌿", "🌸", "💛"].map((e, i) => (
+              {PROOF_EMOJI.map((e, i) => (
                 <div
                   key={i}
                   className="w-7 h-7 rounded-full bg-stone-100 border-2 border-white flex items-center justify-center text-xs"
@@ -76,12 +79,12 @@ export default function HeroSection() {
                 </div>
               ))}
             </div>
-            <span>Fundamentado na Palavra</span>
+            <span>{t("proof1")}</span>
           </div>
           <span className="hidden sm:block text-stone-200">·</span>
-          <span>Neurociência + Fé integrados</span>
+          <span>{t("proof2")}</span>
           <span className="hidden sm:block text-stone-200">·</span>
-          <span>Sem respostas fáceis</span>
+          <span>{t("proof3")}</span>
         </div>
       </div>
 
@@ -90,7 +93,7 @@ export default function HeroSection() {
         href="#para-quem"
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-stone-300 hover:text-stone-500 transition-colors"
       >
-        <span className="text-xs tracking-widest uppercase">Explorar</span>
+        <span className="text-xs tracking-widest uppercase">{t("scroll")}</span>
         <ArrowDown className="h-4 w-4 animate-bounce" />
       </a>
     </section>

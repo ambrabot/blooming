@@ -4,6 +4,7 @@ import { db } from "@/lib/db/client";
 import { setSessionCookie } from "@/lib/auth/jwt";
 import { UserRole } from "@/lib/generated/prisma";
 import { rateLimit, clientIp } from "@/lib/rate-limit";
+import { routing } from "@/i18n/routing";
 
 export async function POST(req: NextRequest) {
   const ip = clientIp(req);
@@ -11,7 +12,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Muitas tentativas. Aguarde alguns minutos." }, { status: 429 });
   }
 
-  const { name, email, password, role } = await req.json();
+  const { name, email, password, role, language } = await req.json();
 
   if (!name || !email || !password) {
     return NextResponse.json({ error: "Dados obrigatórios ausentes" }, { status: 400 });
@@ -34,6 +35,7 @@ export async function POST(req: NextRequest) {
     UserRole.LEADER,
   ];
   const userRole = SELF_SIGNUP_ROLES.includes(role) ? (role as UserRole) : UserRole.WOMAN;
+  const lang = (routing.locales as readonly string[]).includes(language) ? language : "pt";
 
   const user = await db.user.create({
     data: {
@@ -41,11 +43,18 @@ export async function POST(req: NextRequest) {
       email: email.toLowerCase(),
       password: hashed,
       role: userRole,
+      language: lang,
       profile: { create: {} },
     },
   });
 
   await setSessionCookie({ userId: user.id, email: user.email, name: user.name, role: user.role });
 
-  return NextResponse.json({ ok: true });
+  const res = NextResponse.json({ ok: true, locale: lang });
+  res.cookies.set("NEXT_LOCALE", lang, {
+    path: "/",
+    maxAge: 60 * 60 * 24 * 365,
+    sameSite: "lax",
+  });
+  return res;
 }
