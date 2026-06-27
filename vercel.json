@@ -1,0 +1,5 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "prisma generate && node scripts/ensure-prisma-barrel.mjs && next build",
+  "framework": "nextjs"
+}
