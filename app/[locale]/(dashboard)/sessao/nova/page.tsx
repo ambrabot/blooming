@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, Suspense } from "react";
 import { useTranslations, useLocale } from "next-intl";
+import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Send, Loader2 } from "lucide-react";
@@ -12,11 +13,15 @@ interface Message {
   content: string;
 }
 
-export default function NovaSessionPage() {
+function NovaSessionInner() {
   const t = useTranslations("Session");
   const locale = useLocale();
+  // Vindo do onboarding (?welcome=1): a Rafa abre ciente do assessment recém-feito
+  // — a primeira conversa, o momento de ativação. O contexto do assessment já entra
+  // no /api/ai/chat, então a resposta dela à 1ª fala da usuária já é pessoal.
+  const welcome = useSearchParams().get("welcome") === "1";
   const [messages, setMessages] = useState<Message[]>(() => [
-    { role: "assistant", content: t("opening") },
+    { role: "assistant", content: t(welcome ? "openingWelcome" : "opening") },
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -160,5 +165,13 @@ export default function NovaSessionPage() {
         </p>
       </div>
     </div>
+  );
+}
+
+export default function NovaSessionPage() {
+  return (
+    <Suspense fallback={null}>
+      <NovaSessionInner />
+    </Suspense>
   );
 }

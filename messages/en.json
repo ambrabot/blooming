@@ -387,7 +387,8 @@
         "title": "You came here to be cared for",
         "subtitle": "And it doesn't stop here: you were made for something — and you have permission to go.",
         "recommendedTitle": "Modules recommended for you",
-        "goToDashboard": "Go to my dashboard"
+        "goToDashboard": "Go to my dashboard",
+        "talkToRafa": "Talk with Rafa about this"
       },
       "questions": [
         {
@@ -488,7 +489,8 @@
     "continueJourney": "Continue your journey",
     "camadaProgress": "Layer {n} · {name}",
     "secondaryRafa": "Talk with Rafa",
-    "secondaryJournal": "Write in your journal"
+    "secondaryJournal": "Write in your journal",
+    "rootLabel": "Roots · {count, plural, =0 {your presence begins today} one {# day of presence} other {# days of presence}}"
   },
   "Journal": {
     "title": "Journal",
@@ -556,6 +558,7 @@
     "headerTitle": "Session with Rafa",
     "headerSubtitle": "Christian therapist · Confidential",
     "opening": "Shalom. I'm so glad you came.\n\nBefore we begin — how are you arriving here today? It doesn't have to be perfect. It can be a word, a feeling, a question that won't leave your mind.\n\nI'm here.",
+    "openingWelcome": "Shalom. I've just read what you shared in your initial map — and before anything else, thank you for being honest.\n\nWe don't need to solve anything now. I just want to hear you. Of everything you answered, what weighed the most? What would you most like me to understand about you?\n\nI'm here.",
     "inputPlaceholderNew": "Write here... (Enter to send)",
     "inputPlaceholderContinue": "Continue the session... (Enter to send)",
     "inputHint": "Press Enter to send · Shift+Enter for a new line",

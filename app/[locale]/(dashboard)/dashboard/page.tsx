@@ -5,7 +5,7 @@ import { db } from "@/lib/db/client";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { MessageCircle, NotebookPen, ArrowRight } from "lucide-react";
+import { MessageCircle, NotebookPen, ArrowRight, Sprout } from "lucide-react";
 import { CAMADAS, computeCurrentCamada } from "@/lib/journey";
 import { getStreak } from "@/lib/presence";
 import { getDailyDevotional } from "@/lib/devotionals";
@@ -184,9 +184,20 @@ export default async function DashboardPage() {
 
       {/* Jornada de florescimento */}
       <div className="mb-8 rounded-lg border border-stone-200 bg-white p-6">
-        <p className="text-[11px] uppercase tracking-[0.16em] text-stone-400 font-semibold mb-4">
-          {t("journeyLabel", { current: currentCamada })}
-        </p>
+        <div className="flex items-center justify-between gap-3 mb-4">
+          <p className="text-[11px] uppercase tracking-[0.16em] text-stone-400 font-semibold">
+            {t("journeyLabel", { current: currentCamada })}
+          </p>
+          {/* Eixo "raiz": fidelidade diária (streak) alimenta a jornada, não só a
+              compra de módulo. Profundidade = camada; raiz = presença. */}
+          <span
+            className="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-[0.1em] font-semibold shrink-0"
+            style={{ color: "#6e7b61" }}
+          >
+            <Sprout className="h-3.5 w-3.5" />
+            {t("rootLabel", { count: streak.current })}
+          </span>
+        </div>
         <JourneyTrail current={currentCamada} />
       </div>
 

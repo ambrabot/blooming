@@ -165,11 +165,18 @@ export default function OnboardingPage() {
           )}
           <Button
             className="w-full bg-amber-700 hover:bg-amber-800 text-white"
-            onClick={() => router.push("/dashboard")}
+            onClick={() => router.push("/sessao/nova?welcome=1")}
           >
-            {t("result.goToDashboard")}
+            {t("result.talkToRafa")}
             <ChevronRight className="h-4 w-4 ml-1" />
           </Button>
+          <button
+            type="button"
+            onClick={() => router.push("/dashboard")}
+            className="w-full text-center text-sm text-stone-500 mt-3 hover:text-stone-700"
+          >
+            {t("result.goToDashboard")}
+          </button>
         </div>
       </div>
     );

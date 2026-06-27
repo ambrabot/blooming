@@ -387,7 +387,8 @@
         "title": "Você chegou para ser cuidada",
         "subtitle": "E não para por aqui: você foi feita para algo — e tem permissão de ir.",
         "recommendedTitle": "Módulos recomendados para você",
-        "goToDashboard": "Ir para meu painel"
+        "goToDashboard": "Ir para meu painel",
+        "talkToRafa": "Conversar com a Rafa sobre isto"
       },
       "questions": [
         {
@@ -488,7 +489,8 @@
     "continueJourney": "Continuar tua jornada",
     "camadaProgress": "Camada {n} · {name}",
     "secondaryRafa": "Conversar com a Rafa",
-    "secondaryJournal": "Escrever no diário"
+    "secondaryJournal": "Escrever no diário",
+    "rootLabel": "Raiz · {count, plural, =0 {tua presença começa hoje} one {# dia de presença} other {# dias de presença}}"
   },
   "Journal": {
     "title": "Diário",
@@ -556,6 +558,7 @@
     "headerTitle": "Sessão com Rafa",
     "headerSubtitle": "Terapeuta cristã · Confidencial",
     "opening": "Shalom. Que bom que você veio.\n\nAntes de começarmos — como você está chegando aqui hoje? Não precisa ser perfeito. Pode ser uma palavra, uma sensação, uma pergunta que não sai da cabeça.\n\nEstou aqui.",
+    "openingWelcome": "Shalom. Eu acabei de ler o que você compartilhou no seu mapa inicial — e antes de qualquer coisa, obrigada por ter sido honesta.\n\nA gente não precisa resolver nada agora. Só quero te ouvir. Do que você respondeu, o que mais pesou? O que você mais gostaria que eu entendesse sobre você?\n\nEstou aqui.",
     "inputPlaceholderNew": "Escreva aqui... (Enter para enviar)",
     "inputPlaceholderContinue": "Continuar a sessão... (Enter para enviar)",
     "inputHint": "Pressione Enter para enviar · Shift+Enter para nova linha",

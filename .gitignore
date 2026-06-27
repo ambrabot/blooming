@@ -43,3 +43,6 @@ next-env.d.ts
 /lib/generated/prisma
 # O barrel index.ts é manual (não regenerado pelo prisma generate) — versionar.
 !/lib/generated/prisma/index.ts
+
+.vercel
+.env*
