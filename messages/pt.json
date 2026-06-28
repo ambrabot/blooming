@@ -492,6 +492,34 @@
     "secondaryJournal": "Escrever no diário",
     "rootLabel": "Raiz · {count, plural, =0 {tua presença começa hoje} one {# dia de presença} other {# dias de presença}}"
   },
+  "Garden": {
+    "title": "Meu Jardim",
+    "prompt": "O que você está cultivando?",
+    "beds": {
+      "voce": "Você",
+      "casamento": "Casamento",
+      "familia": "Família",
+      "amizades": "Amizades",
+      "casa": "Casa",
+      "trabalho": "Trabalho",
+      "deus": "Deus",
+      "legado": "Legado"
+    },
+    "states": {
+      "aCultivar": "a cultivar",
+      "seco": "pede cuidado",
+      "aRegar": "a regar",
+      "brotando": "brotando",
+      "verdejando": "verdejando",
+      "florescendo": "florescendo"
+    },
+    "needsWater": "precisa de rega",
+    "tendQuestion": "Como esta área da sua vida está florescendo agora?",
+    "scaleLow": "seca",
+    "scaleHigh": "florescendo",
+    "notePlaceholder": "uma linha do que você está cultivando aqui (opcional)",
+    "tendSave": "Regar este canteiro"
+  },
   "Journal": {
     "title": "Diário",
     "entriesCount": "{count, plural, one {# entrada} other {# entradas}}",

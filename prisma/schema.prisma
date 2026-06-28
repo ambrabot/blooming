@@ -39,6 +39,7 @@ model User {
   milestones     Milestone[]
   devotionalLogs DevotionalLog[]
   streakState    StreakState?
+  gardenBeds     GardenBed[]
 
   @@map("users")
 }
@@ -441,6 +442,25 @@ model DevotionalLog {
 
   @@unique([userId, date])
   @@map("devotional_logs")
+}
+
+// Um canteiro do Jardim — uma área da vida que a Jardineira cultiva (Você,
+// Casamento, Família, Amizades, Casa, Trabalho, Deus, Legado). O Jardim mede
+// CULTIVO, não humor: florescimento 1-5 + quão recente foi regado. Sem linha =
+// área ainda não cultivada (neutra, nunca "falha"). key = chave estável do eixo.
+model GardenBed {
+  id           String    @id @default(cuid())
+  userId       String
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  key          String    // voce | casamento | familia | amizades | casa | trabalho | deus | legado
+  flourishing  Int?      // 1..5 (autoavaliação de quanto floresce); null = ainda não cultivado
+  note         String?   // uma linha do que está cultivando aqui
+  lastTendedAt DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@unique([userId, key])
+  @@map("garden_beds")
 }
 
 // Estado durável do streak de "Presença" — devocional OU Rafa OU diário alimentam

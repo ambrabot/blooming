@@ -492,6 +492,34 @@
     "secondaryJournal": "Write in your journal",
     "rootLabel": "Roots · {count, plural, =0 {your presence begins today} one {# day of presence} other {# days of presence}}"
   },
+  "Garden": {
+    "title": "My Garden",
+    "prompt": "What are you cultivating?",
+    "beds": {
+      "voce": "You",
+      "casamento": "Marriage",
+      "familia": "Family",
+      "amizades": "Friendships",
+      "casa": "Home",
+      "trabalho": "Work",
+      "deus": "God",
+      "legado": "Legacy"
+    },
+    "states": {
+      "aCultivar": "to cultivate",
+      "seco": "needs care",
+      "aRegar": "to water",
+      "brotando": "budding",
+      "verdejando": "greening",
+      "florescendo": "flourishing"
+    },
+    "needsWater": "needs water",
+    "tendQuestion": "How is this area of your life flourishing right now?",
+    "scaleLow": "dry",
+    "scaleHigh": "flourishing",
+    "notePlaceholder": "one line on what you're cultivating here (optional)",
+    "tendSave": "Water this bed"
+  },
   "Journal": {
     "title": "Journal",
     "entriesCount": "{count, plural, one {# entry} other {# entries}}",

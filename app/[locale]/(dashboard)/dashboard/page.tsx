@@ -12,6 +12,7 @@ import { getDailyDevotional } from "@/lib/devotionals";
 import { dateLocale } from "@/lib/i18n/format";
 import JourneyTrail from "@/components/journey/journey-trail";
 import TodayRitual from "@/components/dashboard/today-ritual";
+import MyGarden from "@/components/garden/my-garden";
 
 export default async function DashboardPage() {
   const [session, t, tJourney, locale] = await Promise.all([
@@ -25,7 +26,7 @@ export default async function DashboardPage() {
     return null;
   }
 
-  const [user, recentSessions, recentJournal, assessment, recentCheckIn, userProgress, streak] =
+  const [user, recentSessions, recentJournal, assessment, recentCheckIn, userProgress, streak, gardenBeds] =
     await Promise.all([
       db.user.findUnique({
         where: { id: session.userId },
@@ -58,7 +59,23 @@ export default async function DashboardPage() {
         },
       }),
       getStreak(session.userId),
+      db.gardenBed.findMany({
+        where: { userId: session.userId },
+        select: { key: true, flourishing: true, note: true, lastTendedAt: true },
+      }),
     ]);
+
+  const gardenInitial: Record<
+    string,
+    { flourishing: number | null; note: string | null; lastTendedAt: string | null }
+  > = {};
+  for (const b of gardenBeds) {
+    gardenInitial[b.key] = {
+      flourishing: b.flourishing,
+      note: b.note,
+      lastTendedAt: b.lastTendedAt ? b.lastTendedAt.toISOString() : null,
+    };
+  }
 
   const hour = new Date().getHours();
   const timeGreeting =
@@ -101,6 +118,11 @@ export default async function DashboardPage() {
             : t("seasonPrompt")}
         </p>
       </div>
+
+      {/* Meu Jardim — a Home assinatura (Opção B): hero das 8 áreas da vida que a
+          Jardineira cultiva. Eixo de AMPLITUDE; a jornada das camadas (abaixo) é a
+          PROFUNDIDADE. Mede cultivo, não humor. */}
+      {hasAssessment && <MyGarden initial={gardenInitial} />}
 
       {/* Ritual de hoje — passo único do dia + presença inline + streak/graça */}
       <TodayRitual
