@@ -11,6 +11,7 @@ import {
   Users,
   NotebookPen,
   CalendarCheck,
+  MessagesSquare,
   Sparkles,
   User,
   LogOut,
@@ -28,6 +29,7 @@ const PRIMARY = [
 
 const SECONDARY = [
   { href: "/diario", key: "journal", icon: NotebookPen },
+  { href: "/conversa", key: "conversation", icon: MessagesSquare },
   { href: "/check-in", key: "checkIn", icon: CalendarCheck },
   { href: "/assinatura", key: "subscription", icon: Sparkles },
   { href: "/perfil", key: "profile", icon: User },

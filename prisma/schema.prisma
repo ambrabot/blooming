@@ -40,6 +40,7 @@ model User {
   devotionalLogs DevotionalLog[]
   streakState    StreakState?
   gardenBeds     GardenBed[]
+  conversations  Conversation[]
 
   @@map("users")
 }
@@ -453,6 +454,38 @@ model DevotionalLog {
 
   @@unique([userId, date])
   @@map("devotional_logs")
+}
+
+// Conversation Engine — preparar uma conversa difícil ANTES (verdade + honra) e
+// debriefar DEPOIS (o que aprendi de mim, do outro, e do vínculo). Transforma
+// conversa em aprendizado (Art. 4 — crescimento é relacional). Link opcional a um
+// canteiro do Jardim. status: PREPARED → DONE.
+model Conversation {
+  id            String    @id @default(cuid())
+  userId        String
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  withWhom      String?   // com quem é a conversa
+  topic         String?   // sobre o que
+  gardenKey     String?   // área da vida (canteiro do Jardim)
+
+  // Preparação (antes)
+  preserve      String?   @db.Text // o que você deseja preservar nessa conversa
+  fear          String?   @db.Text // o que você teme perder
+  otherPreserve String?   @db.Text // o que o outro deseja preservar
+  howTruth      String?   @db.Text // como comunicar verdade sem perder honra
+
+  // Debrief (depois)
+  status        String    @default("PREPARED") // PREPARED | DONE
+  learnedSelf   String?   @db.Text // o que aprendi sobre mim
+  learnedOther  String?   @db.Text // o que aprendi sobre o outro
+  closeness     String?   // closer | distant | same
+  reflection    String?   @db.Text // observação da Rafa sobre o arco da conversa
+  conversedAt   DateTime?
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@map("conversations")
 }
 
 // Um canteiro do Jardim — uma área da vida que a Jardineira cultiva (Você,

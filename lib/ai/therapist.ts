@@ -103,6 +103,61 @@ export async function generateJournalReflection(
   return response.content[0].type === "text" ? response.content[0].text : "";
 }
 
+// Conversation Engine — depois de uma conversa difícil, a Rafa lê o arco (a
+// preparação + o debrief) e devolve uma observação que honra o esforço relacional.
+// Constituição: verdade+amor, padrão não rótulo, responsabilidade da própria pessoa,
+// termina com pergunta. Nunca toma partido nem rotula o outro.
+export async function generateConversationReflection(
+  userName: string,
+  arc: {
+    withWhom: string | null;
+    preserve: string | null;
+    fear: string | null;
+    otherPreserve: string | null;
+    howTruth: string | null;
+    learnedSelf: string | null;
+    learnedOther: string | null;
+    closeness: string | null;
+  },
+  locale: string = "pt",
+): Promise<string> {
+  const line = (label: string, v: string | null) => (v ? `${label}: ${v}` : null);
+  const body = [
+    line("Com quem", arc.withWhom),
+    line("O que queria preservar", arc.preserve),
+    line("O que temia perder", arc.fear),
+    line("O que o outro queria preservar", arc.otherPreserve),
+    line("Como tentou dizer a verdade com honra", arc.howTruth),
+    line("O que aprendeu sobre si", arc.learnedSelf),
+    line("O que aprendeu sobre o outro", arc.learnedOther),
+    line("O vínculo", arc.closeness),
+  ]
+    .filter(Boolean)
+    .join("\n");
+
+  const response = await client.messages.create({
+    model: "claude-haiku-4-5-20251001",
+    max_tokens: 240,
+    messages: [
+      {
+        role: "user",
+        content: `Você é Rafa, terapeuta cristã do BLOOMING. ${userName} preparou uma conversa difícil e agora registrou como foi. Eis o arco:
+
+${body}
+
+Devolva uma observação breve (máx. 3 frases) que honre o esforço relacional dela, seguindo sem exceção:
+- Nomeie um PADRÃO ou um crescimento que você percebe — nunca rotule a outra pessoa ("ele é...", "ela é...") nem tome partido.
+- Devolva o foco ao que está sob a responsabilidade DELA (agência), com gentileza — não cobre, não culpe.
+- Honre a coragem de buscar verdade com honra; o vínculo importa mais do que vencer.
+- Termine com UMA pergunta que aprofunde o aprendizado para a próxima conversa.
+${respondInLanguage(locale)}`,
+      },
+    ],
+  });
+
+  return response.content[0].type === "text" ? response.content[0].text : "";
+}
+
 // Motor de Evolução — reflexão de cultivo de UM canteiro do Jardim. A Rafa lê os
 // registros do diário marcados àquela área (gardenKey) + o estado do canteiro, e
 // devolve uma observação que mede CULTIVO (padrão ao longo do tempo), nunca humor.
