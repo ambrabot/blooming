@@ -41,8 +41,15 @@ export async function POST(req: NextRequest) {
     },
   });
 
-  // Award milestone if module completed
+  // Award milestone if module completed (no idioma da conta)
   if (pct === 100) {
+    const u = await db.user.findUnique({ where: { id: session.userId }, select: { language: true } });
+    const loc = u?.language === "en" ? "en" : u?.language === "es" ? "es" : "pt";
+    const M = {
+      pt: { title: "Módulo concluído!", description: "Você completou todas as lições deste módulo." },
+      en: { title: "Module completed!", description: "You finished every lesson in this module." },
+      es: { title: "¡Módulo completado!", description: "Completaste todas las lecciones de este módulo." },
+    }[loc];
     await db.milestone.upsert({
       where: {
         // Use a synthetic unique check — create only if not exists
@@ -53,8 +60,8 @@ export async function POST(req: NextRequest) {
         userId: session.userId,
         type: "MODULE_COMPLETED",
         moduleId,
-        title: "Módulo concluído!",
-        description: "Você completou todas as lições deste módulo.",
+        title: M.title,
+        description: M.description,
       },
       update: {},
     }).catch(() => {

@@ -28,23 +28,38 @@ function utcDateOnly(now: Date): Date {
   return new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
 }
 
-// Títulos com enquadramento bíblico (PT — mesmo padrão dos milestones existentes,
-// que são literais. Localizar é refino futuro).
-function milestoneText(streak: number): { title: string; description: string } {
-  switch (streak) {
-    case 3:
-      return { title: "3 dias de presença", description: "Três dias seguidos diante Dele. O hábito está nascendo." };
-    case 7:
-      return { title: "7 dias — uma semana de presença", description: "Uma semana inteira de fidelidade. Deus honra o que se repete no secreto." };
-    case 21:
-      return { title: "21 dias de presença", description: "Três semanas. O que era esforço já está virando raiz." };
-    case 40:
-      return { title: "40 dias — uma estação no deserto", description: "Quarenta dias é tempo bíblico de transformação. Você atravessou." };
-    case 100:
-      return { title: "100 dias de presença", description: "Cem dias plantada na presença. Isto é uma vida sendo reescrita." };
-    default:
-      return { title: `${streak} dias de presença`, description: `${streak} dias de fidelidade.` };
-  }
+// Títulos de milestone com enquadramento bíblico, no idioma da conta (PT/EN/ES).
+function milestoneText(streak: number, locale: string): { title: string; description: string } {
+  const loc = locale === "en" ? "en" : locale === "es" ? "es" : "pt";
+  const T: Record<string, Record<number, { title: string; description: string }>> = {
+    pt: {
+      3: { title: "3 dias de presença", description: "Três dias seguidos diante Dele. O hábito está nascendo." },
+      7: { title: "7 dias — uma semana de presença", description: "Uma semana inteira de fidelidade. Deus honra o que se repete no secreto." },
+      21: { title: "21 dias de presença", description: "Três semanas. O que era esforço já está virando raiz." },
+      40: { title: "40 dias — uma estação no deserto", description: "Quarenta dias é tempo bíblico de transformação. Você atravessou." },
+      100: { title: "100 dias de presença", description: "Cem dias plantada na presença. Isto é uma vida sendo reescrita." },
+    },
+    en: {
+      3: { title: "3 days of presence", description: "Three days in a row before Him. The habit is being born." },
+      7: { title: "7 days — a week of presence", description: "A whole week of faithfulness. God honors what is repeated in secret." },
+      21: { title: "21 days of presence", description: "Three weeks. What was effort is already becoming root." },
+      40: { title: "40 days — a season in the desert", description: "Forty days is the biblical time of transformation. You crossed it." },
+      100: { title: "100 days of presence", description: "A hundred days planted in His presence. This is a life being rewritten." },
+    },
+    es: {
+      3: { title: "3 días de presencia", description: "Tres días seguidos delante de Él. El hábito está naciendo." },
+      7: { title: "7 días — una semana de presencia", description: "Una semana entera de fidelidad. Dios honra lo que se repite en lo secreto." },
+      21: { title: "21 días de presencia", description: "Tres semanas. Lo que era esfuerzo ya se está volviendo raíz." },
+      40: { title: "40 días — una estación en el desierto", description: "Cuarenta días es tiempo bíblico de transformación. Lo atravesaste." },
+      100: { title: "100 días de presencia", description: "Cien días plantada en su presencia. Esto es una vida siendo reescrita." },
+    },
+  };
+  const fallback: Record<string, { title: string; description: string }> = {
+    pt: { title: `${streak} dias de presença`, description: `${streak} dias de fidelidade.` },
+    en: { title: `${streak} days of presence`, description: `${streak} days of faithfulness.` },
+    es: { title: `${streak} días de presencia`, description: `${streak} días de fidelidad.` },
+  };
+  return T[loc][streak] ?? fallback[loc];
 }
 
 /**
@@ -105,7 +120,9 @@ export async function recordPresence(
 
   const milestone = (PRESENCE_MILESTONES as readonly number[]).includes(current) ? current : null;
   if (milestone) {
-    const { title, description } = milestoneText(milestone);
+    // idioma da conta → o milestone fica gravado já no idioma certo
+    const u = await db.user.findUnique({ where: { id: userId }, select: { language: true } });
+    const { title, description } = milestoneText(milestone, u?.language ?? "pt");
     await db.milestone
       .create({
         data: { userId, type: "JOURNAL_STREAK", title, description, metadata: { streak: milestone } },

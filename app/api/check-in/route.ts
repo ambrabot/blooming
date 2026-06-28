@@ -1,6 +1,7 @@
 ﻿import { NextRequest, NextResponse } from "next/server";
 import { getSession } from "@/lib/auth/jwt";
 import { db } from "@/lib/db/client";
+import { respondInLanguage } from "@/lib/i18n/language";
 import Anthropic from "@anthropic-ai/sdk";
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
@@ -11,7 +12,7 @@ export async function POST(req: NextRequest) {
   const session = await getSession();
   if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  const { answers } = await req.json();
+  const { answers, locale = "pt" } = await req.json();
 
   // Fetch last PERIODIC assessment for trend comparison
   const last = await db.assessment.findFirst({
@@ -75,7 +76,7 @@ Escreva uma reflexão breve (3-4 parágrafos) que:
 3. Aponta uma área de atenção gentilmente
 4. Termina com uma âncora bíblica ou palavra de encorajamento
 
-Tom: íntimo, caloroso, direto. Fale com a pessoa, não sobre ela.`,
+Tom: íntimo, caloroso, direto. Fale com a pessoa, não sobre ela. ${respondInLanguage(locale)}`,
       },
     ],
   });

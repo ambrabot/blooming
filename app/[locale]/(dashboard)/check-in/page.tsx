@@ -71,7 +71,7 @@ export default function CheckInPage() {
     const res = await fetch("/api/check-in", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ answers: formatted }),
+      body: JSON.stringify({ answers: formatted, locale }),
     });
 
     const data = await res.json();

@@ -163,14 +163,15 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
   });
 
   if (purchaseCount === 1) {
+    const u = await db.user.findUnique({ where: { id: userId }, select: { language: true } });
+    const loc = u?.language === "en" ? "en" : u?.language === "es" ? "es" : "pt";
+    const M = {
+      pt: { title: "Primeira jornada começou", description: "Você adquiriu seu primeiro módulo. A cura começa com um passo." },
+      en: { title: "Your first journey has begun", description: "You acquired your first module. Healing begins with one step." },
+      es: { title: "Tu primera jornada comenzó", description: "Adquiriste tu primer módulo. La sanidad empieza con un paso." },
+    }[loc];
     await db.milestone.create({
-      data: {
-        userId,
-        type: "MODULE_STARTED",
-        moduleId,
-        title: "Primeira jornada começou ✨",
-        description: "Você adquiriu seu primeiro módulo. A cura começa com um passo.",
-      },
+      data: { userId, type: "MODULE_STARTED", moduleId, title: M.title, description: M.description },
     }).catch(() => {}); // ignore if already exists
   }
 

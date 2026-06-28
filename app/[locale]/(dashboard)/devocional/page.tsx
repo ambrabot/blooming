@@ -1,7 +1,7 @@
 import { getTranslations, getLocale } from "next-intl/server";
 import { redirect, Link } from "@/i18n/navigation";
 import { getSession } from "@/lib/auth/jwt";
-import { getDailyDevotional, READING_PLANS, THEMATIC_STUDIES } from "@/lib/devotionals";
+import { getDailyDevotional, getReadingPlans, getThematicStudies } from "@/lib/devotionals";
 import { getStreak } from "@/lib/presence";
 import { Flame, MessageCircle } from "lucide-react";
 import CompleteButton from "@/components/devocional/complete-button";
@@ -20,7 +20,7 @@ export default async function DevocionalPage() {
   }
 
   const now = new Date();
-  const dev = getDailyDevotional(now);
+  const dev = getDailyDevotional(now, locale);
 
   // Streak unificado de "Presença" (devocional OU Rafa OU diário) — o mesmo número
   // do dashboard, com graça. Não recalcula só pelo devocional.
@@ -88,7 +88,7 @@ export default async function DevocionalPage() {
           {t("readingPlans")}
         </p>
         <div className="divide-y divide-stone-100">
-          {READING_PLANS.map((p) => (
+          {getReadingPlans(locale).map((p) => (
             <div key={p.slug} className="flex items-center gap-3 py-4 first:pt-1 last:pb-0">
               <div className="flex-1">
                 <p className="font-medium text-[14.5px] text-stone-800">{p.title}</p>
@@ -108,7 +108,7 @@ export default async function DevocionalPage() {
           {t("womenStudies")}
         </p>
         <div className="flex flex-wrap gap-2">
-          {THEMATIC_STUDIES.map((t) => (
+          {getThematicStudies(locale).map((t) => (
             <span
               key={t}
               className="text-[13px] border border-stone-200 rounded-full px-3.5 py-1.5 text-stone-500"

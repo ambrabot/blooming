@@ -71,7 +71,7 @@ export default async function DashboardPage() {
     if (p.completedAt || p.lessonProgress.length > 0) touched.add(p.module.slug);
   }
   const currentCamada = computeCurrentCamada(touched, hasAssessment);
-  const dev = getDailyDevotional(new Date());
+  const dev = getDailyDevotional(new Date(), locale);
 
   // Próximo passo da jornada: a camada atual e seu primeiro módulo (rota direta
   // para continuar/desbloquear — liga o ritual diário à transformação macro).
