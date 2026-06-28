@@ -349,6 +349,17 @@ model JournalEntry {
   insight      String?
   cyclePhase   CyclePhase?
   aiReflection String?                @db.Text
+
+  // Journaling de 4 perspectivas (método Blooming): evento → emoção → empatia →
+  // dinâmica. A 4ª (o que aconteceu com o RELACIONAMENTO) é a inovação. Opcionais
+  // e estruturadas p/ a IA ler padrões por área. gardenKey liga a entrada a um
+  // canteiro do Jardim (a ponte journaling → cultivo).
+  pEvent       String?                @db.Text // O que aconteceu
+  pEmotion     String?                @db.Text // O que aconteceu dentro de mim
+  pEmpathy     String?                @db.Text // O que talvez acontecia no outro
+  pDynamic     String?                @db.Text // O que aconteceu com o relacionamento
+  gardenKey    String?                // voce|casamento|familia|amizades|casa|trabalho|deus|legado
+
   createdAt    DateTime               @default(now())
   updatedAt    DateTime               @updatedAt
 

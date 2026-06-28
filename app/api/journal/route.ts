@@ -2,13 +2,18 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSession } from "@/lib/auth/jwt";
 import { db } from "@/lib/db/client";
 import { recordPresence } from "@/lib/presence";
+import { isGardenKey } from "@/lib/garden";
 
 export async function POST(req: NextRequest) {
   const session = await getSession();
   if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  const { title, content, gratitude, scripture, insight, mood, promptId, moduleId } =
-    await req.json();
+  const {
+    title, content, gratitude, scripture, insight, mood, promptId, moduleId,
+    pEvent, pEmotion, pEmpathy, pDynamic, gardenKey,
+  } = await req.json();
+
+  const clean = (v: unknown) => (typeof v === "string" && v.trim() ? v.trim() : null);
 
   if (!content?.trim()) {
     return NextResponse.json({ error: "Conteúdo obrigatório" }, { status: 400 });
@@ -25,6 +30,11 @@ export async function POST(req: NextRequest) {
       mood: mood ? Number(mood) : null,
       promptId: promptId || null,
       moduleId: moduleId || null,
+      pEvent: clean(pEvent),
+      pEmotion: clean(pEmotion),
+      pEmpathy: clean(pEmpathy),
+      pDynamic: clean(pDynamic),
+      gardenKey: typeof gardenKey === "string" && isGardenKey(gardenKey) ? gardenKey : null,
     },
   });
 
