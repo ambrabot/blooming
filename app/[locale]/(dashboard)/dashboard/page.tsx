@@ -61,19 +61,20 @@ export default async function DashboardPage() {
       getStreak(session.userId),
       db.gardenBed.findMany({
         where: { userId: session.userId },
-        select: { key: true, flourishing: true, note: true, lastTendedAt: true },
+        select: { key: true, flourishing: true, note: true, lastTendedAt: true, reflection: true },
       }),
     ]);
 
   const gardenInitial: Record<
     string,
-    { flourishing: number | null; note: string | null; lastTendedAt: string | null }
+    { flourishing: number | null; note: string | null; lastTendedAt: string | null; reflection: string | null }
   > = {};
   for (const b of gardenBeds) {
     gardenInitial[b.key] = {
       flourishing: b.flourishing,
       note: b.note,
       lastTendedAt: b.lastTendedAt ? b.lastTendedAt.toISOString() : null,
+      reflection: b.reflection,
     };
   }
 

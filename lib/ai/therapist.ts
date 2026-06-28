@@ -103,6 +103,51 @@ export async function generateJournalReflection(
   return response.content[0].type === "text" ? response.content[0].text : "";
 }
 
+// Motor de Evolução — reflexão de cultivo de UM canteiro do Jardim. A Rafa lê os
+// registros do diário marcados àquela área (gardenKey) + o estado do canteiro, e
+// devolve uma observação que mede CULTIVO (padrão ao longo do tempo), nunca humor.
+// Governada pela Constituição: padrão, não rótulo; pergunta, não diagnóstico; honra.
+export async function generateGardenReflection(
+  gardenName: string,
+  userName: string,
+  bed: { flourishing: number | null; note: string | null },
+  entries: string[],
+  locale: string = "pt",
+): Promise<string> {
+  const state =
+    bed.flourishing != null
+      ? `A pessoa marcou este canteiro em ${bed.flourishing}/5${bed.note ? ` ("${bed.note}")` : ""}.`
+      : "A pessoa ainda não avaliou este canteiro.";
+  const corpus = entries.length
+    ? entries.map((e, i) => `Registro ${i + 1}:\n${e}`).join("\n\n")
+    : "(ainda não há registros do diário ligados a esta área)";
+
+  const response = await client.messages.create({
+    model: "claude-haiku-4-5-20251001",
+    max_tokens: 240,
+    messages: [
+      {
+        role: "user",
+        content: `Você é Rafa, terapeuta cristã do BLOOMING. Está observando o canteiro "${gardenName}" do jardim de ${userName} — uma área da vida dela.
+
+${state}
+
+O que ${userName} registrou sobre esta área (diário de 4 perspectivas — evento, emoção, empatia, dinâmica do relacionamento):
+${corpus}
+
+Devolva uma observação de CULTIVO desta área (máx. 3 frases), seguindo, sem exceção:
+- Nomeie um PADRÃO que você percebe ao longo do tempo, nunca um rótulo. Jamais diga "você é..." ou "ele/ela é..." (nada de "narcisista", "tóxico", diagnóstico). Diga "percebo um padrão de...".
+- Honre a pessoa e o caminho — ela é uma Jardineira cultivando, não um problema a consertar.
+- Meça frutos/cultivo, não humor. Se há pouco registro, convide com gentileza a cultivar, sem cobrar.
+- Termine com UMA pergunta que aprofunde — você desenvolve o pensamento dela, não a dependência das suas respostas.
+${respondInLanguage(locale)}`,
+      },
+    ],
+  });
+
+  return response.content[0].type === "text" ? response.content[0].text : "";
+}
+
 export async function analyzeAssessment(
   answers: Record<string, string>,
   availableModules: { slug: string; title: string; description: string }[],

@@ -467,6 +467,13 @@ model GardenBed {
   flourishing  Int?      // 1..5 (autoavaliação de quanto floresce); null = ainda não cultivado
   note         String?   // uma linha do que está cultivando aqui
   lastTendedAt DateTime?
+
+  // Motor de Evolução: a Rafa lê os registros do diário marcados a este canteiro
+  // (gardenKey) + o estado, e devolve uma observação de cultivo (padrão, não rótulo;
+  // pergunta, não diagnóstico — Constituição). Gerada sob demanda, guardada aqui.
+  reflection   String?   @db.Text
+  reflectedAt  DateTime?
+
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
 

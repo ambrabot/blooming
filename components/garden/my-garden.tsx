@@ -15,6 +15,7 @@ import {
   X,
   type LucideIcon,
 } from "lucide-react";
+import { useLocale } from "next-intl";
 import { GARDENS, bedState, type GardenKey } from "@/lib/garden";
 
 // O Jardim — a Home assinatura (Opção B): hero no topo do dashboard. Cada canteiro
@@ -37,15 +38,36 @@ export interface BedData {
   flourishing: number | null;
   note: string | null;
   lastTendedAt: string | null;
+  reflection: string | null;
 }
 
 export default function MyGarden({ initial }: { initial: Record<string, BedData> }) {
   const t = useTranslations("Garden");
+  const locale = useLocale();
   const [beds, setBeds] = useState<Record<string, BedData>>(initial);
   const [active, setActive] = useState<GardenKey | null>(null);
   const [score, setScore] = useState(3);
   const [note, setNote] = useState("");
   const [saving, setSaving] = useState(false);
+  const [reflecting, setReflecting] = useState(false);
+
+  async function reflect() {
+    if (!active || reflecting) return;
+    setReflecting(true);
+    try {
+      const res = await fetch("/api/garden/reflect", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ key: active, gardenName: t(`beds.${active}`), locale }),
+      });
+      if (res.ok) {
+        const { reflection } = await res.json();
+        setBeds((prev) => ({ ...prev, [active]: { ...prev[active], reflection } }));
+      }
+    } finally {
+      setReflecting(false);
+    }
+  }
 
   function open(key: GardenKey) {
     const b = beds[key];
@@ -67,7 +89,12 @@ export default function MyGarden({ initial }: { initial: Record<string, BedData>
         const { bed } = await res.json();
         setBeds((prev) => ({
           ...prev,
-          [active]: { flourishing: bed.flourishing, note: bed.note, lastTendedAt: bed.lastTendedAt },
+          [active]: {
+            ...prev[active],
+            flourishing: bed.flourishing,
+            note: bed.note,
+            lastTendedAt: bed.lastTendedAt,
+          },
         }));
         setActive(null);
       }
@@ -165,6 +192,35 @@ export default function MyGarden({ initial }: { initial: Record<string, BedData>
             {saving && <Loader2 className="h-4 w-4 animate-spin" />}
             {t("tendSave")}
           </button>
+
+          {/* Motor de Evolução — a observação de cultivo da Rafa sobre esta área */}
+          <div className="mt-4 pt-3 border-t border-stone-100">
+            {beds[active]?.reflection && (
+              <div className="flex gap-2 mb-2">
+                <Sparkles className="h-4 w-4 shrink-0 mt-0.5" style={{ color: "#c9a86a" }} />
+                <p className="text-sm text-stone-600 leading-relaxed italic">
+                  {beds[active].reflection}
+                </p>
+              </div>
+            )}
+            <button
+              onClick={reflect}
+              disabled={reflecting}
+              className="inline-flex items-center gap-1.5 text-xs font-medium disabled:opacity-60"
+              style={{ color: "#6d4a5a" }}
+            >
+              {reflecting ? (
+                <Loader2 className="h-3.5 w-3.5 animate-spin" />
+              ) : (
+                <Sparkles className="h-3.5 w-3.5" />
+              )}
+              {reflecting
+                ? t("reflecting")
+                : beds[active]?.reflection
+                  ? t("reflectAgain")
+                  : t("reflectCta")}
+            </button>
+          </div>
         </div>
       )}
     </div>

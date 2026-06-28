@@ -518,7 +518,10 @@
     "scaleLow": "seca",
     "scaleHigh": "floreciendo",
     "notePlaceholder": "una línea de lo que estás cultivando aquí (opcional)",
-    "tendSave": "Regar este cantero"
+    "tendSave": "Regar este cantero",
+    "reflectCta": "Ver lo que Rafa observa aquí",
+    "reflectAgain": "Actualizar la observación",
+    "reflecting": "Rafa está observando…"
   },
   "Journal": {
     "title": "Diario",

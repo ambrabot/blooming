@@ -518,7 +518,10 @@
     "scaleLow": "dry",
     "scaleHigh": "flourishing",
     "notePlaceholder": "one line on what you're cultivating here (optional)",
-    "tendSave": "Water this bed"
+    "tendSave": "Water this bed",
+    "reflectCta": "See what Rafa notices here",
+    "reflectAgain": "Refresh the observation",
+    "reflecting": "Rafa is observing…"
   },
   "Journal": {
     "title": "Journal",
