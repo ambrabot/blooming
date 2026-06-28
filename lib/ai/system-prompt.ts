@@ -1,5 +1,6 @@
 ﻿import { UserRole, CyclePhase } from "@/lib/generated/prisma";
 import { PSYCHOLOGY_KNOWLEDGE } from "./psychology";
+import { CONSTITUTION } from "./constitution";
 import { languageDirective, respondInLanguage } from "@/lib/i18n/language";
 
 export interface TherapistContext {
@@ -64,6 +65,10 @@ export function buildSystemPrompt(ctx: TherapistContext): string {
       : "";
 
   return `${languageDirective(ctx.locale ?? "pt")}
+
+---
+
+${CONSTITUTION}
 
 ---
 

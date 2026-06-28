@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { Flame, Check, Loader2, ArrowRight, Shield } from "lucide-react";
+import { Droplets, Sprout, Loader2, ArrowRight, Shield } from "lucide-react";
 
 interface Streak {
   current: number;
@@ -14,7 +14,9 @@ interface Streak {
 
 // Ritual "Hoje": o passo único do dia, com a presença marcável INLINE (sem sair
 // do dashboard). Devocional OU Rafa OU diário marcam presença; aqui o caminho é
-// o devocional. O streak + graça vivem aqui — é a alavanca nº1 de retenção.
+// o devocional. Filosofia (Constituição): a presença REGA o Jardim — sem chama,
+// sem contador, sem culpa. Aparecer faz um canteiro ficar mais verde. A graça
+// (misericórdia) cobre a falha; marcos são honra do cultivo, nunca placar.
 export default function TodayRitual({
   question,
   passageText,
@@ -57,15 +59,6 @@ export default function TodayRitual({
         >
           {t("todayStep")}
         </p>
-        {streak.current > 0 && (
-          <span
-            className="inline-flex items-center gap-1.5 text-[13px] shrink-0"
-            style={{ color: "#c9a86a" }}
-          >
-            <Flame className="h-4 w-4" />
-            {t("streakLabel", { count: streak.current })}
-          </span>
-        )}
       </div>
 
       <p className="font-serif text-xl md:text-2xl leading-snug">{question}</p>
@@ -79,7 +72,7 @@ export default function TodayRitual({
             className="inline-flex items-center gap-2 rounded text-sm font-medium px-4 py-2.5"
             style={{ background: "rgba(110,123,97,0.22)", color: "#cdd6bf" }}
           >
-            <Check className="h-4 w-4" />
+            <Sprout className="h-4 w-4" />
             {t("presentToday")}
           </span>
         ) : (
@@ -89,7 +82,7 @@ export default function TodayRitual({
             className="inline-flex items-center gap-2 rounded text-sm font-medium text-stone-900 px-5 py-2.5 transition-opacity disabled:opacity-70"
             style={{ background: "#c9a86a" }}
           >
-            {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Flame className="h-4 w-4" />}
+            {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Droplets className="h-4 w-4" />}
             {loading ? t("presenceMarking") : t("markPresence")}
           </button>
         )}
