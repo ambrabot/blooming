@@ -279,7 +279,7 @@ Parágrafo de texto...
         <Button
           onClick={handleSave}
           disabled={saving}
-          className="bg-amber-600 hover:bg-amber-700 text-white"
+          className="bg-berry hover:bg-berry text-white"
         >
           {saving ? (
             <Loader2 className="h-4 w-4 animate-spin mr-2" />

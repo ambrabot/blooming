@@ -4,7 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import UserRoleToggle from "@/components/admin/user-role-toggle";
 
 const ROLE_LABEL: Record<string, { label: string; color: string }> = {
-  WOMAN:  { label: "Mulher",   color: "bg-rose-100 text-rose-700" },
+  WOMAN:  { label: "Mulher",   color: "bg-berry-wash text-berry" },
   COUPLE: { label: "Casal",    color: "bg-purple-100 text-purple-700" },
   FAMILY: { label: "Família",  color: "bg-orange-100 text-orange-700" },
   LEADER: { label: "Líder",    color: "bg-indigo-100 text-indigo-700" },

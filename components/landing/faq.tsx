@@ -16,33 +16,33 @@ export default function FaqSection() {
     <section id="faq" className="py-24 px-6 bg-white">
       <div className="max-w-3xl mx-auto">
         <div className="text-center mb-16">
-          <p className="text-xs font-medium text-amber-700 uppercase tracking-widest mb-3">
+          <p className="text-xs font-medium text-[#8E3B5A] uppercase tracking-widest mb-3">
             {t("eyebrow")}
           </p>
-          <h2 className="font-serif text-4xl md:text-5xl text-stone-800 leading-tight">
+          <h2 className="font-serif text-4xl md:text-5xl text-[#242120] leading-tight">
             {t("title")}
           </h2>
         </div>
 
-        <div className="divide-y divide-stone-100">
+        <div className="divide-y divide-[#ECEAE8]">
           {items.map((faq, i) => (
             <div key={i}>
               <button
                 className="w-full text-left py-5 flex items-start justify-between gap-4"
                 onClick={() => setOpen(open === i ? null : i)}
               >
-                <span className="font-medium text-stone-800 text-base leading-snug">
+                <span className="font-medium text-[#242120] text-base leading-snug">
                   {faq.q}
                 </span>
                 <ChevronDown
                   className={cn(
-                    "h-5 w-5 text-stone-400 shrink-0 transition-transform mt-0.5",
+                    "h-5 w-5 text-[#6E6A66] shrink-0 transition-transform mt-0.5",
                     open === i && "rotate-180",
                   )}
                 />
               </button>
               {open === i && (
-                <p className="pb-5 text-stone-500 text-sm leading-relaxed -mt-1">
+                <p className="pb-5 text-[#6E6A66] text-sm leading-relaxed -mt-1">
                   {faq.a}
                 </p>
               )}

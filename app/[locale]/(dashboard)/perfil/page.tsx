@@ -61,9 +61,9 @@ export default async function PerfilPage() {
       {/* Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
         {[
-          { label: t("statSessions"), value: sessionCount, icon: MessageCircle, color: "text-rose-500" },
-          { label: t("statJournal"), value: journalCount, icon: NotebookPen, color: "text-teal-500" },
-          { label: t("statModules"), value: moduleCount, icon: BookOpen, color: "text-amber-600" },
+          { label: t("statSessions"), value: sessionCount, icon: MessageCircle, color: "text-red-500" },
+          { label: t("statJournal"), value: journalCount, icon: NotebookPen, color: "text-green" },
+          { label: t("statModules"), value: moduleCount, icon: BookOpen, color: "text-berry" },
           { label: t("statAssessments"), value: assessmentCount, icon: CheckCircle2, color: "text-purple-500" },
         ].map(({ label, value, icon: Icon, color }) => (
           <Card key={label} className="border-stone-200">

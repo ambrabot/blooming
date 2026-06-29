@@ -33,10 +33,10 @@ export default function CompleteButton({
 
   if (done) {
     return (
-      <div className="inline-flex items-center gap-2 rounded text-sm font-medium text-[#6e7b61] bg-[#6e7b61]/10 px-4 py-3">
+      <div className="inline-flex items-center gap-2 rounded text-sm font-medium text-[#3c7a5e] bg-[#3c7a5e]/10 px-4 py-3">
         <Check className="h-4 w-4" />
         {t("doneToday")}
-        <span className="inline-flex items-center gap-1 text-[#9c7a39] ml-1">
+        <span className="inline-flex items-center gap-1 text-[#8e3b5a] ml-1">
           <Flame className="h-4 w-4" />
           {t("dayCount", { count: streak })}
         </span>
@@ -49,7 +49,7 @@ export default function CompleteButton({
       onClick={complete}
       disabled={loading}
       className="inline-flex items-center gap-2 rounded text-sm font-medium text-white px-5 py-3 transition-opacity disabled:opacity-70"
-      style={{ background: "#9c7a39" }}
+      style={{ background: "#8e3b5a" }}
     >
       {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
       {t("completeButton")}

@@ -111,7 +111,7 @@ function NovaSessionInner() {
             className={cn("flex", msg.role === "user" ? "justify-end" : "justify-start")}
           >
             {msg.role === "assistant" && (
-              <div className="w-7 h-7 rounded-full bg-amber-100 flex items-center justify-center text-sm shrink-0 mr-3 mt-0.5">
+              <div className="w-7 h-7 rounded-full bg-berry-wash flex items-center justify-center text-sm shrink-0 mr-3 mt-0.5">
                 R
               </div>
             )}
@@ -119,7 +119,7 @@ function NovaSessionInner() {
               className={cn(
                 "max-w-[80%] rounded-2xl px-4 py-3 text-sm leading-relaxed whitespace-pre-wrap",
                 msg.role === "user"
-                  ? "bg-amber-700 text-white rounded-tr-sm"
+                  ? "bg-berry text-white rounded-tr-sm"
                   : "bg-white border border-stone-100 text-stone-800 rounded-tl-sm shadow-sm",
               )}
             >
@@ -145,13 +145,13 @@ function NovaSessionInner() {
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder={t("inputPlaceholderNew")}
-            className="resize-none min-h-[52px] max-h-[160px] border-stone-200 focus-visible:ring-amber-500"
+            className="resize-none min-h-[52px] max-h-[160px] border-stone-200 focus-visible:ring-berry"
             rows={2}
           />
           <Button
             onClick={sendMessage}
             disabled={!input.trim() || loading}
-            className="bg-amber-700 hover:bg-amber-800 text-white h-[52px] px-4 shrink-0"
+            className="bg-berry hover:bg-berry-deep text-white h-[52px] px-4 shrink-0"
           >
             {loading ? (
               <Loader2 className="h-4 w-4 animate-spin" />

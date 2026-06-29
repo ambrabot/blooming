@@ -112,7 +112,7 @@ export default function AssessmentQuestionForm({ question }: { question: Questio
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         {isNew ? (
-          <Button className="bg-amber-600 hover:bg-amber-700 text-white">
+          <Button className="bg-berry hover:bg-berry text-white">
             <Plus className="h-4 w-4 mr-2" />
             Nova pergunta
           </Button>
@@ -227,7 +227,7 @@ export default function AssessmentQuestionForm({ question }: { question: Questio
             <Button
               onClick={handleSave}
               disabled={saving}
-              className="flex-1 bg-amber-600 hover:bg-amber-700 text-white"
+              className="flex-1 bg-berry hover:bg-berry text-white"
             >
               {saving && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
               {isNew ? "Criar" : "Salvar"}

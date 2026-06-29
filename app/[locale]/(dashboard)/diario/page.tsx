@@ -77,12 +77,12 @@ export default async function DiarioPage() {
         </div>
         <div className="flex items-center gap-3">
           {streak > 0 && (
-            <div className="flex items-center gap-1.5 text-sm text-amber-700 bg-amber-50 border border-amber-100 rounded-full px-3 py-1">
+            <div className="flex items-center gap-1.5 text-sm text-berry bg-berry-wash border border-berry-wash rounded-full px-3 py-1">
               <Flame className="h-4 w-4" />
               <span className="font-medium">{t("streakDays", { count: streak })}</span>
             </div>
           )}
-          <Button asChild className="bg-amber-700 hover:bg-amber-800 text-white">
+          <Button asChild className="bg-berry hover:bg-berry-deep text-white">
             <Link href="/diario/novo">
               <Plus className="h-4 w-4 mr-2" />
               {t("newEntry")}
@@ -99,7 +99,7 @@ export default async function DiarioPage() {
             <p className="text-stone-400 text-sm mt-1 mb-4">
               {t("emptyBody")}
             </p>
-            <Button asChild className="bg-amber-700 hover:bg-amber-800 text-white">
+            <Button asChild className="bg-berry hover:bg-berry-deep text-white">
               <Link href="/diario/novo">{t("firstEntry")}</Link>
             </Button>
           </CardContent>
@@ -148,7 +148,7 @@ export default async function DiarioPage() {
                             </Badge>
                           )}
                           {entry.scripture && (
-                            <Badge variant="outline" className="text-xs py-0 text-amber-600 border-amber-200">
+                            <Badge variant="outline" className="text-xs py-0 text-berry border-berry-wash">
                               📖 {entry.scripture}
                             </Badge>
                           )}

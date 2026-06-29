@@ -122,7 +122,7 @@ export default function RegisterPage() {
           )}
           <Button
             type="submit"
-            className="w-full bg-amber-700 hover:bg-amber-800 text-white"
+            className="w-full bg-berry hover:bg-berry-deep text-white"
             disabled={loading}
           >
             {loading ? t("submitting") : t("submit")}
@@ -130,7 +130,7 @@ export default function RegisterPage() {
         </form>
         <p className="text-center text-sm text-stone-500 mt-4">
           {t("haveAccount")}{" "}
-          <Link href="/login" className="text-amber-700 hover:underline">
+          <Link href="/login" className="text-berry hover:underline">
             {t("signIn")}
           </Link>
         </p>

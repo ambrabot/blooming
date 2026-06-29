@@ -41,12 +41,12 @@ export default function EsqueciSenhaPage() {
     return (
       <Card className="border-stone-200 shadow-sm">
         <CardContent className="p-8 text-center">
-          <CheckCircle2 className="h-10 w-10 text-teal-500 mx-auto mb-4" />
+          <CheckCircle2 className="h-10 w-10 text-green mx-auto mb-4" />
           <h2 className="font-serif text-xl text-stone-800 mb-2">{t("sentTitle")}</h2>
           <p className="text-stone-500 text-sm leading-relaxed">{t("sentBody")}</p>
           <Link
             href="/login"
-            className="block mt-6 text-sm text-amber-700 hover:underline"
+            className="block mt-6 text-sm text-berry hover:underline"
           >
             {t("backToLogin")}
           </Link>
@@ -79,14 +79,14 @@ export default function EsqueciSenhaPage() {
           <Button
             type="submit"
             disabled={loading}
-            className="w-full bg-amber-700 hover:bg-amber-800 text-white"
+            className="w-full bg-berry hover:bg-berry-deep text-white"
           >
             {loading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
             {t("submit")}
           </Button>
         </form>
         <p className="text-center text-sm text-stone-400 mt-4">
-          <Link href="/login" className="text-amber-700 hover:underline">
+          <Link href="/login" className="text-berry hover:underline">
             {t("backToLogin")}
           </Link>
         </p>

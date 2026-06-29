@@ -36,7 +36,7 @@ export default function LessonCompleteButton({ lessonId, progressId, moduleId, c
 
   if (done) {
     return (
-      <div className="flex items-center gap-1.5 text-sm text-teal-600">
+      <div className="flex items-center gap-1.5 text-sm text-green">
         <CheckCircle2 className="h-4 w-4" />
         {t("completed")}
       </div>
@@ -49,7 +49,7 @@ export default function LessonCompleteButton({ lessonId, progressId, moduleId, c
       size="sm"
       onClick={markComplete}
       disabled={loading}
-      className="border-teal-300 text-teal-700 hover:bg-teal-50"
+      className="border-green-wash text-green-deep hover:bg-green-wash"
     >
       {loading ? (
         <Loader2 className="h-4 w-4 animate-spin mr-1" />

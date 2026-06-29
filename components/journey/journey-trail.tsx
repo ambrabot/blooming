@@ -27,9 +27,9 @@ export default function JourneyTrail({ current }: { current: number }) {
               <span
                 className={cn(
                   "mt-1 rounded-full z-10",
-                  status === "done" && "h-3 w-3 bg-[#6e7b61]",
+                  status === "done" && "h-3 w-3 bg-[#3c7a5e]",
                   status === "current" &&
-                    "h-3.5 w-3.5 bg-white border-2 border-[#9c7a39] ring-4 ring-[#9c7a39]/10",
+                    "h-3.5 w-3.5 bg-white border-2 border-[#8e3b5a] ring-4 ring-[#8e3b5a]/10",
                   status === "locked" && "h-3 w-3 bg-stone-100 border border-stone-200",
                 )}
               />
@@ -38,13 +38,13 @@ export default function JourneyTrail({ current }: { current: number }) {
               <p
                 className={cn(
                   "font-medium text-[15px]",
-                  status === "current" ? "text-[#9c7a39]" : "text-stone-800",
+                  status === "current" ? "text-[#8e3b5a]" : "text-stone-800",
                 )}
               >
                 <span className="text-stone-400 font-normal mr-2">{ROMAN[c.n]}</span>
                 {ct.name}
                 {status === "current" && (
-                  <span className="ml-2 inline-block text-[10px] uppercase tracking-wider text-[#9c7a39] border border-[#d8c39a] rounded-full px-2 py-0.5 align-middle">
+                  <span className="ml-2 inline-block text-[10px] uppercase tracking-wider text-[#8e3b5a] border border-[#d8c39a] rounded-full px-2 py-0.5 align-middle">
                     {t("youAreHere")}
                   </span>
                 )}

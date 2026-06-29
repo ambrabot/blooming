@@ -24,7 +24,7 @@ export default async function ComunidadePage() {
       <div className="mt-8 rounded-lg border border-stone-200 bg-white p-10 text-center">
         <div
           className="w-12 h-12 rounded-full mx-auto flex items-center justify-center mb-4"
-          style={{ background: "#f3ece0", color: "#9c7a39" }}
+          style={{ background: "#f3ece0", color: "#8e3b5a" }}
         >
           <Users className="h-5 w-5" />
         </div>
@@ -35,7 +35,7 @@ export default async function ComunidadePage() {
         <Link
           href="/assinatura"
           className="inline-block mt-6 rounded text-sm font-medium text-white px-5 py-3"
-          style={{ background: "#9c7a39" }}
+          style={{ background: "#8e3b5a" }}
         >
           {t("cta")}
         </Link>

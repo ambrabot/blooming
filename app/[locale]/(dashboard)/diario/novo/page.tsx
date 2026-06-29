@@ -106,15 +106,15 @@ export default function NovaDiarioPage() {
   if (reflection) {
     return (
       <div className="p-8 max-w-2xl mx-auto">
-        <Card className="border-amber-200 bg-amber-50">
+        <Card className="border-berry-wash bg-berry-wash">
           <CardContent className="p-8">
             <div className="flex items-center gap-2 mb-4">
-              <Sparkles className="h-4 w-4 text-amber-600" />
-              <p className="text-sm font-medium text-amber-800">{t("rafaRespondsTitle")}</p>
+              <Sparkles className="h-4 w-4 text-berry" />
+              <p className="text-sm font-medium text-berry-deep">{t("rafaRespondsTitle")}</p>
             </div>
             <p className="text-stone-700 leading-relaxed italic">{reflection}</p>
             <Button
-              className="mt-6 bg-amber-700 hover:bg-amber-800 text-white"
+              className="mt-6 bg-berry hover:bg-berry-deep text-white"
               onClick={() => router.push("/diario")}
             >
               {t("seeMyJournal")}
@@ -149,11 +149,11 @@ export default function NovaDiarioPage() {
             max={10}
             value={form.mood}
             onChange={(e) => set("mood", Number(e.target.value))}
-            className="flex-1 accent-amber-600"
+            className="flex-1 accent-berry"
           />
           <span className="text-xs text-stone-400">{t("moodHigh")}</span>
         </div>
-        <p className="text-sm text-amber-700 mt-1 font-medium">{moodLabels[form.mood - 1]}</p>
+        <p className="text-sm text-berry mt-1 font-medium">{moodLabels[form.mood - 1]}</p>
       </div>
 
       {/* Link opcional a um canteiro do Jardim */}
@@ -170,7 +170,7 @@ export default function NovaDiarioPage() {
                 className="rounded-full px-3 py-1 text-xs font-medium border transition-colors"
                 style={
                   active
-                    ? { background: "#6e7b61", color: "#fff", borderColor: "#6e7b61" }
+                    ? { background: "#3c7a5e", color: "#fff", borderColor: "#3c7a5e" }
                     : { background: "#fff", color: "#6b6256", borderColor: "#e7e1d6" }
                 }
               >
@@ -188,9 +188,9 @@ export default function NovaDiarioPage() {
           return (
             <div
               key={p.key}
-              className={isKey ? "rounded-lg border-l-2 border-amber-400 pl-4 -ml-px" : ""}
+              className={isKey ? "rounded-lg border-l-2 border-berry pl-4 -ml-px" : ""}
             >
-              <Label className={isKey ? "text-amber-800 font-medium" : "text-stone-700"}>
+              <Label className={isKey ? "text-berry-deep font-medium" : "text-stone-700"}>
                 {p.n}. {t(`p${p.n}Label`)}
               </Label>
               <p className="text-xs text-stone-400 mt-0.5 mb-1.5">{t(`p${p.n}Hint`)}</p>
@@ -232,7 +232,7 @@ export default function NovaDiarioPage() {
       <Button
         onClick={handleSave}
         disabled={!hasPerspective || saving || reflecting}
-        className="mt-6 bg-amber-700 hover:bg-amber-800 text-white"
+        className="mt-6 bg-berry hover:bg-berry-deep text-white"
       >
         {saving || reflecting ? (
           <>

@@ -19,7 +19,7 @@ export default async function AdminModulosPage() {
           <h1 className="text-2xl font-serif text-zinc-800">Módulos</h1>
           <p className="text-zinc-500 text-sm mt-1">{modules.length} módulos cadastrados</p>
         </div>
-        <Button asChild className="bg-amber-600 hover:bg-amber-700 text-white">
+        <Button asChild className="bg-berry hover:bg-berry text-white">
           <Link href="/admin/modulos/novo">
             <Plus className="h-4 w-4 mr-2" />
             Novo módulo
@@ -61,7 +61,7 @@ export default async function AdminModulosPage() {
                 </td>
                 <td className="px-4 py-3">
                   {mod.isActive ? (
-                    <Badge className="bg-teal-100 text-teal-700 border-0 text-xs">
+                    <Badge className="bg-green-wash text-green-deep border-0 text-xs">
                       <Eye className="h-3 w-3 mr-1" />
                       Ativo
                     </Badge>

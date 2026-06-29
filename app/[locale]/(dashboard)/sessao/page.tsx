@@ -53,7 +53,7 @@ export default async function SessoesPage() {
             {t("countWithRafa", { count: sessions.length })}
           </p>
         </div>
-        <Button asChild className="bg-amber-700 hover:bg-amber-800 text-white">
+        <Button asChild className="bg-berry hover:bg-berry-deep text-white">
           <Link href="/sessao/nova">
             <Plus className="h-4 w-4 mr-2" />
             {t("newSession")}
@@ -69,7 +69,7 @@ export default async function SessoesPage() {
             <p className="text-stone-400 text-sm mt-1 mb-5">
               {t("emptyBody")}
             </p>
-            <Button asChild className="bg-amber-700 hover:bg-amber-800 text-white">
+            <Button asChild className="bg-berry hover:bg-berry-deep text-white">
               <Link href="/sessao/nova">{t("firstSession")}</Link>
             </Button>
           </CardContent>

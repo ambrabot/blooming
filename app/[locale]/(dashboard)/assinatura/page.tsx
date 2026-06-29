@@ -47,7 +47,7 @@ export default async function AssinaturaPage({
       )}
 
       <div className="text-center mb-8">
-        <div className="inline-flex items-center gap-2 text-amber-700 mb-3">
+        <div className="inline-flex items-center gap-2 text-berry mb-3">
           <Sparkles className="h-5 w-5" />
           <span className="font-serif text-lg">{t("brand")}</span>
         </div>
@@ -93,8 +93,8 @@ export default async function AssinaturaPage({
               const Icon = b.icon;
               return (
                 <li key={b.title} className="flex gap-3">
-                  <div className="mt-0.5 h-8 w-8 shrink-0 rounded-full bg-amber-50 flex items-center justify-center">
-                    <Icon className="h-4 w-4 text-amber-700" />
+                  <div className="mt-0.5 h-8 w-8 shrink-0 rounded-full bg-berry-wash flex items-center justify-center">
+                    <Icon className="h-4 w-4 text-berry" />
                   </div>
                   <div>
                     <p className="font-medium text-stone-800">{b.title}</p>
@@ -106,7 +106,7 @@ export default async function AssinaturaPage({
           </ul>
           <SubscribeButton
             label={t("subscribeLabel")}
-            className="w-full bg-amber-700 hover:bg-amber-800 text-white"
+            className="w-full bg-berry hover:bg-berry-deep text-white"
           />
           <p className="text-center text-xs text-stone-400 mt-3">
             {t("fineprint")}

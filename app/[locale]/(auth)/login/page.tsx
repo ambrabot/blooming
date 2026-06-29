@@ -67,7 +67,7 @@ export default function LoginPage() {
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <Label htmlFor="password">{t("password")}</Label>
-              <Link href="/esqueci-senha" className="text-xs text-amber-700 hover:underline">
+              <Link href="/esqueci-senha" className="text-xs text-berry hover:underline">
                 {t("forgot")}
               </Link>
             </div>
@@ -85,7 +85,7 @@ export default function LoginPage() {
           )}
           <Button
             type="submit"
-            className="w-full bg-amber-700 hover:bg-amber-800 text-white"
+            className="w-full bg-berry hover:bg-berry-deep text-white"
             disabled={loading}
           >
             {loading ? t("submitting") : t("submit")}
@@ -93,7 +93,7 @@ export default function LoginPage() {
         </form>
         <p className="text-center text-sm text-stone-500 mt-4">
           {t("noAccount")}{" "}
-          <Link href="/register" className="text-amber-700 hover:underline">
+          <Link href="/register" className="text-berry hover:underline">
             {t("createAccount")}
           </Link>
         </p>

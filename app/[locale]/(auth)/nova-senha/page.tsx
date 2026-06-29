@@ -50,7 +50,7 @@ function NovaSenhaForm() {
       <Card className="border-stone-200 shadow-sm">
         <CardContent className="p-8 text-center">
           <p className="text-stone-500">{t("invalidLink")}</p>
-          <Link href="/esqueci-senha" className="block mt-4 text-amber-700 text-sm hover:underline">
+          <Link href="/esqueci-senha" className="block mt-4 text-berry text-sm hover:underline">
             {t("requestNew")}
           </Link>
         </CardContent>
@@ -93,7 +93,7 @@ function NovaSenhaForm() {
           <Button
             type="submit"
             disabled={loading}
-            className="w-full bg-amber-700 hover:bg-amber-800 text-white"
+            className="w-full bg-berry hover:bg-berry-deep text-white"
           >
             {loading && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
             {t("submit")}

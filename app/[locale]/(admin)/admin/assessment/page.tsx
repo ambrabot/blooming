@@ -51,7 +51,7 @@ export default async function AdminAssessmentPage() {
                     <td className="px-4 py-3">
                       <p className="text-zinc-800">{q.text}</p>
                       {q.scriptureRef && (
-                        <p className="text-xs text-amber-600 mt-0.5">{q.scriptureRef}</p>
+                        <p className="text-xs text-berry mt-0.5">{q.scriptureRef}</p>
                       )}
                     </td>
                     <td className="px-4 py-3">

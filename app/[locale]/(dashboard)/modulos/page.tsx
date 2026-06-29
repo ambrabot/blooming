@@ -90,7 +90,7 @@ export default async function ModulosPage() {
               <div className="flex items-center gap-3 border-b border-stone-200 pb-2 mb-1">
                 <span
                   className="text-[13px] font-semibold tracking-[0.1em]"
-                  style={{ color: status === "locked" ? "#a8a29e" : "#9c7a39" }}
+                  style={{ color: status === "locked" ? "#a8a29e" : "#8e3b5a" }}
                 >
                   {ROMAN[camada.n]}
                 </span>
@@ -101,12 +101,12 @@ export default async function ModulosPage() {
                   {ct.name}
                 </h2>
                 {status === "current" && (
-                  <span className="text-[10px] uppercase tracking-wider text-[#9c7a39] border border-[#d8c39a] rounded-full px-2 py-0.5">
+                  <span className="text-[10px] uppercase tracking-wider text-[#8e3b5a] border border-[#d8c39a] rounded-full px-2 py-0.5">
                     {tj("youAreHere")}
                   </span>
                 )}
                 {status === "done" && (
-                  <CheckCircle2 className="h-4 w-4 text-[#6e7b61]" />
+                  <CheckCircle2 className="h-4 w-4 text-[#3c7a5e]" />
                 )}
               </div>
               <p className="text-[12.5px] text-stone-400 mb-3">{ct.desc}</p>
@@ -131,7 +131,7 @@ export default async function ModulosPage() {
                         )}
                       </div>
                       {owned ? (
-                        <span className="inline-flex items-center gap-1 text-xs text-[#6e7b61] font-medium shrink-0">
+                        <span className="inline-flex items-center gap-1 text-xs text-[#3c7a5e] font-medium shrink-0">
                           <CheckCircle2 className="h-3.5 w-3.5" />
                           {t("access")}
                           <ArrowRight className="h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity" />

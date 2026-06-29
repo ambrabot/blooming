@@ -57,7 +57,7 @@ export default async function AdminModuloDetailPage({ params }: Props) {
             <h2 className="text-lg font-medium text-zinc-800">
               Lições ({mod.lessons.length})
             </h2>
-            <Button asChild size="sm" className="bg-amber-600 hover:bg-amber-700 text-white">
+            <Button asChild size="sm" className="bg-berry hover:bg-berry text-white">
               <Link href={`/admin/modulos/${slug}/licoes/nova`}>
                 <Plus className="h-4 w-4 mr-1" />
                 Nova lição

@@ -100,7 +100,7 @@ export default async function LicaoPage({ params }: Props) {
               </span>
             )}
             {lessonCompleted && (
-              <span className="text-xs text-teal-600 flex items-center gap-1">
+              <span className="text-xs text-green flex items-center gap-1">
                 <CheckCircle2 className="h-3 w-3" />
                 {t("completed")}
               </span>
@@ -117,9 +117,9 @@ export default async function LicaoPage({ params }: Props) {
 
       {/* Scripture */}
       {lesson.scripture && (
-        <Card className="border-amber-100 bg-amber-50 mb-6">
+        <Card className="border-berry-wash bg-berry-wash mb-6">
           <CardContent className="p-4">
-            <p className="text-xs font-medium text-amber-700 uppercase tracking-wide mb-1">{t("anchorScripture")}</p>
+            <p className="text-xs font-medium text-berry uppercase tracking-wide mb-1">{t("anchorScripture")}</p>
             <p className="text-stone-700 italic">{lesson.scripture}</p>
           </CardContent>
         </Card>
@@ -127,9 +127,9 @@ export default async function LicaoPage({ params }: Props) {
 
       {/* Exercise */}
       {lesson.exercise && (
-        <Card className="border-teal-100 bg-teal-50 mb-6">
+        <Card className="border-green-wash bg-green-wash mb-6">
           <CardContent className="p-4">
-            <p className="text-xs font-medium text-teal-700 uppercase tracking-wide mb-2">{t("practicalExercise")}</p>
+            <p className="text-xs font-medium text-green-deep uppercase tracking-wide mb-2">{t("practicalExercise")}</p>
             <p className="text-stone-700 whitespace-pre-wrap text-sm leading-relaxed">{lesson.exercise}</p>
           </CardContent>
         </Card>
@@ -137,22 +137,22 @@ export default async function LicaoPage({ params }: Props) {
 
       {/* Prayer */}
       {lesson.prayer && (
-        <Card className="border-rose-100 bg-rose-50 mb-6">
+        <Card className="border-berry-wash bg-berry-wash mb-6">
           <CardContent className="p-4">
-            <p className="text-xs font-medium text-rose-700 uppercase tracking-wide mb-2">{t("prayer")}</p>
+            <p className="text-xs font-medium text-berry uppercase tracking-wide mb-2">{t("prayer")}</p>
             <p className="text-stone-700 italic text-sm leading-relaxed whitespace-pre-wrap">{lesson.prayer}</p>
           </CardContent>
         </Card>
       )}
 
       {/* Session CTA */}
-      <Card className="border-amber-200 bg-amber-50 mb-8">
+      <Card className="border-berry-wash bg-berry-wash mb-8">
         <CardContent className="p-4 flex items-center justify-between gap-4">
           <div>
-            <p className="text-sm font-medium text-amber-900">{t("deepenWithRafa")}</p>
-            <p className="text-xs text-amber-700 mt-0.5">{t("lessonContextBody")}</p>
+            <p className="text-sm font-medium text-berry-deep">{t("deepenWithRafa")}</p>
+            <p className="text-xs text-berry mt-0.5">{t("lessonContextBody")}</p>
           </div>
-          <Button asChild size="sm" className="bg-amber-700 hover:bg-amber-800 text-white shrink-0">
+          <Button asChild size="sm" className="bg-berry hover:bg-berry-deep text-white shrink-0">
             <Link href={`/sessao/nova?moduleId=${mod.id}&lessonTitle=${encodeURIComponent(lesson.title)}`}>
               <MessageCircle className="h-4 w-4 mr-1" />
               {t("talk")}
@@ -190,7 +190,7 @@ export default async function LicaoPage({ params }: Props) {
           />
 
           {nextLesson && (
-            <Button asChild className="bg-amber-700 hover:bg-amber-800 text-white" size="sm">
+            <Button asChild className="bg-berry hover:bg-berry-deep text-white" size="sm">
               <Link href={`/modulos/${slug}/licoes/${nextLesson.slug}`}>
                 {t("next")}
                 <ArrowRight className="h-4 w-4 ml-1" />
@@ -218,7 +218,7 @@ function LessonContent({ content }: { content: string }) {
       elements.push(<h3 key={i} className="text-lg font-medium text-stone-700 mt-6 mb-2">{line.slice(4)}</h3>);
     } else if (line.startsWith("> ")) {
       elements.push(
-        <blockquote key={i} className="border-l-4 border-amber-300 pl-4 my-4 text-stone-600 italic text-sm">
+        <blockquote key={i} className="border-l-4 border-berry-wash pl-4 my-4 text-stone-600 italic text-sm">
           {line.slice(2)}
         </blockquote>
       );

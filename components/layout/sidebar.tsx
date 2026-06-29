@@ -35,7 +35,7 @@ const SECONDARY = [
   { href: "/perfil", key: "profile", icon: User },
 ] as const;
 
-const GOLD = "#9c7a39";
+const GOLD = "#8e3b5a";
 
 function initials(name: string) {
   return name

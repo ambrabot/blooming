@@ -135,13 +135,13 @@ export default async function DashboardPage() {
 
       {/* CTA: Assessment (só se ainda não fez) */}
       {!hasAssessment && (
-        <Card className="mb-6 border-amber-200 bg-amber-50">
+        <Card className="mb-6 border-berry-wash bg-berry-wash">
           <CardContent className="p-6 flex items-center justify-between">
             <div>
-              <p className="font-medium text-amber-900">{t("assessmentCtaTitle")}</p>
-              <p className="text-sm text-amber-700 mt-1">{t("assessmentCtaBody")}</p>
+              <p className="font-medium text-berry-deep">{t("assessmentCtaTitle")}</p>
+              <p className="text-sm text-berry mt-1">{t("assessmentCtaBody")}</p>
             </div>
-            <Button asChild className="bg-amber-700 hover:bg-amber-800 text-white shrink-0">
+            <Button asChild className="bg-berry hover:bg-berry-deep text-white shrink-0">
               <Link href="/onboarding">{t("assessmentCtaButton")}</Link>
             </Button>
           </CardContent>
@@ -150,18 +150,18 @@ export default async function DashboardPage() {
 
       {/* CTA: Check-in mensal (quando vencido) */}
       {showCheckInBanner && (
-        <Card className="mb-6 border-teal-200 bg-teal-50">
+        <Card className="mb-6 border-green-wash bg-green-wash">
           <CardContent className="p-5 flex items-center justify-between">
             <div>
-              <p className="font-medium text-teal-900">{t("checkInTitle")}</p>
-              <p className="text-sm text-teal-700 mt-0.5">
+              <p className="font-medium text-green-deep">{t("checkInTitle")}</p>
+              <p className="text-sm text-green-deep mt-0.5">
                 {daysSinceCheckIn === 999
                   ? t("checkInNever")
                   : t("checkInDays", { days: daysSinceCheckIn })}{" "}
                 {t("checkInBody")}
               </p>
             </div>
-            <Button asChild className="bg-teal-700 hover:bg-teal-800 text-white shrink-0">
+            <Button asChild className="bg-green-deep hover:bg-green-deep text-white shrink-0">
               <Link href="/check-in">{t("checkInButton")}</Link>
             </Button>
           </CardContent>
@@ -171,16 +171,16 @@ export default async function DashboardPage() {
       {/* Próximo passo primário: continuar a jornada (1 ação clara, não um menu) */}
       {hasAssessment && (
         <Link href={`/modulos/${primarySlug}`} className="block mb-4">
-          <div className="rounded-lg border-2 border-amber-300 bg-amber-50/60 p-6 flex items-center justify-between hover:border-amber-400 transition-colors">
+          <div className="rounded-lg border-2 border-berry-wash bg-berry-wash/60 p-6 flex items-center justify-between hover:border-berry transition-colors">
             <div>
-              <p className="text-[11px] uppercase tracking-[0.16em] text-amber-700 font-semibold mb-1">
+              <p className="text-[11px] uppercase tracking-[0.16em] text-berry font-semibold mb-1">
                 {t("continueJourney")}
               </p>
               <p className="font-serif text-lg text-stone-800">
                 {t("camadaProgress", { n: currentCamada, name: camadaName })}
               </p>
             </div>
-            <ArrowRight className="h-5 w-5 text-amber-700 shrink-0" />
+            <ArrowRight className="h-5 w-5 text-berry shrink-0" />
           </div>
         </Link>
       )}
@@ -189,16 +189,16 @@ export default async function DashboardPage() {
       <div className="grid grid-cols-2 gap-3 mb-8">
         <Link href="/sessao/nova">
           <div className="flex items-center gap-3 rounded-lg border border-stone-200 bg-white px-4 py-3 hover:border-stone-300 transition-colors">
-            <div className="w-8 h-8 bg-rose-100 rounded-full flex items-center justify-center shrink-0">
-              <MessageCircle className="h-4 w-4 text-rose-600" />
+            <div className="w-8 h-8 bg-berry-wash rounded-full flex items-center justify-center shrink-0">
+              <MessageCircle className="h-4 w-4 text-berry" />
             </div>
             <p className="text-sm font-medium text-stone-700">{t("secondaryRafa")}</p>
           </div>
         </Link>
         <Link href="/diario/novo">
           <div className="flex items-center gap-3 rounded-lg border border-stone-200 bg-white px-4 py-3 hover:border-stone-300 transition-colors">
-            <div className="w-8 h-8 bg-teal-100 rounded-full flex items-center justify-center shrink-0">
-              <NotebookPen className="h-4 w-4 text-teal-600" />
+            <div className="w-8 h-8 bg-green-wash rounded-full flex items-center justify-center shrink-0">
+              <NotebookPen className="h-4 w-4 text-green" />
             </div>
             <p className="text-sm font-medium text-stone-700">{t("secondaryJournal")}</p>
           </div>
@@ -215,7 +215,7 @@ export default async function DashboardPage() {
               compra de módulo. Profundidade = camada; raiz = presença. */}
           <span
             className="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-[0.1em] font-semibold shrink-0"
-            style={{ color: "#6e7b61" }}
+            style={{ color: "#3c7a5e" }}
           >
             <Sprout className="h-3.5 w-3.5" />
             {t("rootLabel", { count: streak.current })}

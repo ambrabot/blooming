@@ -89,11 +89,11 @@ export default function CheckInPage() {
     return (
       <div className="p-8 max-w-2xl mx-auto">
         <div className="text-center mb-6">
-          <Sparkles className="h-7 w-7 text-amber-600 mx-auto mb-2" />
+          <Sparkles className="h-7 w-7 text-berry mx-auto mb-2" />
           <h1 className="text-2xl font-serif text-stone-800">{t("resultTitle")}</h1>
         </div>
 
-        <Card className="border-amber-200 bg-amber-50 mb-6">
+        <Card className="border-berry-wash bg-berry-wash mb-6">
           <CardContent className="p-6">
             <p className="text-stone-700 leading-relaxed whitespace-pre-wrap">{result.report}</p>
           </CardContent>
@@ -109,16 +109,16 @@ export default function CheckInPage() {
                 <Card key={key} className="border-stone-200">
                   <CardContent className="p-3 flex items-center gap-2">
                     {delta > 0 ? (
-                      <TrendingUp className="h-4 w-4 text-teal-600 shrink-0" />
+                      <TrendingUp className="h-4 w-4 text-green shrink-0" />
                     ) : delta < 0 ? (
-                      <TrendingDown className="h-4 w-4 text-rose-500 shrink-0" />
+                      <TrendingDown className="h-4 w-4 text-red-500 shrink-0" />
                     ) : (
                       <Minus className="h-4 w-4 text-zinc-400 shrink-0" />
                     )}
                     <div>
                       <p className="text-xs text-stone-500">{categoryFor(key)}</p>
                       <p className={cn("text-sm font-medium",
-                        delta > 0 ? "text-teal-700" : delta < 0 ? "text-rose-600" : "text-zinc-500"
+                        delta > 0 ? "text-green-deep" : delta < 0 ? "text-berry" : "text-zinc-500"
                       )}>
                         {t("points", { delta: delta > 0 ? `+${delta}` : String(delta) })}
                       </p>
@@ -132,7 +132,7 @@ export default function CheckInPage() {
 
         <div className="flex gap-3">
           <Button
-            className="bg-amber-700 hover:bg-amber-800 text-white"
+            className="bg-berry hover:bg-berry-deep text-white"
             onClick={() => router.push("/sessao/nova")}
           >
             {t("talkWithRafa")}
@@ -166,7 +166,7 @@ export default function CheckInPage() {
 
       <Card className="border-stone-200 shadow-sm">
         <CardContent className="p-7">
-          <p className="text-xs font-medium text-amber-700 uppercase tracking-wide mb-3">
+          <p className="text-xs font-medium text-berry uppercase tracking-wide mb-3">
             {currentText.category} · {step + 1}/{CHECK_IN_QUESTIONS.length}
           </p>
           <h2 className="text-lg font-medium text-stone-800 leading-snug mb-6">
@@ -181,11 +181,11 @@ export default function CheckInPage() {
                 max={10}
                 value={(answers[current.id] as number) ?? 5}
                 onChange={(e) => setAnswers({ ...answers, [current.id]: Number(e.target.value) })}
-                className="w-full accent-amber-600"
+                className="w-full accent-berry"
               />
               <div className="flex justify-between text-xs text-stone-400">
                 <span>{t("scaleLow")}</span>
-                <span className="font-medium text-amber-700 text-sm">
+                <span className="font-medium text-berry text-sm">
                   {t("scaleValue", {
                     value: (answers[current.id] as number) ?? 5,
                     label: scaleLabels[((answers[current.id] as number) ?? 5) - 1],
@@ -202,11 +202,11 @@ export default function CheckInPage() {
                     const curr = answers[current.id] as number;
                     const delta = curr - prev;
                     return delta > 0 ? (
-                      <span className="text-teal-600 flex items-center gap-1">
+                      <span className="text-green flex items-center gap-1">
                         <TrendingUp className="h-3 w-3" /> {t("trendUp", { delta, prev })}
                       </span>
                     ) : delta < 0 ? (
-                      <span className="text-rose-500 flex items-center gap-1">
+                      <span className="text-red-500 flex items-center gap-1">
                         <TrendingDown className="h-3 w-3" /> {t("trendDown", { delta, prev })}
                       </span>
                     ) : (
@@ -230,7 +230,7 @@ export default function CheckInPage() {
           <Button
             onClick={advance}
             disabled={!canAdvance() || loading}
-            className="mt-6 w-full bg-amber-700 hover:bg-amber-800 text-white"
+            className="mt-6 w-full bg-berry hover:bg-berry-deep text-white"
           >
             {loading ? (
               <><Loader2 className="h-4 w-4 animate-spin mr-2" />{t("analyzing")}</>

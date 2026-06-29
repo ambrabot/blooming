@@ -38,7 +38,7 @@ export default function AdminSidebar({ user }: { user: JWTPayload }) {
       {/* Topbar mobile */}
       <header className="md:hidden fixed top-0 inset-x-0 h-14 z-40 bg-zinc-900 text-zinc-100 flex items-center justify-between px-4">
         <div className="flex items-center gap-2">
-          <Shield className="h-4 w-4 text-amber-400" />
+          <Shield className="h-4 w-4 text-berry" />
           <span className="font-serif text-base text-white">BLOOMING Admin</span>
         </div>
         <button onClick={() => setOpen(true)} aria-label="Abrir menu" className="text-zinc-300 p-1">
@@ -62,7 +62,7 @@ export default function AdminSidebar({ user }: { user: JWTPayload }) {
       >
         <div className="px-5 py-5 border-b border-zinc-800 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Shield className="h-4 w-4 text-amber-400" />
+            <Shield className="h-4 w-4 text-berry" />
             <div>
               <p className="font-serif text-base text-white">BLOOMING Admin</p>
               <p className="text-xs text-zinc-500 mt-0.5">{user.name}</p>
@@ -83,7 +83,7 @@ export default function AdminSidebar({ user }: { user: JWTPayload }) {
                 className={cn(
                   "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors",
                   active
-                    ? "bg-amber-600 text-white font-medium"
+                    ? "bg-berry text-white font-medium"
                     : "text-zinc-400 hover:bg-zinc-800 hover:text-zinc-100",
                 )}
               >

@@ -1,13 +1,20 @@
 import { useTranslations } from "next-intl";
+import {
+  MessagesSquare,
+  NotebookPen,
+  BarChart3,
+  Lock,
+  type LucideIcon,
+} from "lucide-react";
 
 const STEP_STYLE = [
-  { number: "1", color: "bg-amber-100 text-amber-800" },
-  { number: "2", color: "bg-teal-100 text-teal-800" },
-  { number: "3", color: "bg-rose-100 text-rose-800" },
-  { number: "4", color: "bg-purple-100 text-purple-800" },
+  { number: "1", color: "bg-[#F5E9EE] text-[#8E3B5A]" },
+  { number: "2", color: "bg-[#E6F1EB] text-[#3C7A5E]" },
+  { number: "3", color: "bg-[#F5E9EE] text-[#8E3B5A]" },
+  { number: "4", color: "bg-[#E6F1EB] text-[#3C7A5E]" },
 ];
 
-const FEATURE_EMOJI = ["🗣️", "📓", "📊", "🔒"];
+const FEATURE_ICONS: LucideIcon[] = [MessagesSquare, NotebookPen, BarChart3, Lock];
 
 type Step = { title: string; body: string; detail: string };
 type Feature = { label: string; sub: string };
@@ -21,13 +28,13 @@ export default function HowItWorksSection() {
     <section id="como-funciona" className="py-24 px-6 bg-white">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
-          <p className="text-xs font-medium text-amber-700 uppercase tracking-widest mb-3">
+          <p className="text-xs font-medium text-[#8E3B5A] uppercase tracking-widest mb-3">
             {t("eyebrow")}
           </p>
-          <h2 className="font-serif text-4xl md:text-5xl text-stone-800 leading-tight">
+          <h2 className="font-serif text-4xl md:text-5xl text-[#242120] leading-tight">
             {t("title")}
           </h2>
-          <p className="text-stone-400 mt-4 max-w-xl mx-auto text-lg">
+          <p className="text-[#6E6A66] mt-4 max-w-xl mx-auto text-lg">
             {t("subtitle")}
           </p>
         </div>
@@ -41,9 +48,9 @@ export default function HowItWorksSection() {
                 {STEP_STYLE[i]?.number}
               </div>
               <div>
-                <h3 className="font-medium text-stone-800 text-lg mb-2">{s.title}</h3>
-                <p className="text-stone-500 text-sm leading-relaxed mb-2">{s.body}</p>
-                <p className="text-xs text-stone-400 font-medium">{s.detail}</p>
+                <h3 className="font-medium text-[#242120] text-lg mb-2">{s.title}</h3>
+                <p className="text-[#6E6A66] text-sm leading-relaxed mb-2">{s.body}</p>
+                <p className="text-xs text-[#6E6A66] font-medium">{s.detail}</p>
               </div>
             </div>
           ))}
@@ -51,13 +58,18 @@ export default function HowItWorksSection() {
 
         {/* Feature grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-          {features.map((f, i) => (
-            <div key={i} className="bg-stone-50 rounded-xl p-5 border border-stone-100">
-              <span className="text-2xl block mb-2">{FEATURE_EMOJI[i]}</span>
-              <p className="text-sm font-medium text-stone-700">{f.label}</p>
-              <p className="text-xs text-stone-400 mt-0.5">{f.sub}</p>
+          {features.map((f, i) => {
+            const Icon = FEATURE_ICONS[i] ?? Lock;
+            return (
+            <div key={i} className="bg-[#F7F7F6] rounded-xl p-5 border border-[#ECEAE8]">
+              <span className="mb-2 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white">
+                <Icon className="h-5 w-5 text-[#8E3B5A]" strokeWidth={1.5} />
+              </span>
+              <p className="text-sm font-medium text-[#242120]">{f.label}</p>
+              <p className="text-xs text-[#6E6A66] mt-0.5">{f.sub}</p>
             </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

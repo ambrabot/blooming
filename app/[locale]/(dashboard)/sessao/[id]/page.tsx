@@ -117,7 +117,7 @@ export default function SessaoPage() {
     return (
       <div className="p-8 text-center text-stone-400">
         {t("notFound")}{" "}
-        <Link href="/sessao" className="text-amber-700 hover:underline">{t("back")}</Link>
+        <Link href="/sessao" className="text-berry hover:underline">{t("back")}</Link>
       </div>
     );
   }
@@ -148,9 +148,9 @@ export default function SessaoPage() {
 
       {/* Summary banner */}
       {session.summary && (
-        <div className="mx-6 mt-4 bg-amber-50 border border-amber-100 rounded-xl px-4 py-3 flex items-start gap-2">
-          <BookOpen className="h-4 w-4 text-amber-600 shrink-0 mt-0.5" />
-          <p className="text-xs text-amber-700 leading-relaxed italic">{session.summary}</p>
+        <div className="mx-6 mt-4 bg-berry-wash border border-berry-wash rounded-xl px-4 py-3 flex items-start gap-2">
+          <BookOpen className="h-4 w-4 text-berry shrink-0 mt-0.5" />
+          <p className="text-xs text-berry leading-relaxed italic">{session.summary}</p>
         </div>
       )}
 
@@ -159,12 +159,12 @@ export default function SessaoPage() {
         {messages.map((msg) => (
           <div key={msg.id} className={cn("flex", msg.role === "USER" ? "justify-end" : "justify-start")}>
             {msg.role === "ASSISTANT" && (
-              <div className="w-7 h-7 rounded-full bg-amber-100 flex items-center justify-center text-xs font-medium text-amber-800 shrink-0 mr-3 mt-0.5">R</div>
+              <div className="w-7 h-7 rounded-full bg-berry-wash flex items-center justify-center text-xs font-medium text-berry-deep shrink-0 mr-3 mt-0.5">R</div>
             )}
             <div className={cn(
               "max-w-[80%] rounded-2xl px-4 py-3 text-sm leading-relaxed whitespace-pre-wrap",
               msg.role === "USER"
-                ? "bg-amber-700 text-white rounded-tr-sm"
+                ? "bg-berry text-white rounded-tr-sm"
                 : "bg-white border border-stone-100 text-stone-800 rounded-tl-sm shadow-sm",
             )}>
               {msg.content}
@@ -189,13 +189,13 @@ export default function SessaoPage() {
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder={t("inputPlaceholderContinue")}
-            className="resize-none min-h-[52px] max-h-[160px] border-stone-200 focus-visible:ring-amber-500"
+            className="resize-none min-h-[52px] max-h-[160px] border-stone-200 focus-visible:ring-berry"
             rows={2}
           />
           <Button
             onClick={sendMessage}
             disabled={!input.trim() || loading}
-            className="bg-amber-700 hover:bg-amber-800 text-white h-[52px] px-4 shrink-0"
+            className="bg-berry hover:bg-berry-deep text-white h-[52px] px-4 shrink-0"
           >
             {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
           </Button>

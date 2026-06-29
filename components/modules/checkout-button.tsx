@@ -65,7 +65,7 @@ export default function ModuleCheckoutButton({
         onClick={handleCheckout}
         disabled={state === "loading"}
         size={size}
-        className="bg-amber-700 hover:bg-amber-800 text-white w-full"
+        className="bg-berry hover:bg-berry-deep text-white w-full"
       >
         {state === "loading" ? (
           <>

@@ -86,9 +86,9 @@ export default async function DiarioEntryPage({ params }: Props) {
 
       {/* Gratitude */}
       {entry.gratitude && (
-        <Card className="border-rose-100 bg-rose-50 mb-4">
+        <Card className="border-berry-wash bg-berry-wash mb-4">
           <CardContent className="p-4">
-            <p className="text-xs font-medium text-rose-700 uppercase tracking-wide mb-1 flex items-center gap-1">
+            <p className="text-xs font-medium text-berry uppercase tracking-wide mb-1 flex items-center gap-1">
               <Heart className="h-3 w-3" />
               {t("gratitudeHeader")}
             </p>
@@ -99,9 +99,9 @@ export default async function DiarioEntryPage({ params }: Props) {
 
       {/* Scripture */}
       {entry.scripture && (
-        <Card className="border-amber-100 bg-amber-50 mb-4">
+        <Card className="border-berry-wash bg-berry-wash mb-4">
           <CardContent className="p-4">
-            <p className="text-xs font-medium text-amber-700 uppercase tracking-wide mb-1 flex items-center gap-1">
+            <p className="text-xs font-medium text-berry uppercase tracking-wide mb-1 flex items-center gap-1">
               <BookOpen className="h-3 w-3" />
               {t("scriptureHeader")}
             </p>
@@ -112,9 +112,9 @@ export default async function DiarioEntryPage({ params }: Props) {
 
       {/* Insight */}
       {entry.insight && (
-        <Card className="border-teal-100 bg-teal-50 mb-4">
+        <Card className="border-green-wash bg-green-wash mb-4">
           <CardContent className="p-4">
-            <p className="text-xs font-medium text-teal-700 uppercase tracking-wide mb-1">
+            <p className="text-xs font-medium text-green-deep uppercase tracking-wide mb-1">
               {t("insightLabel")}
             </p>
             <p className="text-stone-700 text-sm">{entry.insight}</p>
@@ -141,7 +141,7 @@ export default async function DiarioEntryPage({ params }: Props) {
         <Button asChild variant="outline" size="sm">
           <Link href="/diario/novo">{t("newEntry")}</Link>
         </Button>
-        <Button asChild size="sm" className="bg-amber-700 hover:bg-amber-800 text-white">
+        <Button asChild size="sm" className="bg-berry hover:bg-berry-deep text-white">
           <Link href={`/sessao/nova`}>{t("talkWithRafa")}</Link>
         </Button>
       </div>

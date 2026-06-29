@@ -152,7 +152,7 @@ export default function ProfileForm({
               id="hebrewRoots"
               checked={form.hebrewRoots}
               onChange={(e) => set("hebrewRoots", e.target.checked)}
-              className="w-4 h-4 accent-amber-600"
+              className="w-4 h-4 accent-berry"
             />
             <Label htmlFor="hebrewRoots" className="cursor-pointer">
               {t("hebrewRootsLabel")}
@@ -166,10 +166,10 @@ export default function ProfileForm({
 
       {/* Ciclo menstrual (visível para todos mas contexto feminino) */}
       {(form.role === "WOMAN" || form.role === "COUPLE") && (
-        <Card className="border-rose-100 bg-rose-50/30">
+        <Card className="border-berry-wash bg-berry-wash/30">
           <CardContent className="p-6 space-y-4">
             <div>
-              <h2 className="text-sm font-medium text-rose-700 uppercase tracking-wide">
+              <h2 className="text-sm font-medium text-berry uppercase tracking-wide">
                 {t("cycleTitle")}
               </h2>
               <p className="text-xs text-stone-400 mt-1">
@@ -215,7 +215,7 @@ export default function ProfileForm({
         <Button
           onClick={handleSave}
           disabled={saving}
-          className="bg-amber-700 hover:bg-amber-800 text-white"
+          className="bg-berry hover:bg-berry-deep text-white"
         >
           {saving ? (
             <><Loader2 className="h-4 w-4 animate-spin mr-2" />{t("saving")}</>
@@ -224,7 +224,7 @@ export default function ProfileForm({
           )}
         </Button>
         {saved && (
-          <p className="text-sm text-teal-600 font-medium">✓ {t("saved")}</p>
+          <p className="text-sm text-green font-medium">✓ {t("saved")}</p>
         )}
       </div>
     </div>
@@ -249,13 +249,13 @@ function CyclePhaseIndicator({
 
   if (dayInCycle <= 5) {
     key = "menstrual";
-    color = "text-rose-700 bg-rose-50 border-rose-200";
+    color = "text-berry bg-berry-wash border-berry-wash";
   } else if (dayInCycle <= 13) {
     key = "follicular";
-    color = "text-teal-700 bg-teal-50 border-teal-200";
+    color = "text-green-deep bg-green-wash border-green-wash";
   } else if (dayInCycle <= 17) {
     key = "ovulatory";
-    color = "text-amber-700 bg-amber-50 border-amber-200";
+    color = "text-berry bg-berry-wash border-berry-wash";
   } else {
     key = "luteal";
     color = "text-purple-700 bg-purple-50 border-purple-200";

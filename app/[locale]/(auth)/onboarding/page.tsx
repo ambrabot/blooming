@@ -120,10 +120,10 @@ export default function OnboardingPage() {
 
   if (result) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-stone-50 via-amber-50 to-rose-50 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-br from-stone-50 via-berry-wash to-berry-wash flex items-center justify-center p-4">
         <div className="w-full max-w-lg">
           <div className="text-center mb-8">
-            <Sparkles className="h-8 w-8 text-amber-600 mx-auto mb-3" />
+            <Sparkles className="h-8 w-8 text-berry mx-auto mb-3" />
             <h1 className="text-2xl font-serif text-stone-800">
               {t("result.title")}
             </h1>
@@ -147,7 +147,7 @@ export default function OnboardingPage() {
                 {result.recommendations.slice(0, 3).map((r, i) => (
                   <Card key={r.slug} className="border-stone-200">
                     <CardContent className="p-4 flex items-start gap-3">
-                      <Badge className="bg-amber-100 text-amber-800 border-0 shrink-0">
+                      <Badge className="bg-berry-wash text-berry-deep border-0 shrink-0">
                         {i + 1}º
                       </Badge>
                       <div>
@@ -164,7 +164,7 @@ export default function OnboardingPage() {
             </div>
           )}
           <Button
-            className="w-full bg-amber-700 hover:bg-amber-800 text-white"
+            className="w-full bg-berry hover:bg-berry-deep text-white"
             onClick={() => router.push("/sessao/nova?welcome=1")}
           >
             {t("result.talkToRafa")}
@@ -183,7 +183,7 @@ export default function OnboardingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-stone-50 via-amber-50 to-rose-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-stone-50 via-berry-wash to-berry-wash flex items-center justify-center p-4">
       <div className="w-full max-w-lg">
         {/* Idioma — define a língua de toda a conta: a plataforma E a Rafa. */}
         <div className="flex items-center justify-center gap-1 mb-6">
@@ -198,7 +198,7 @@ export default function OnboardingPage() {
               className={cn(
                 "px-3 py-1 rounded-full text-xs border transition-colors",
                 l === locale
-                  ? "border-amber-600 bg-amber-50 text-amber-800 font-medium"
+                  ? "border-berry bg-berry-wash text-berry-deep font-medium"
                   : "border-stone-200 text-stone-500 hover:border-stone-300 hover:bg-stone-50",
               )}
             >
@@ -225,7 +225,7 @@ export default function OnboardingPage() {
         {/* Question */}
         <Card className="border-stone-200 shadow-sm">
           <CardContent className="p-8">
-            <p className="text-xs font-medium text-amber-700 uppercase tracking-wide mb-3">
+            <p className="text-xs font-medium text-berry uppercase tracking-wide mb-3">
               {content.category}
             </p>
             <h2 className="text-lg font-medium text-stone-800 leading-snug mb-2">
@@ -235,7 +235,7 @@ export default function OnboardingPage() {
               <p className="text-sm text-stone-500 mb-4">{content.subtext}</p>
             )}
             {content.scripture && (
-              <p className="text-xs text-amber-600 italic mb-6 border-l-2 border-amber-200 pl-3">
+              <p className="text-xs text-berry italic mb-6 border-l-2 border-berry-wash pl-3">
                 {content.scripture}
               </p>
             )}
@@ -249,11 +249,11 @@ export default function OnboardingPage() {
                   max={10}
                   value={(answers[qid] as number) ?? 5}
                   onChange={(e) => setAnswer(Number(e.target.value))}
-                  className="w-full accent-amber-600"
+                  className="w-full accent-berry"
                 />
                 <div className="flex justify-between text-xs text-stone-400">
                   <span>{t("scaleLow")}</span>
-                  <span className="font-medium text-amber-700">
+                  <span className="font-medium text-berry">
                     {answers[qid] ?? 5}/10
                   </span>
                   <span>{t("scaleHigh")}</span>
@@ -271,7 +271,7 @@ export default function OnboardingPage() {
                     className={cn(
                       "w-full text-left px-4 py-3 rounded-lg text-sm border transition-colors",
                       answers[qid] === option
-                        ? "border-amber-600 bg-amber-50 text-amber-800 font-medium"
+                        ? "border-berry bg-berry-wash text-berry-deep font-medium"
                         : "border-stone-200 text-stone-700 hover:border-stone-300 hover:bg-stone-50",
                     )}
                   >
@@ -293,7 +293,7 @@ export default function OnboardingPage() {
                       className={cn(
                         "w-full text-left px-4 py-3 rounded-lg text-sm border transition-colors",
                         selected
-                          ? "border-amber-600 bg-amber-50 text-amber-800 font-medium"
+                          ? "border-berry bg-berry-wash text-berry-deep font-medium"
                           : "border-stone-200 text-stone-700 hover:border-stone-300",
                       )}
                     >
@@ -316,7 +316,7 @@ export default function OnboardingPage() {
 
             {/* Advance */}
             <Button
-              className="mt-6 w-full bg-amber-700 hover:bg-amber-800 text-white"
+              className="mt-6 w-full bg-berry hover:bg-berry-deep text-white"
               onClick={advance}
               disabled={!canAdvance() || loading}
             >

@@ -18,9 +18,9 @@ export default async function AdminDashboard() {
   });
 
   const stats = [
-    { label: "Módulos", value: modules, icon: BookOpen, color: "text-amber-600" },
-    { label: "Usuários", value: users, icon: Users, color: "text-teal-600" },
-    { label: "Entradas no diário", value: journals, icon: NotebookPen, color: "text-rose-600" },
+    { label: "Módulos", value: modules, icon: BookOpen, color: "text-berry" },
+    { label: "Usuários", value: users, icon: Users, color: "text-green" },
+    { label: "Entradas no diário", value: journals, icon: NotebookPen, color: "text-berry" },
     { label: "Sessões terapêuticas", value: sessions, icon: MessageCircle, color: "text-purple-600" },
   ];
 

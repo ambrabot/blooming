@@ -26,12 +26,12 @@ const ICONS: Record<string, LucideIcon> = {
   User, Heart, Users, Handshake, Home, Briefcase, Sparkles, Globe,
 };
 
-// tier 0..5 → cor de fundo do canteiro (seco→verde) + cor do ponto de estado.
+// tier 0..5 → cor de fundo do canteiro (neutro→verde) + cor do ponto de estado.
 const BG: Record<number, string> = {
-  0: "#f1ebe1", 1: "#f3ebdf", 2: "#f3efe4", 3: "#eef0e6", 4: "#e6ebdc", 5: "#dfe7d2",
+  0: "#f5f4f3", 1: "#eff2ee", 2: "#e8f0ea", 3: "#deede3", 4: "#d2e7da", 5: "#c4e0cf",
 };
 const DOT: Record<number, string> = {
-  0: "#d6cbb8", 1: "#d9b98e", 2: "#d8c79a", 3: "#b9bf9b", 4: "#8a9a78", 5: "#6e7b61",
+  0: "#d8d5d1", 1: "#bcc9be", 2: "#9fc0a8", 3: "#7fb293", 4: "#5c9a77", 5: "#3c7a5e",
 };
 
 export interface BedData {
@@ -126,7 +126,7 @@ export default function MyGarden({ initial }: { initial: Record<string, BedData>
                 className="absolute top-2 right-2 h-1.5 w-1.5 rounded-full"
                 style={{ background: DOT[st.tier] }}
               />
-              <Icon className="h-[15px] w-[15px]" style={{ color: "#5b6b4e", opacity: 0.75 }} />
+              <Icon className="h-[15px] w-[15px]" style={{ color: "#2e5e48", opacity: 0.75 }} />
               <span>
                 <span className="block text-[12px] font-semibold text-stone-700 leading-tight">
                   {t(`beds.${g.key}`)}
@@ -187,7 +187,7 @@ export default function MyGarden({ initial }: { initial: Record<string, BedData>
             onClick={save}
             disabled={saving}
             className="inline-flex items-center gap-2 rounded-lg text-sm font-medium text-stone-900 px-4 py-2 disabled:opacity-70"
-            style={{ background: "#c9a86a" }}
+            style={{ background: "#8e3b5a" }}
           >
             {saving && <Loader2 className="h-4 w-4 animate-spin" />}
             {t("tendSave")}
@@ -197,7 +197,7 @@ export default function MyGarden({ initial }: { initial: Record<string, BedData>
           <div className="mt-4 pt-3 border-t border-stone-100">
             {beds[active]?.reflection && (
               <div className="flex gap-2 mb-2">
-                <Sparkles className="h-4 w-4 shrink-0 mt-0.5" style={{ color: "#c9a86a" }} />
+                <Sparkles className="h-4 w-4 shrink-0 mt-0.5" style={{ color: "#8e3b5a" }} />
                 <p className="text-sm text-stone-600 leading-relaxed italic">
                   {beds[active].reflection}
                 </p>
@@ -207,7 +207,7 @@ export default function MyGarden({ initial }: { initial: Record<string, BedData>
               onClick={reflect}
               disabled={reflecting}
               className="inline-flex items-center gap-1.5 text-xs font-medium disabled:opacity-60"
-              style={{ color: "#6d4a5a" }}
+              style={{ color: "#8e3b5a" }}
             >
               {reflecting ? (
                 <Loader2 className="h-3.5 w-3.5 animate-spin" />

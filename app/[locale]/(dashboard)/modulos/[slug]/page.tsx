@@ -74,11 +74,11 @@ export default async function ModuloDetailPage({ params, searchParams }: Props) 
     <div className="p-8 max-w-4xl mx-auto">
       {/* Purchase success banner */}
       {success === "1" && owned && (
-        <div className="mb-6 bg-teal-50 border border-teal-200 rounded-xl p-4 flex items-center gap-3">
-          <PartyPopper className="h-5 w-5 text-teal-600 shrink-0" />
+        <div className="mb-6 bg-green-wash border border-green-wash rounded-xl p-4 flex items-center gap-3">
+          <PartyPopper className="h-5 w-5 text-green shrink-0" />
           <div className="flex-1">
-            <p className="font-medium text-teal-800">{t("purchaseSuccessTitle")}</p>
-            <p className="text-sm text-teal-600 mt-0.5">
+            <p className="font-medium text-green-deep">{t("purchaseSuccessTitle")}</p>
+            <p className="text-sm text-green mt-0.5">
               {t("purchaseSuccessBody")}
             </p>
           </div>
@@ -107,7 +107,7 @@ export default async function ModuloDetailPage({ params, searchParams }: Props) 
         <div className="flex-1">
           <div className="flex items-center gap-2 mb-1">
             {mod.hebrewWord && (
-              <span className="text-xs font-medium text-amber-700 uppercase tracking-widest">
+              <span className="text-xs font-medium text-berry uppercase tracking-widest">
                 {mod.hebrewWord}
               </span>
             )}
@@ -158,9 +158,9 @@ export default async function ModuloDetailPage({ params, searchParams }: Props) 
           </p>
           <div className="flex flex-wrap gap-2">
             {keyScriptures.map((s) => (
-              <div key={s.ref} className="bg-amber-50 border border-amber-100 rounded-lg px-3 py-2">
-                <p className="text-xs font-medium text-amber-800">{s.ref}</p>
-                <p className="text-xs text-amber-600 italic mt-0.5">{s.text}</p>
+              <div key={s.ref} className="bg-berry-wash border border-berry-wash rounded-lg px-3 py-2">
+                <p className="text-xs font-medium text-berry-deep">{s.ref}</p>
+                <p className="text-xs text-berry italic mt-0.5">{s.text}</p>
               </div>
             ))}
           </div>
@@ -169,18 +169,18 @@ export default async function ModuloDetailPage({ params, searchParams }: Props) 
 
       {/* Session CTA */}
       {owned && (
-        <Card className="border-amber-200 bg-amber-50 mb-6">
+        <Card className="border-berry-wash bg-berry-wash mb-6">
           <CardContent className="p-5 flex items-center justify-between">
             <div>
-              <p className="font-medium text-amber-900 flex items-center gap-2">
+              <p className="font-medium text-berry-deep flex items-center gap-2">
                 <MessageCircle className="h-4 w-4" />
                 {t("sessionContextTitle")}
               </p>
-              <p className="text-sm text-amber-700 mt-0.5">
+              <p className="text-sm text-berry mt-0.5">
                 {t("sessionContextBody", { title: mod.title })}
               </p>
             </div>
-            <Button asChild className="bg-amber-700 hover:bg-amber-800 text-white shrink-0">
+            <Button asChild className="bg-berry hover:bg-berry-deep text-white shrink-0">
               <Link href={`/sessao/nova?moduleId=${mod.id}`}>{t("startSession")}</Link>
             </Button>
           </CardContent>
@@ -263,9 +263,9 @@ function LessonRow({
       <CardContent className="p-4 flex items-center gap-4">
         <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0">
           {completed ? (
-            <CheckCircle2 className="h-5 w-5 text-teal-600" />
+            <CheckCircle2 className="h-5 w-5 text-green" />
           ) : accessible ? (
-            <PlayCircle className="h-5 w-5 text-amber-600" />
+            <PlayCircle className="h-5 w-5 text-berry" />
           ) : (
             <Lock className="h-4 w-4 text-stone-400" />
           )}

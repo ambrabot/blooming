@@ -32,27 +32,27 @@ const GROUPS: FooterGroup[] = [
 ];
 
 const LINK_CLASS =
-  "text-sm text-stone-400 hover:text-white transition-colors";
+  "text-sm text-white/60 hover:text-white transition-colors";
 
 export default function LandingFooter() {
   const t = useTranslations("Landing.footer");
   const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-stone-900 text-stone-400 py-16 px-6">
+    <footer className="bg-[#242120] text-white/60 py-16 px-6">
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-5 gap-12 mb-12">
           {/* Brand */}
           <div className="md:col-span-2">
             <div className="flex items-center gap-2 mb-4">
-              <Sparkles className="h-4 w-4 text-amber-500" />
+              <Sparkles className="h-4 w-4 text-[#C98AA3]" />
               <span className="font-serif text-lg text-white">BLOOMING</span>
-              <span className="text-stone-600 text-sm ml-1">חַיִל</span>
+              <span className="text-white/40 text-sm ml-1">חַיִל</span>
             </div>
-            <p className="text-sm leading-relaxed text-stone-500 max-w-xs">
+            <p className="text-sm leading-relaxed text-white/55 max-w-xs">
               {t("tagline")}
             </p>
-            <p className="text-xs text-stone-600 mt-4 italic">
+            <p className="text-xs text-white/40 mt-4 italic">
               {t.rich("verse", {
                 q: (chunks) => <>&ldquo;{chunks}&rdquo;</>,
                 br: () => <br />,
@@ -63,7 +63,7 @@ export default function LandingFooter() {
           {/* Links */}
           {GROUPS.map((group) => (
             <div key={group.id}>
-              <p className="text-xs font-medium text-stone-500 uppercase tracking-widest mb-4">
+              <p className="text-xs font-medium text-white/45 uppercase tracking-widest mb-4">
                 {t(`groups.${group.id}.title`)}
               </p>
               <ul className="space-y-2.5">
@@ -85,9 +85,9 @@ export default function LandingFooter() {
           ))}
         </div>
 
-        <div className="border-t border-stone-800 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-stone-600">{t("rights", { year })}</p>
-          <p className="text-xs text-stone-600">{t("builtWith")}</p>
+        <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-xs text-white/40">{t("rights", { year })}</p>
+          <p className="text-xs text-white/40">{t("builtWith")}</p>
         </div>
       </div>
     </footer>

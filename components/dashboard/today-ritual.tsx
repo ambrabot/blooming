@@ -51,27 +51,21 @@ export default function TodayRitual({
   }
 
   return (
-    <div className="rounded-lg bg-stone-800 text-stone-100 p-6 md:p-7 mb-6">
+    <div className="rounded-2xl border border-stone-200 bg-white p-6 md:p-7 mb-6">
       <div className="flex items-center justify-between gap-3 mb-2">
-        <p
-          className="text-[11px] uppercase tracking-[0.16em] font-semibold"
-          style={{ color: "#c9a86a" }}
-        >
+        <p className="text-[11px] uppercase tracking-[0.16em] font-semibold text-green">
           {t("todayStep")}
         </p>
       </div>
 
-      <p className="font-serif text-xl md:text-2xl leading-snug">{question}</p>
-      <p className="text-[13px] text-stone-400 italic mt-3 pt-3 border-t border-white/10">
+      <p className="font-serif text-xl md:text-2xl leading-snug text-stone-800">{question}</p>
+      <p className="text-[13px] text-stone-500 italic mt-3 pt-3 border-t border-stone-100">
         “{passageText}” — {passageRef}
       </p>
 
       <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-3">
         {streak.doneToday ? (
-          <span
-            className="inline-flex items-center gap-2 rounded text-sm font-medium px-4 py-2.5"
-            style={{ background: "rgba(110,123,97,0.22)", color: "#cdd6bf" }}
-          >
+          <span className="inline-flex items-center gap-2 rounded-lg text-sm font-medium px-4 py-2.5 bg-green-wash text-green-deep">
             <Sprout className="h-4 w-4" />
             {t("presentToday")}
           </span>
@@ -79,8 +73,7 @@ export default function TodayRitual({
           <button
             onClick={mark}
             disabled={loading}
-            className="inline-flex items-center gap-2 rounded text-sm font-medium text-stone-900 px-5 py-2.5 transition-opacity disabled:opacity-70"
-            style={{ background: "#c9a86a" }}
+            className="inline-flex items-center gap-2 rounded-lg text-sm font-medium text-white px-5 py-2.5 bg-green hover:bg-green-deep transition-colors disabled:opacity-70"
           >
             {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Droplets className="h-4 w-4" />}
             {loading ? t("presenceMarking") : t("markPresence")}
@@ -89,8 +82,7 @@ export default function TodayRitual({
 
         <Link
           href="/devocional"
-          className="inline-flex items-center gap-1.5 text-[13px]"
-          style={{ color: "#e7d9bf" }}
+          className="inline-flex items-center gap-1.5 text-[13px] text-berry hover:text-berry-deep"
         >
           {t("openFullDevotional")} <ArrowRight className="h-3.5 w-3.5" />
         </Link>
@@ -104,12 +96,10 @@ export default function TodayRitual({
       </div>
 
       {graceMsg > 0 && (
-        <p className="mt-3 text-[13px]" style={{ color: "#c9a86a" }}>
-          {t("graceCovered", { count: graceMsg })}
-        </p>
+        <p className="mt-3 text-[13px] text-green">{t("graceCovered", { count: graceMsg })}</p>
       )}
       {milestone && (
-        <p className="mt-3 text-[13px] font-medium" style={{ color: "#e7d9bf" }}>
+        <p className="mt-3 text-[13px] font-medium text-berry">
           {t("milestoneReached", { count: milestone })}
         </p>
       )}

@@ -40,7 +40,7 @@ export default async function DevocionalPage() {
     <div className="p-6 md:p-8 max-w-2xl mx-auto">
       <p className="text-[11px] uppercase tracking-[0.18em] text-stone-400 font-semibold flex items-center gap-2">
         {streak.current > 0 && (
-          <span className="inline-flex items-center gap-1 text-[#9c7a39]">
+          <span className="inline-flex items-center gap-1 text-[#8e3b5a]">
             <Flame className="h-3.5 w-3.5" />
             {t("streakDays", { count: streak.current })}
           </span>
@@ -60,7 +60,7 @@ export default async function DevocionalPage() {
         <div className="divide-y divide-stone-100">
           {steps.map((step, i) => (
             <div key={i} className="flex gap-4 py-4 first:pt-0 last:pb-0">
-              <span className="font-serif text-xl w-5 shrink-0 leading-tight" style={{ color: "#9c7a39" }}>
+              <span className="font-serif text-xl w-5 shrink-0 leading-tight" style={{ color: "#8e3b5a" }}>
                 {ROMAN[i + 1]}
               </span>
               <div>
