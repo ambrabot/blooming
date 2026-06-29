@@ -19,7 +19,7 @@ export default function FaqSection() {
           <p className="text-xs font-medium text-[#8E3B5A] uppercase tracking-widest mb-3">
             {t("eyebrow")}
           </p>
-          <h2 className="font-serif text-4xl md:text-5xl text-[#242120] leading-tight">
+          <h2 className="font-serif text-4xl md:text-5xl text-[#242120] leading-tight text-balance">
             {t("title")}
           </h2>
         </div>

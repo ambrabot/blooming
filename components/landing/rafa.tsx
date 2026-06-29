@@ -20,7 +20,7 @@ export default function RafaSection() {
             <p className="text-xs font-medium text-[#8E3B5A] uppercase tracking-widest mb-4">
               {t("eyebrow")}
             </p>
-            <h2 className="font-serif text-4xl md:text-5xl text-[#242120] leading-tight mb-6">
+            <h2 className="font-serif text-4xl md:text-5xl text-[#242120] leading-tight text-balance mb-6">
               {t.rich("title", {
                 em: (chunks) => <span className="italic text-[#8E3B5A]">{chunks}</span>,
                 br: () => <br className="hidden md:block" />,
